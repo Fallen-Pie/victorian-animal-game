@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VictorianAnimalGame.Scripts.Province
 {
-    internal interface IProvince
+    internal struct ProvinceData
     {
-        
+        public string Name;
     }
 }
