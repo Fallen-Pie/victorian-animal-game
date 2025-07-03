@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "F:\\Repositories\\victorian-animal-game\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\map\\mainmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\map\\mainmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\map\\provinces\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\map\\provinces\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\map\\provinces\\provincedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\map\\provinces\\provincedata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critteroccupation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critteroccupation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critterkey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critterkey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critterculture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critterculture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\province\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\province\\province.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critterclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critterclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|f:\\repositories\\victorian-animal-game\\scripts\\critters\\critterenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB1F1297-9AE3-45AF-A981-5FE2210417D6}|Victorian Animal Game.csproj|solutionrelative:scripts\\critters\\critterenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,76 +34,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 230,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Critter.cs",
-              "DocumentMoniker": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Critters\\Critter.cs",
+              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\Critter.cs",
               "RelativeDocumentMoniker": "Scripts\\Critters\\Critter.cs",
-              "ToolTip": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Critters\\Critter.cs",
+              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\Critter.cs",
               "RelativeToolTip": "Scripts\\Critters\\Critter.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAwwCMAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T02:29:50.851Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CritterOccupation.cs",
-              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterOccupation.cs",
-              "RelativeDocumentMoniker": "Scripts\\Critters\\CritterOccupation.cs",
-              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterOccupation.cs",
-              "RelativeToolTip": "Scripts\\Critters\\CritterOccupation.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAhAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "MainMap.cs",
+              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Map\\MainMap.cs",
+              "RelativeDocumentMoniker": "Scripts\\Map\\MainMap.cs",
+              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Map\\MainMap.cs*",
+              "RelativeToolTip": "Scripts\\Map\\MainMap.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T05:02:33.405Z",
+              "WhenOpened": "2025-07-03T07:13:43.065Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CritterCulture.cs",
-              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterCulture.cs",
-              "RelativeDocumentMoniker": "Scripts\\Critters\\CritterCulture.cs",
-              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterCulture.cs",
-              "RelativeToolTip": "Scripts\\Critters\\CritterCulture.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Title": "ProvinceData.cs",
+              "DocumentMoniker": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Map\\Provinces\\ProvinceData.cs",
+              "RelativeDocumentMoniker": "Scripts\\Map\\Provinces\\ProvinceData.cs",
+              "ToolTip": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Map\\Provinces\\ProvinceData.cs",
+              "RelativeToolTip": "Scripts\\Map\\Provinces\\ProvinceData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T09:35:50.71Z",
+              "WhenOpened": "2025-07-03T07:09:57.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 230,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Province.cs",
+              "DocumentMoniker": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Map\\Provinces\\Province.cs",
+              "RelativeDocumentMoniker": "Scripts\\Map\\Provinces\\Province.cs",
+              "ToolTip": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Map\\Provinces\\Province.cs*",
+              "RelativeToolTip": "Scripts\\Map\\Provinces\\Province.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T03:12:23.704Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CritterEnums.cs",
+              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterEnums.cs",
+              "RelativeDocumentMoniker": "Scripts\\Critters\\CritterEnums.cs",
+              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterEnums.cs",
+              "RelativeToolTip": "Scripts\\Critters\\CritterEnums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T11:38:25.909Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "CritterClass.cs",
-              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterClass.cs",
-              "RelativeDocumentMoniker": "Scripts\\Critters\\CritterClass.cs",
-              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterClass.cs",
-              "RelativeToolTip": "Scripts\\Critters\\CritterClass.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
+              "Title": "CritterKey.cs",
+              "DocumentMoniker": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterKey.cs",
+              "RelativeDocumentMoniker": "Scripts\\Critters\\CritterKey.cs",
+              "ToolTip": "F:\\Repositories\\victorian-animal-game\\Scripts\\Critters\\CritterKey.cs",
+              "RelativeToolTip": "Scripts\\Critters\\CritterKey.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAqwAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T04:53:09.279Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Province.cs",
-              "DocumentMoniker": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Province\\Province.cs",
-              "RelativeDocumentMoniker": "Scripts\\Province\\Province.cs",
-              "ToolTip": "F:\\REPOSITORIES\\VICTORIAN-ANIMAL-GAME\\Scripts\\Province\\Province.cs*",
-              "RelativeToolTip": "Scripts\\Province\\Province.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-29T12:58:01.393Z",
+              "WhenOpened": "2025-07-02T11:31:46.489Z",
               "EditorCaption": ""
             }
           ]
