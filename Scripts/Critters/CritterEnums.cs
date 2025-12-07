@@ -13,13 +13,6 @@ namespace VictorianAnimalGame.Scripts.Critters
         Raccon
     }
 
-    public enum CritterCulture : byte
-    {
-        SEALANDER,
-        BURGUNIDAN,
-        FRANCIAN
-    }
-
     public enum CritterClass : byte
     {
         UPPER,

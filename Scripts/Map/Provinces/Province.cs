@@ -23,14 +23,14 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
 
     public partial class LandProvince : Node, IProvince
     {
-        public Dictionary<CritterKey, Critter> critters = [];
+        public List<Critter> critters = [];
             
-        public void AddCritters(CritterKey newCritterKey, Critter newCritter) {
-            critters.Add(newCritterKey, newCritter);
+        public void AddCritters(Critter newCritter) {
+            critters.Add(newCritter);
         }
         public string GetDetails()
         {
-            return String.Format("Info on this LandProvince\nHashCode: {0}\nCurrent critter: {1}", GetHashCode(), critters);
+            return $"Info on this LandProvince\nHashCode: {GetHashCode()}\nCurrent critter: {critters}";
         }
 
         public void SetName()

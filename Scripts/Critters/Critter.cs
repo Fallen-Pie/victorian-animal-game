@@ -1,73 +1,59 @@
-using System;
-using System.Text.RegularExpressions;
-
 namespace VictorianAnimalGame.Scripts.Critters
 {
-    public class Critter
+    public interface ICritter
     {
-        public uint critterCount;
-        public uint educatedCount;
-        public uint trainedCount;
+        void AddCritterCount(uint newCount);
+    }
+    
+    public class Critter : ICritter
+    {
+        private uint _critterCount;
+        private uint _critterTraining;
+        private float _critterHappiness;
+        private float _critterLiteracy;
+        private CritterType CritterType { get; set; }
 
-        public Critter AddCritterCount(uint newCount)
+        public void AddCritterCount(uint newCount)
         {
-            critterCount += newCount;
-            return this;
+            _critterCount += newCount;
         }
-        public Critter AddEducatedCount(uint newCount)
+        public void SubCritterCount(uint newCount)
         {
-            educatedCount += newCount;
-            return this;
+            _critterCount -= newCount;
         }
-        public Critter AddTrainedCount(uint newCount)
+        public void AddCritterTraining(uint newCount)
         {
-            trainedCount += newCount;
-            return this;
+            _critterTraining += newCount;
         }
-        public Critter SubCritterCount(uint newCount)
+        public void SubCritterTraining(uint newCount)
         {
-            critterCount -= newCount;
-            return this;
+            _critterTraining -= newCount;
         }
-        public Critter SubEducatedCount(uint newCount)
+        public void AddCritterHappiness(float newCount)
         {
-            educatedCount -= newCount;
-            return this;
+            _critterHappiness += newCount;
         }
-        public Critter SubTrainedCount(uint newCount)
+        public void SubCritterHappiness(float newCount)
         {
-            trainedCount -= newCount;
-            return this;
+            _critterHappiness -= newCount;
         }
-        public string GetDetails()
+        public void AddCritterLiteracy(float newCount)
         {
-            return String.Format("Info on this Critter:\nHashCode: {0}\nCurrent counts: {1}/{2}/{3}", GetHashCode(), critterCount, educatedCount, trainedCount);
+            _critterLiteracy += newCount;
+        }
+        public void SubCritterLiteracy(float newCount)
+        {
+            _critterLiteracy -= newCount;
+        }
+        public void AddCulture(CritterType newCritterType)
+        {
+            CritterType = newCritterType;
+        }
+
+        public override string ToString()
+        {
+            return
+                $"Critter: HashCode={GetHashCode()} Counts={_critterCount}/{_critterTraining} Rates={_critterHappiness}/{_critterLiteracy}";
         }
     }
-
-    public class CritterBuilder 
-    {
-        private Critter _critter = new();
-
-        public CritterBuilder SetCritterCount(uint newCount)
-        {
-            _critter.critterCount = newCount;
-            return this;
-        }
-        public CritterBuilder SetEducatedCount(uint newEducated)
-        {
-            _critter.educatedCount = newEducated;
-            return this;
-        }
-        public CritterBuilder SetCount(uint mewTrained)
-        {
-            _critter.trainedCount = mewTrained;
-            return this;
-        }
-        public Critter Build()
-        {
-            return _critter;
-        }
-    }
-
 }
