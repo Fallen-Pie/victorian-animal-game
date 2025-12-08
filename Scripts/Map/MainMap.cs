@@ -13,23 +13,24 @@ namespace VictorianAnimalGame.Scripts.Map {
             province = AddCrittersToProvince(province);
             foreach (var critter in province.critters) 
             {
-                GD.Print($"{critter}");
+                GD.Print(critter);
             } 
             province.SetName();
             GD.Print(province.GetDetails());
-            this.AddChild(province);
+            AddChild(province);
             base._Ready();
         }
         public LandProvince AddCrittersToProvince(LandProvince province)
         {
             Random random = new();
-            CritterType critterType = new(CritterSpecies.Otter, CritterOccupation.Labourer, new CritterCulture());
-            for (byte i = 0; i < 20; i++)
+            CritterType critterType = new(CritterSpecies.Otter, CritterOccupation.Labourer, new CritterCulture(Culture.OtterAmericans));
+            for (byte i = 0; i < 16; i++)
             {
                 Critter newCritter = new();
                 newCritter.AddCritterCount((uint)random.Next(1, 12000));
                 newCritter.AddCulture(critterType);
                 province.AddCritters(newCritter);
+                Console.WriteLine($"Size of {typeof(Critter)} is {Marshal.SizeOf(typeof(CritterType))}");
             }
             return province;
         }

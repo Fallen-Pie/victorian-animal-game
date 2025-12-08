@@ -53,7 +53,9 @@ namespace VictorianAnimalGame.Scripts.Critters
         public override string ToString()
         {
             return
-                $"Critter: HashCode={GetHashCode()} Counts={_critterCount}/{_critterTraining} Rates={_critterHappiness}/{_critterLiteracy}";
+                $"Critter: HashCode={GetHashCode()} Counts={_critterCount}/{_critterTraining} " +
+                $"Rates={_critterHappiness}/{_critterLiteracy} " +
+                $"Critter Type={CritterType.GetHashCode()}";
         }
     }
 }

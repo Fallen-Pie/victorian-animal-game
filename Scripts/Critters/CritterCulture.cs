@@ -1,9 +1,11 @@
 ﻿namespace VictorianAnimalGame.Scripts.Critters;
 
-public class CritterCulture
+public record struct CritterCulture
 {
-    public static CritterCulture CreateInstance()
+    private readonly Culture _name;
+
+    public CritterCulture(Culture newName)
     {
-        return new CritterCulture();
+        _name = newName;
     }
 }

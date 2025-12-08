@@ -29,4 +29,11 @@ namespace VictorianAnimalGame.Scripts.Critters
         Aristocrats,
         Buracrats
     }
+    
+    public enum Culture : ushort
+    {
+        OtterAmericans,
+        Beaver,
+        Raccon
+    }
 }
