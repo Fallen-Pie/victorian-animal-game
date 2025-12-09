@@ -1,18 +1,16 @@
 namespace VictorianAnimalGame.Scripts.Critters
 {
-    public interface ICritter
-    {
-        void AddCritterCount(uint newCount);
-    }
-    
-    public class Critter : ICritter
+    public class CritterDetails
     {
         private uint _critterCount;
         private uint _critterTraining;
         private float _critterHappiness;
         private float _critterLiteracy;
-        private CritterType CritterType { get; set; }
-
+        
+        public uint GetCritterCount()
+        {
+            return _critterCount;
+        }
         public void AddCritterCount(uint newCount)
         {
             _critterCount += newCount;
@@ -45,17 +43,11 @@ namespace VictorianAnimalGame.Scripts.Critters
         {
             _critterLiteracy -= newCount;
         }
-        public void AddCulture(CritterType newCritterType)
-        {
-            CritterType = newCritterType;
-        }
-
         public override string ToString()
         {
             return
-                $"Critter: HashCode={GetHashCode()} Counts={_critterCount}/{_critterTraining} " +
-                $"Rates={_critterHappiness}/{_critterLiteracy} " +
-                $"Critter Type={CritterType.GetHashCode()}";
+                $"(Counts={_critterCount}/{_critterTraining} " +
+                $"Rates={_critterHappiness}/{_critterLiteracy})";
         }
     }
 }
