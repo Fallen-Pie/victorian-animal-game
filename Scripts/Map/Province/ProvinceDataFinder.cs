@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VictorianAnimalGame.Scripts.Province
+namespace VictorianAnimalGame.Scripts.Map.Province
 {
-    internal struct ProvinceData
+    internal struct ProvinceDataFinder
     {
         public string Name;
     }
