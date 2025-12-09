@@ -11,26 +11,34 @@ namespace VictorianAnimalGame.Scripts.Map {
         {
             LandProvince province = new();
             province = AddCrittersToProvince(province);
-            foreach (var critter in province.critters) 
+            foreach (var critter in province._provinceCritters) 
             {
                 GD.Print(critter);
             } 
             province.SetName();
             GD.Print(province.GetDetails());
-            AddChild(province);
+            //AddChild(province);
             base._Ready();
         }
+        
+        static Random _r = new Random ();
+        static T RandomEnumValue<T> ()
+        {
+            var v = Enum.GetValues (typeof (T));
+            return (T) v.GetValue (_r.Next(v.Length));
+        }
+        
         public LandProvince AddCrittersToProvince(LandProvince province)
         {
-            Random random = new();
-            CritterType critterType = new(CritterSpecies.Otter, CritterOccupation.Labourer, new CritterCulture(Culture.OtterAmericans));
-            for (byte i = 0; i < 16; i++)
+            for (int i = 0; i < 10024; i++)
             {
-                Critter newCritter = new();
-                newCritter.AddCritterCount((uint)random.Next(1, 12000));
-                newCritter.AddCulture(critterType);
-                province.AddCritters(newCritter);
-                Console.WriteLine($"Size of {typeof(Critter)} is {Marshal.SizeOf(typeof(CritterType))}");
+                CritterDetails critterDetails = new();
+                critterDetails.AddCritterCount((uint)_r.Next(1, 12000));
+                CritterEntry critterEntry = new(RandomEnumValue<CritterSpecies>(), 
+                    RandomEnumValue<CritterOccupation>(), RandomEnumValue<CritterCulture>(), 
+                    critterDetails);
+                province.AddCritterEntry(critterEntry);
+                Console.WriteLine($"Size of {typeof(CritterDetails)} is {Marshal.SizeOf(typeof(CritterEntry))}");
             }
             return province;
         }

@@ -1,10 +1,5 @@
-using Godot;
-using Godot.NativeInterop;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VictorianAnimalGame.Scripts.Critters;
 
 namespace VictorianAnimalGame.Scripts.Map.Provinces
@@ -21,25 +16,36 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
         }
     }
 
-    public partial class LandProvince : Node, IProvince
+    public class LandProvince : IProvince
     {
-        public List<Critter> critters = [];
-            
-        public void AddCritters(Critter newCritter) {
-            critters.Add(newCritter);
+        public HashSet<CritterEntry> _provinceCritters = [];
+        public string ProvinceName;
+
+        public void AddCritterEntry(CritterEntry newCritter) {
+            if (!_provinceCritters.Add(newCritter))
+            {
+                 _provinceCritters.TryGetValue(newCritter, out var item);
+                 item.GetCritterDetails().AddCritterCount(newCritter.GetCritterDetails().GetCritterCount());
+            }
         }
+        
         public string GetDetails()
         {
-            return $"Info on this LandProvince\nHashCode: {GetHashCode()}\nCurrent critter: {critters}";
+            string details = $"Info on this LandProvince\nHashCode: {GetHashCode()}\nCurrent Critters:\n";
+            foreach (var critter in _provinceCritters)
+            {
+                details += $"{critter}\n";
+            }
+            return details;
         }
 
         public void SetName()
         {
-            Name = String.Format("LandProvince-{0}", GetHashCode());
+            ProvinceName = $"LandProvince-{GetHashCode()}";
         }
     }
 
-    public partial class SeaProvince : Node, IProvince
+    public partial class SeaProvince : IProvince
     {
         public string GetDetails()
         {
