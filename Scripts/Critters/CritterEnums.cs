@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
-    public enum CritterSpecies : byte
+    public enum CritterSpecies : ushort
     {
         Otter,
         Beaver,
-        Raccon
+        Raccoon
     }
 
     public enum CritterClass : byte
@@ -21,19 +21,19 @@ namespace VictorianAnimalGame.Scripts.Critters
         NONE
     }
 
-    public enum CritterOccupation : byte
+    public enum CritterOccupation : ushort
     {
         Dependent,
         Labourer,
         Worker,
         Aristocrats,
-        Buracrats
+        Bureaucrats
     }
     
-    public enum Culture : ushort
+    public enum CritterCulture : int
     {
         OtterAmericans,
-        Beaver,
-        Raccon
+        BeaverAmericans,
+        RaccoonAmericans
     }
 }
