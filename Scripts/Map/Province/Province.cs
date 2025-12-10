@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Map.Province;
 
 namespace VictorianAnimalGame.Scripts.Map.Provinces
 {
@@ -20,6 +21,7 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
     {
         public HashSet<CritterEntry> _provinceCritters = [];
         public string ProvinceName;
+        private ProvinceDataWorkforce _hello =  new ProvinceDataWorkforce();
 
         public void AddCritterEntry(CritterEntry newCritter) {
             if (!_provinceCritters.Add(newCritter))
@@ -33,6 +35,12 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
         {
             string details = $"Info on this LandProvince\nHashCode: {GetHashCode()}\nCurrent Critters:\n";
             foreach (var critter in _provinceCritters)
+            {
+                details += $"{critter}\n";
+            }
+
+            var i = _hello.Execute(_provinceCritters);
+            foreach (var critter in i)
             {
                 details += $"{critter}\n";
             }
