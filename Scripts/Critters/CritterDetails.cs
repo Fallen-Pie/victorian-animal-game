@@ -4,8 +4,8 @@ namespace VictorianAnimalGame.Scripts.Critters
     {
         private uint _critterCount;
         private uint _critterTraining;
-        private float _critterHappiness;
-        private float _critterLiteracy;
+        private uint _critterHappiness;
+        private uint _critterLiteracy;
         
         public uint GetCritterCount()
         {
@@ -15,6 +15,7 @@ namespace VictorianAnimalGame.Scripts.Critters
         {
             _critterCount += newCount;
         }
+        
         public void SubCritterCount(uint newCount)
         {
             _critterCount -= newCount;
@@ -27,19 +28,19 @@ namespace VictorianAnimalGame.Scripts.Critters
         {
             _critterTraining -= newCount;
         }
-        public void AddCritterHappiness(float newCount)
+        public void AddCritterHappiness(uint newCount)
         {
             _critterHappiness += newCount;
         }
-        public void SubCritterHappiness(float newCount)
+        public void SubCritterHappiness(uint newCount)
         {
             _critterHappiness -= newCount;
         }
-        public void AddCritterLiteracy(float newCount)
+        public void AddCritterLiteracy(uint newCount)
         {
             _critterLiteracy += newCount;
         }
-        public void SubCritterLiteracy(float newCount)
+        public void SubCritterLiteracy(uint newCount)
         {
             _critterLiteracy -= newCount;
         }
