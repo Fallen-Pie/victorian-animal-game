@@ -25,6 +25,16 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _critterDetails;
         }
         
+        public CritterOccupation GetCritterOccupation()
+        {
+            return _occupation;
+        }
+        
+        public uint GetCritterCount()
+        {
+            return _critterDetails.GetCritterCount();
+        }
+        
         public bool Equals(CritterEntry newCritter) =>
             (_culture, _species, _occupation).Equals(
                 (newCritter._culture, newCritter._species, newCritter._occupation));
