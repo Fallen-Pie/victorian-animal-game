@@ -1,6 +1,6 @@
 ﻿namespace VictorianAnimalGame.Scripts.Critters.Species;
 
-public class Otter : BaseSpecies
+public class Otter : Species
 {
     
 }
