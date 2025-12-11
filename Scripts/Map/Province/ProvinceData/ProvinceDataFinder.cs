@@ -13,7 +13,7 @@ namespace VictorianAnimalGame.Scripts.Map.Province
             _strategyMethod = newStrategy;
         }
         
-        public HashSet<IProvinceData> RunBehaviour(HashSet<CritterEntry> critters)
+        public HashSet<ProvinceCritterData> RunBehaviour(HashSet<CritterEntry> critters)
         {
             return _strategyMethod.Execute(critters);
         }
