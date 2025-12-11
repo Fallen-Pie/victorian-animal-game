@@ -1,19 +1,22 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
 namespace VictorianAnimalGame.Scripts.Map.Province
 {
     public class ProvinceDataFinder
     {
-        private ProvinceDataContext _dataContext = new ();
-    }
+        private IProvinceDataStrategy _strategyMethod;
 
-    internal class ProvinceDataContext
-    {
-        private IProvinceDataStrategy strategyMethod;
+        public void ChangeBehaviour(IProvinceDataStrategy newStrategy)
+        {
+            _strategyMethod = newStrategy;
+        }
+        
+        public HashSet<IProvinceData> RunBehaviour(HashSet<CritterEntry> critters)
+        {
+            return _strategyMethod.Execute(critters);
+        }
     }
 }
 
