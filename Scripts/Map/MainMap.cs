@@ -11,7 +11,7 @@ namespace VictorianAnimalGame.Scripts.Map {
         {
             LandProvince province = new();
             province = AddCrittersToProvince(province);
-            foreach (var critter in province._provinceCritters) 
+            foreach (var critter in province.ProvinceCritters) 
             {
                 GD.Print(critter);
             } 

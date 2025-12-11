@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Map.Province;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
 namespace VictorianAnimalGame.Scripts.Map.Provinces
 {
@@ -19,14 +20,14 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
 
     public class LandProvince : IProvince
     {
-        public HashSet<CritterEntry> _provinceCritters = [];
+        public HashSet<CritterEntry> ProvinceCritters = [];
         public string ProvinceName;
-        private ProvinceDataWorkforce _hello =  new ProvinceDataWorkforce();
+        private readonly ProvinceDataFinder _provinceData = new();
 
         public void AddCritterEntry(CritterEntry newCritter) {
-            if (!_provinceCritters.Add(newCritter))
+            if (!ProvinceCritters.Add(newCritter))
             {
-                 _provinceCritters.TryGetValue(newCritter, out var item);
+                 ProvinceCritters.TryGetValue(newCritter, out var item);
                  item.GetCritterDetails().AddCritterCount(newCritter.GetCritterDetails().GetCritterCount());
             }
         }
@@ -34,12 +35,19 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
         public string GetDetails()
         {
             string details = $"Info on this LandProvince\nHashCode: {GetHashCode()}\nCurrent Critters:\n";
-            foreach (var critter in _provinceCritters)
+            foreach (var critter in ProvinceCritters)
             {
                 details += $"{critter}\n";
             }
-
-            var i = _hello.Execute(_provinceCritters);
+            _provinceData.ChangeBehaviour(new ProvinceDataWorkforce());
+            var i = _provinceData.RunBehaviour(ProvinceCritters);
+            foreach (var critter in i)
+            {
+                details += $"{critter}\n";
+            }
+            
+            _provinceData.ChangeBehaviour(new ProvinceDataSpeciesWorkforce());
+            i = _provinceData.RunBehaviour(ProvinceCritters);
             foreach (var critter in i)
             {
                 details += $"{critter}\n";
@@ -53,7 +61,7 @@ namespace VictorianAnimalGame.Scripts.Map.Provinces
         }
     }
 
-    public partial class SeaProvince : IProvince
+    public class SeaProvince : IProvince
     {
         public string GetDetails()
         {
