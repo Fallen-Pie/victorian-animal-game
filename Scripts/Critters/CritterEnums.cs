@@ -8,6 +8,7 @@ namespace VictorianAnimalGame.Scripts.Critters
 {
     public enum CritterSpecies : ushort
     {
+        None = 0,
         Otter,
         Beaver,
         Raccoon
@@ -23,6 +24,7 @@ namespace VictorianAnimalGame.Scripts.Critters
 
     public enum CritterOccupation : ushort
     {
+        None = 0,
         Dependent,
         Labourer,
         Worker,
@@ -30,8 +32,9 @@ namespace VictorianAnimalGame.Scripts.Critters
         Bureaucrats
     }
     
-    public enum CritterCulture : int
+    public enum CritterCulture : ushort
     {
+        None = 0,
         OtterAmericans,
         BeaverAmericans,
         RaccoonAmericans
