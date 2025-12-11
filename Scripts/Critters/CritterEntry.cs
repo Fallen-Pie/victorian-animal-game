@@ -30,6 +30,11 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _occupation;
         }
         
+        public CritterSpecies GetCritterSpecies()
+        {
+            return _species;
+        }
+        
         public uint GetCritterCount()
         {
             return _critterDetails.GetCritterCount();
