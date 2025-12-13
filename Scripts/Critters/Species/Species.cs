@@ -1,6 +1,6 @@
 ﻿namespace VictorianAnimalGame.Scripts.Critters.Species;
 
-public class Species : ISpecies
+public class Species
 {
     private readonly float _foodConsumption = 1;
     private readonly float _workforceValue = 1;
