@@ -1,8 +1,8 @@
 using Godot;
 using System;
-using System.Runtime.InteropServices;
+using System.Linq;
 using VictorianAnimalGame.Scripts.Critters;
-using VictorianAnimalGame.Scripts.Map.Provinces;
+using VictorianAnimalGame.Scripts.Map.Province;
 
 namespace VictorianAnimalGame.Scripts.Map {
     public partial class MainMap : Node2D
@@ -24,7 +24,7 @@ namespace VictorianAnimalGame.Scripts.Map {
         static Random _r = new Random ();
         static T RandomEnumValue<T> ()
         {
-            var v = Enum.GetValues (typeof (T));
+            var v = Enum.GetValues(typeof (T)).Cast<T>().Where(value => value.ToString() != "None").ToArray();
             return (T) v.GetValue (_r.Next(v.Length));
         }
         
@@ -38,7 +38,6 @@ namespace VictorianAnimalGame.Scripts.Map {
                     RandomEnumValue<CritterOccupation>(), RandomEnumValue<CritterCulture>(), 
                     critterDetails);
                 province.AddCritterEntry(critterEntry);
-                Console.WriteLine($"Size of {typeof(CritterDetails)} is {Marshal.SizeOf(typeof(CritterEntry))}");
             }
             return province;
         }
