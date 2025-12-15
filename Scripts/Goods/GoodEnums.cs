@@ -6,7 +6,7 @@ namespace VictorianAnimalGame.Scripts.Goods;
 public enum GoodType
 {
     None = 0b_0000_0000,
-    ConsumerIndustry = 0b_0000_0001,
+    //ConsumerIndustry = 0b_0000_0001,
     LightIndustry = 0b_0000_0010,
     HeavyIndustry = 0b_0000_0100,
     Artisan = 0b_0000_1000,
@@ -21,13 +21,14 @@ public enum GoodType
     Gathered = Forestry | Mining | Food,
     
     Industrial = LightIndustry | HeavyIndustry,
-    Manufactured = ConsumerIndustry | Industrial | Artisan,
+    Manufactured = Industrial | Artisan,
 }
 
 public enum GoodQuality
 {
     Artisanal,
     Poor,
+    Normal,
     Good,
     Excellent
 }
