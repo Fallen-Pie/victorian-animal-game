@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Defines;
 using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
 namespace VictorianAnimalGame.Scripts.Map.Province;
@@ -26,6 +27,11 @@ public class LandProvince : IProvince
         foreach (var critter in ProvinceCritters)
         {
             details += $"{critter}\n";
+            if (CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var newData))
+            {
+                details += $"{newData.ToString()}\n";
+            }
+            
         }
         _provinceData.ChangeBehaviour(new ProvinceDataWorkforce());
         var i = _provinceData.RunBehaviour(ProvinceCritters);
@@ -41,7 +47,6 @@ public class LandProvince : IProvince
             details += $"{critter}\n";
         }
         Console.WriteLine($"Size of {typeof(CritterEntry)} is {Marshal.SizeOf(typeof(CritterEntry))}");
-        Console.WriteLine($"Size of {typeof(ProvinceCritterData)} is {Marshal.SizeOf(typeof(ProvinceCritterData))}");
         return details;
     }
 
