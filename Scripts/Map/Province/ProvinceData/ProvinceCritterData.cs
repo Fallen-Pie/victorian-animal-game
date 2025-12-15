@@ -3,7 +3,7 @@ using VictorianAnimalGame.Scripts.Critters;
 
 namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
-public record struct ProvinceCritterData
+public record ProvinceCritterData
 {
     public ProvinceCritterData(CritterOccupation occupation, uint amount)
     {
@@ -20,13 +20,13 @@ public record struct ProvinceCritterData
         _amount = amount;
     }
 
-    private readonly ProvinceDataFlags _dataType { get; }
-    private readonly CritterCulture _culture { get; }
-    private readonly CritterOccupation _occupation { get; }
-    private readonly CritterSpecies _species { get; }
+    private ProvinceDataFlags _dataType { get; }
+    private CritterCulture _culture { get; }
+    private CritterOccupation _occupation { get; }
+    private CritterSpecies _species { get; }
     private uint _amount { get; set; }
     
-    public bool Equals(ProvinceCritterData newCritter) =>
+    public virtual bool Equals(ProvinceCritterData newCritter) =>
         (_culture, _species, _occupation).Equals(
             (newCritter._culture, newCritter._species, newCritter._occupation));
 
