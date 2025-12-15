@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
@@ -10,11 +11,13 @@ public class ProvinceDataWorkforce : IProvinceDataStrategy
         HashSet<ProvinceCritterData> workforce = [];
         foreach (CritterEntry critter in critters)
         {
-            ProvinceData.ProvinceCritterData critterData = new(critter.GetCritterOccupation(), critter.GetCritterCount());
+            CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var value);
+            uint stuff = (uint)(critter.GetCritterCount() * value.GetWorkforce());
+            ProvinceCritterData critterData = new(critter.GetCritterOccupation(), stuff);
             if (!workforce.Add(critterData))
             {
                 workforce.TryGetValue(critterData, out var oldData);
-                oldData.AddAmount(critter.GetCritterCount());
+                oldData.AddAmount(stuff);
             }
         }
         return workforce;
