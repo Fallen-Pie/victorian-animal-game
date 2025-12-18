@@ -14,8 +14,8 @@ public enum GoodType : ushort
     Forestry = 0b_0001_0000,
     Mining = 0b_0010_0000,
     Aquatic = 0b_0100_0000,
-    Husbandry = 0b_0000_1000_0000,
-    //Energy = 0b_0010_0000_0000,
+    Husbandry = 0b_1000_0000,
+    //Energy = 0b_0001_0000_0000,
     
     Food = Agricultural | Aquatic | Husbandry,
     Gathered = Forestry | Mining | Food,
