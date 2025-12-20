@@ -7,9 +7,15 @@ namespace VictorianAnimalGame.Scripts.Defines;
 
 public static class CritterDefines
 {
-    public static readonly FrozenDictionary<CritterSpecies, Species> Species = CreateFrozenDictionary();
-    
-    private static FrozenDictionary<CritterSpecies, Species> CreateFrozenDictionary()
+    public static readonly FrozenDictionary<CritterSpecies, Species> Species = CreateFrozenSpecies();
+    public static readonly FrozenDictionary<CritterSpecies, Species> Goods = CreateFrozenGoods();
+
+    private static FrozenDictionary<CritterSpecies, Species> CreateFrozenGoods()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private static FrozenDictionary<CritterSpecies, Species> CreateFrozenSpecies()
     {
         Dictionary<CritterSpecies, Species> species = [];
         species.Add(CritterSpecies.Otter, new Species(CritterSpecies.Otter, 1, 1.1f));

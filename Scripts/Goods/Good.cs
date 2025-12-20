@@ -1,8 +1,10 @@
-﻿namespace VictorianAnimalGame.Scripts.Goods;
+﻿using System;
+
+namespace VictorianAnimalGame.Scripts.Goods;
 
 public readonly record struct Good
 {
-    public Good(bool gathered, bool food, GoodType type, float price, float bulk)
+    public Good(bool gathered, bool food, GoodType type, Half price, Half bulk)
     {
         Food = food;
         Type = type;
@@ -15,15 +17,15 @@ public readonly record struct Good
     private bool Food { get; }
     private GoodType Type { get; }
     
-    private float Price { get; }
-    private float Bulk { get; }
+    private Half Price { get; }
+    private Half Bulk { get; }
 
-    public float GetPrice()
+    public Half GetPrice()
     {
         return Price;
     }
     
-    public float GetBulk()
+    public Half GetBulk()
     {
         return Bulk;
     }
