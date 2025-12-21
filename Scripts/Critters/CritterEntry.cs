@@ -6,28 +6,28 @@ namespace VictorianAnimalGame.Scripts.Critters
     [StructLayout(LayoutKind.Sequential)]
     public readonly record struct CritterEntry
     {
-        private readonly CritterCulture _culture;
+        private readonly short _year;
         private readonly CritterSpecies _species;
-        private readonly CritterOccupation _occupation;
+        private readonly CritterCulture _culture;
         private readonly CritterDetails _critterDetails;
 
-        public CritterEntry(CritterSpecies newSpecies, CritterOccupation newOccupation, 
+        public CritterEntry(short newYear, CritterSpecies newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
         {
+            _year =  newYear;
             _species = newSpecies;
-            _occupation = newOccupation;
             _culture = newCulture;
             _critterDetails = newDetails;
+        }
+        
+        public short GetCritterYear()
+        {
+            return _year;
         }
 
         public CritterDetails GetCritterDetails()
         {
             return _critterDetails;
-        }
-        
-        public CritterOccupation GetCritterOccupation()
-        {
-            return _occupation;
         }
         
         public CritterSpecies GetCritterSpecies()
@@ -41,19 +41,19 @@ namespace VictorianAnimalGame.Scripts.Critters
         }
         
         public bool Equals(CritterEntry newCritter) =>
-            (_culture, _species, _occupation).Equals(
-                (newCritter._culture, newCritter._species, newCritter._occupation));
+            (_culture, _species, _year).Equals(
+                (newCritter._culture, newCritter._species, newCritter._year));
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_culture, _species, _occupation);
+            return HashCode.Combine(_culture, _species, _year);
         }
 
         public override string ToString()
         {
             return $"Info on this {_species}: " +
                    $"{_culture}" +
-                   $"/{_occupation}" +
+                   $"/{_year}" +
                    $"/{GetHashCode()}/{_critterDetails}";
         }
     }
