@@ -7,14 +7,14 @@ public record ProvinceCritterData
 {
     public ProvinceCritterData(short year, uint amount)
     {
-        _dataType = ProvinceDataFlags.Occupation;
+        _dataType = ProvinceDataFlags.Year;
         _year = year;
         _amount = amount;
     }
     
     public ProvinceCritterData(CritterSpecies species, uint amount)
     {
-        _dataType = ProvinceDataFlags.OccupationSpecies;
+        _dataType = ProvinceDataFlags.Species;
         _species = species;
         _amount = amount;
     }

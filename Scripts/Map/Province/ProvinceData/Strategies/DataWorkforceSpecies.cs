@@ -14,10 +14,13 @@ public class DataWorkforceSpecies : IDataStrategy
             CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var workforceModifier);
             uint workforceAmount = (uint)(critter.GetCritterCount() * workforceModifier.GetWorkforce());
             ProvinceCritterData critterData = new(critter.GetCritterSpecies(), workforceAmount);
-            if (!workforce.Add(critterData))
+            if (workforce.TryGetValue(critterData, out var oldData))
             {
-                workforce.TryGetValue(critterData, out var oldData);
                 oldData.AddAmount(workforceAmount);
+            }
+            else
+            {
+                workforce.Add(critterData);
             }
         }
         return workforce;
