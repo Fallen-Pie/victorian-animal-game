@@ -40,12 +40,22 @@ namespace VictorianAnimalGame.Scripts.Critters
         Clerk = Ruler | Administrator | Scholar | Manager,
         Solider = Conscript | Regular | Officer,
     
-        Young = Dependent,
-        Adolescent = Student | Worker | Dependent,
-        Adult = Clerk | Labour | Solider | Dependent,
+        //Young = Dependent,
+        //Adolescent = Student | Worker | Dependent,
+        //Adult = Clerk | Labour | Solider | Dependent,
     
         LowerClass = Labourer | Farmer | Worker | Conscript | Student,
         MiddleClass = Administrator | Scholar | Regular | Artisan,
         UpperClass = Officer | Ruler | Manager,
     }
+
+    public enum CritterLifeStage : ushort
+    {
+        Young,
+        Adolescent,
+        Adult,
+        Elder
+    }
 }
+
+

@@ -2,19 +2,20 @@ namespace VictorianAnimalGame.Scripts.Critters
 {
     public class CritterDetails
     {
-        private CritterOccupation _occupation;
-        private uint _critterCount;
-        private uint _critterTraining;
-        private uint _critterHappiness;
-        private uint _critterLiteracy;
+        private CritterLifeStage _lifeStage = CritterLifeStage.Young;
         
+        private uint _critterCount;
+        private uint _critterTrained;
+        private uint _critterLiterate;
+        private uint _critterHappiness;
+
         public uint GetCritterCount()
         {
             return _critterCount;
         }
-        public void SetCritterAge(CritterOccupation newOccupation)
+        public void SetCritterAge(CritterLifeStage newLifeStage)
         {
-            _occupation = newOccupation;
+            _lifeStage = newLifeStage;
         }
         public void AddCritterCount(uint newCount)
         {
@@ -52,9 +53,9 @@ namespace VictorianAnimalGame.Scripts.Critters
         public override string ToString()
         {
             return
-                $"(Counts={_critterCount}/{_critterTraining} " +
-                $"Rates={_critterHappiness}/{_critterLiteracy} " +
-                $"AvailableJobs={_occupation})";
+                $"(Counts={_critterCount}/{_critterTrained} " +
+                $"Rates={_critterHappiness}/{_critterLiterate} " +
+                $"AvailableJobs={_lifeStage})";
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
@@ -14,7 +15,7 @@ namespace VictorianAnimalGame.Scripts.Critters
         public CritterEntry(short newYear, CritterSpecies newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
         {
-            _year =  newYear;
+            _year = newYear;
             _species = newSpecies;
             _culture = newCulture;
             _critterDetails = newDetails;
@@ -38,6 +39,28 @@ namespace VictorianAnimalGame.Scripts.Critters
         public uint GetCritterCount()
         {
             return _critterDetails.GetCritterCount();
+        }
+
+        public void UpdateCritterYear()
+        {
+            CritterDefines.Species.TryGetValue(_species, out var species);
+            var h = MapDefines.GetCurrentYear() - _year;
+            if (h < species.AdolescentAge)
+            {
+                _critterDetails.SetCritterAge(CritterLifeStage.Young);
+            }
+            else if (h < species.AdultAge)
+            {
+                _critterDetails.SetCritterAge(CritterLifeStage.Adolescent);
+            } 
+            else if (h > species.ElderAge)
+            {
+                _critterDetails.SetCritterAge(CritterLifeStage.Adult);
+            }
+            else if (h <= species.ElderAge)
+            {
+                _critterDetails.SetCritterAge(CritterLifeStage.Elder);
+            }
         }
         
         public bool Equals(CritterEntry newCritter) =>
