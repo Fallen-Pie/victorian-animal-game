@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Defines;
 using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceData.Strategies;
 
 namespace VictorianAnimalGame.Scripts.Map.Province;
 
@@ -33,14 +34,14 @@ public class LandProvince : IProvince
             }
             
         }
-        _provinceData.ChangeBehaviour(new ProvinceDataWorkforce());
+        _provinceData.ChangeBehaviour(new DataWorkforceYear());
         var i = _provinceData.RunBehaviour(ProvinceCritters);
         foreach (var critter in i)
         {
             details += $"{critter}\n";
         }
             
-        _provinceData.ChangeBehaviour(new ProvinceDataSpeciesWorkforce());
+        _provinceData.ChangeBehaviour(new DataWorkforceSpecies());
         i = _provinceData.RunBehaviour(ProvinceCritters);
         foreach (var critter in i)
         {

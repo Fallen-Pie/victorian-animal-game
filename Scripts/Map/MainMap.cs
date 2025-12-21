@@ -34,8 +34,9 @@ namespace VictorianAnimalGame.Scripts.Map {
             {
                 CritterDetails critterDetails = new();
                 critterDetails.AddCritterCount((uint)_r.Next(1, 12000));
-                CritterEntry critterEntry = new(RandomEnumValue<CritterSpecies>(), 
-                    RandomEnumValue<CritterOccupation>(), RandomEnumValue<CritterCulture>(), 
+                critterDetails.SetCritterAge(CritterOccupation.Adult);
+                CritterEntry critterEntry = new((short)_r.Next(1800, 1820), 
+                    RandomEnumValue<CritterSpecies>(), RandomEnumValue<CritterCulture>(), 
                     critterDetails);
                 province.AddCritterEntry(critterEntry);
             }
