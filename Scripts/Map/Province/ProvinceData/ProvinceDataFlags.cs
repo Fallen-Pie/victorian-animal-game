@@ -7,7 +7,7 @@ public enum ProvinceDataFlags : ushort
 {
     None = 0b_0000_0000,  // 0
     Culture = 0b_0000_0001,  // 1
-    Occupation = 0b_0000_0010,  // 2
+    Year = 0b_0000_0010,  // 2
     Species = 0b_0000_0100,  // 4
 
     BaseCount = 0b_0001_0000,  // 16
@@ -15,7 +15,7 @@ public enum ProvinceDataFlags : ushort
     TrainedCount = 0b_0100_0000,  // 64
     HappyCount = 0b_1000_0000,  // 128
     
-    CultureOccupation = Culture | Occupation,
-    OccupationSpecies = Species | Occupation,
+    CultureYear = Culture | Year,
+    YearSpecies = Species | Year,
     CultureSpecies = Culture | Species,
 }
