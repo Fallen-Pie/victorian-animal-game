@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Linq;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Defines;
 using VictorianAnimalGame.Scripts.Map.Province;
 
 namespace VictorianAnimalGame.Scripts.Map {
@@ -34,10 +35,10 @@ namespace VictorianAnimalGame.Scripts.Map {
             {
                 CritterDetails critterDetails = new();
                 critterDetails.AddCritterCount((uint)_r.Next(1, 12000));
-                critterDetails.SetCritterAge(CritterOccupation.Adult);
-                CritterEntry critterEntry = new((short)_r.Next(1800, 1820), 
+                CritterEntry critterEntry = new((short)_r.Next(1800, 1819), 
                     RandomEnumValue<CritterSpecies>(), RandomEnumValue<CritterCulture>(), 
                     critterDetails);
+                critterEntry.UpdateCritterYear();
                 province.AddCritterEntry(critterEntry);
             }
             return province;
