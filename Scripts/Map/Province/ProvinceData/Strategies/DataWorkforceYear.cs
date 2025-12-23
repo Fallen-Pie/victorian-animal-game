@@ -12,7 +12,8 @@ public class DataWorkforceYear : IDataStrategy
         foreach (CritterEntry critter in critters)
         {
             CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var value);
-            uint workAmountYear = (uint)(critter.GetCritterCount() * value.GetWorkforce());
+            //uint workAmountYear = (uint)(critter.GetCritterCount() * value.GetWorkforce());
+            uint workAmountYear = critter.GetCritterCount();
             ProvinceCritterData critterData = new(critter.GetCritterYear(), workAmountYear);
             if (workforce.TryGetValue(critterData, out var oldData))
             {
