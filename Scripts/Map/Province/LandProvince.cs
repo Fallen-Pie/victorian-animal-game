@@ -14,13 +14,13 @@ public class LandProvince : IProvince
     public string ProvinceName;
     private readonly ProvinceDataFinder _provinceData = new();
 
-    public void AddCritterEntry(CritterEntry newCritter) {
-        if (!ProvinceCritters.Add(newCritter))
-        {
-            ProvinceCritters.TryGetValue(newCritter, out var item);
-            item.GetCritterDetails().AddCritterCount(newCritter.GetCritterDetails().GetCritterCount());
-        }
-    }
+    // public void AddCritterEntry(CritterEntry newCritter) {
+    //     if (!ProvinceCritters.Add(newCritter))
+    //     {
+    //         ProvinceCritters.TryGetValue(newCritter, out var item);
+    //         item.GetCritterDetails().AddCritterCount(newCritter.GetCritterDetails().GetCritterCount());
+    //     }
+    // }
         
     public string GetDetails()
     {
@@ -28,10 +28,10 @@ public class LandProvince : IProvince
         foreach (var critter in ProvinceCritters)
         {
             details += $"{critter}\n";
-            if (CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var newData))
-            {
-                details += $"{newData.ToString()}\n";
-            }
+            // if (CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var newData))
+            // {
+            //     details += $"{newData.ToString()}\n";
+            // }
             
         }
         _provinceData.ChangeBehaviour(new DataWorkforceYear());

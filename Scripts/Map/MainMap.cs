@@ -2,8 +2,12 @@ using Godot;
 using System;
 using System.Linq;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Critters.Species;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder;
 using VictorianAnimalGame.Scripts.Defines;
 using VictorianAnimalGame.Scripts.Map.Province;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.ClassRatio;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.Distribution;
 
 namespace VictorianAnimalGame.Scripts.Map {
     public partial class MainMap : Node2D
@@ -11,7 +15,7 @@ namespace VictorianAnimalGame.Scripts.Map {
         public override void _Ready()
         {
             LandProvince province = new();
-            province = AddCrittersToProvince(province);
+            province = InitialiseProvince(province);
             foreach (var critter in province.ProvinceCritters) 
             {
                 GD.Print(critter);
@@ -19,6 +23,8 @@ namespace VictorianAnimalGame.Scripts.Map {
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
+            
+
             base._Ready();
         }
         
@@ -29,19 +35,15 @@ namespace VictorianAnimalGame.Scripts.Map {
             return (T) v.GetValue (_r.Next(v.Length));
         }
         
-        public LandProvince AddCrittersToProvince(LandProvince province)
+        public LandProvince InitialiseProvince(LandProvince province)
         {
-            for (int i = 0; i < 10024; i++)
-            {
-                CritterDetails critterDetails = new();
-                critterDetails.AddCritterCount((uint)_r.Next(1, 12000));
-                CritterEntry critterEntry = new((short)_r.Next(1800, 1819), 
-                    RandomEnumValue<CritterSpecies>(), RandomEnumValue<CritterCulture>(), 
-                    critterDetails);
-                critterEntry.UpdateCritterYear();
-                province.AddCritterEntry(critterEntry);
-            }
-            return province;
+            ProvinceCritterBuilder newBuilder = new ProvinceCritterBuilder();
+            newBuilder.SetDistribution(new FlatDistribution());
+            newBuilder.SetRatio(new RuralRatio());
+            CritterDefines.Species.TryGetValue(CritterSpecies.Otter, out var value);
+            newBuilder.SetSpecies(value);
+            newBuilder.SetCulture(CritterCulture.Dutch);
+            return newBuilder.AddCritterToProvince(25000, province);
         }
     }
 }
