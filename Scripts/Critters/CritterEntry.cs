@@ -11,7 +11,7 @@ namespace VictorianAnimalGame.Scripts.Critters
         private readonly CritterSpecies _species;
         private readonly CritterCulture _culture;
         private readonly CritterDetails _critterDetails;
-
+        
         public CritterEntry(short newYear, CritterSpecies newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
         {
@@ -19,6 +19,7 @@ namespace VictorianAnimalGame.Scripts.Critters
             _species = newSpecies;
             _culture = newCulture;
             _critterDetails = newDetails;
+            UpdateCritterYear();
         }
         
         public short GetCritterYear()
@@ -44,20 +45,20 @@ namespace VictorianAnimalGame.Scripts.Critters
         public void UpdateCritterYear()
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
-            var h = MapDefines.GetCurrentYear() - _year;
-            if (h < species.AdolescentAge)
+            int age = MapDefines.GetCurrentYear() - _year;
+            if (age < species.AdolescentAge)
             {
                 _critterDetails.SetCritterAge(CritterLifeStage.Young);
             }
-            else if (h < species.AdultAge)
+            else if (age < species.AdultAge)
             {
                 _critterDetails.SetCritterAge(CritterLifeStage.Adolescent);
             } 
-            else if (h > species.ElderAge)
+            else if (age < species.ElderAge)
             {
                 _critterDetails.SetCritterAge(CritterLifeStage.Adult);
             }
-            else if (h <= species.ElderAge)
+            else
             {
                 _critterDetails.SetCritterAge(CritterLifeStage.Elder);
             }
