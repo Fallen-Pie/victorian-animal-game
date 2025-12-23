@@ -6,8 +6,10 @@ public readonly record struct Species
 {
     public readonly sbyte AdolescentAge;
     public readonly sbyte AdultAge;
+    public readonly sbyte FertileAge;
     public readonly sbyte ElderAge;
-    private readonly CritterSpecies _speciesType;
+    
+    public readonly CritterSpecies SpeciesType;
     public readonly float FoodConsumption;
     public readonly float WorkforceValue;
     
@@ -15,13 +17,14 @@ public readonly record struct Species
     
 
     public Species(CritterSpecies species, float foodConsumption, float workforce, 
-        sbyte adolescentAge, sbyte adultAge, sbyte elderAge)
+        sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge)
     {
-        _speciesType = species;
+        SpeciesType = species;
         FoodConsumption = foodConsumption;
         WorkforceValue = workforce;
         AdolescentAge = adolescentAge;
         AdultAge = adultAge;
+        FertileAge = fertileAge;
         ElderAge = elderAge;
     }
 
@@ -32,7 +35,7 @@ public readonly record struct Species
 
     public override string ToString()
     {
-        return $"Name:{_speciesType}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
+        return $"Name:{SpeciesType}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
                $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}";
     }
 }
