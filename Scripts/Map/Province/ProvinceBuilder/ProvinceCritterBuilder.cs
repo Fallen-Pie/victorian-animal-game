@@ -44,8 +44,11 @@ public class ProvinceCritterBuilder
         for (short age = 0; age <= maxAge; age++)
         {
             double weight = _critterDistribution.Execute(age, _species);
-            weights[age] = weight;
-            totalWeight += weight;
+            if (weight >= 0)
+            {
+                weights[age] = weight;
+                totalWeight += weight;
+            }
         }
 
         for (short age = 0; age <= maxAge; age++)
