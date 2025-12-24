@@ -75,7 +75,7 @@ namespace VictorianAnimalGame.Scripts.Critters
 
         public override string ToString()
         {
-            return $"Info on this {_species}: " +
+            return $"Current {_species}: " +
                    $"{_culture}" +
                    $"/{_year}" +
                    $"/{GetHashCode()}/{_critterDetails}";

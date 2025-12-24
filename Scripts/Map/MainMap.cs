@@ -43,7 +43,7 @@ namespace VictorianAnimalGame.Scripts.Map {
             CritterDefines.Species.TryGetValue(CritterSpecies.Otter, out var value);
             newBuilder.SetSpecies(value);
             newBuilder.SetCulture(CritterCulture.Dutch);
-            return newBuilder.AddCritterToProvince(25000, province);
+            return newBuilder.AddCritterToProvince(30000, province);
         }
     }
 }

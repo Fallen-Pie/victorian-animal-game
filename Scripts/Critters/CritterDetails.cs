@@ -43,15 +43,16 @@ namespace VictorianAnimalGame.Scripts.Critters
         private class CritterClass(uint newCount)
         {
             public uint Total = newCount;
-            public uint Trained;
-            public uint Literate;
+            //public uint Trained;
+            //public uint Literate;
             //public uint Love;
             //public uint Hate;
 
             public override string ToString()
             {
                 return
-                    $"({Total}/{Trained}/{Literate})";
+                    $"({Total})";
+                //$"/{Trained}/{Literate})";
                 //$"Rates={Love}/{Hate})";
             }
         }
