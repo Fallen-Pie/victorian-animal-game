@@ -38,7 +38,7 @@ namespace VictorianAnimalGame.Scripts.Map {
         public LandProvince InitialiseProvince(LandProvince province)
         {
             ProvinceCritterBuilder newBuilder = new ProvinceCritterBuilder();
-            newBuilder.SetDistribution(new FlatDistribution());
+            newBuilder.SetDistribution(new Stage1Distribution());
             newBuilder.SetRatio(new RuralRatio());
             CritterDefines.Species.TryGetValue(CritterSpecies.Otter, out var value);
             newBuilder.SetSpecies(value);
