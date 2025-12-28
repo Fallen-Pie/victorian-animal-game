@@ -2,13 +2,11 @@ using System;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
-    public record CritterDetails
+    public record struct CritterDetails
     {
-        private CritterLifeStage _lifeStage = CritterLifeStage.Young;
-        
-        private readonly CritterClass _critterLower;
-        private readonly CritterClass _critterMiddle;
-        private readonly CritterClass _critterUpper;
+        private CritterClass _critterLower;
+        private CritterClass _critterMiddle;
+        private CritterClass _critterUpper;
 
         public CritterDetails(uint low, uint middle, uint upper)
         {
@@ -23,10 +21,6 @@ namespace VictorianAnimalGame.Scripts.Critters
                    _critterMiddle.Total + 
                    _critterUpper.Total;
         }
-        public void SetCritterAge(CritterLifeStage newLifeStage)
-        {
-            _lifeStage = newLifeStage;
-        }
         public void AddCritterCount(uint newCount)
         {
             _critterLower.Total += newCount;
@@ -34,17 +28,16 @@ namespace VictorianAnimalGame.Scripts.Critters
         
         public override string ToString()
         {
-            return $"LifeStage={_lifeStage}/" +
-                   $"LowerClass={_critterLower}|" +
+            return $"LowerClass={_critterLower}|" +
                    $"MiddleClass={_critterMiddle}|" +
                    $"UpperClass={_critterUpper}";
         }
 
-        private class CritterClass(uint newCount)
+        private struct CritterClass(uint newCount)
         {
             public uint Total = newCount;
-            //public uint Trained;
-            //public uint Literate;
+            public uint Trained;
+            public uint Literate;
             //public uint Love;
             //public uint Hate;
 
