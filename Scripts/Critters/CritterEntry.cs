@@ -5,12 +5,12 @@ using VictorianAnimalGame.Scripts.Defines;
 namespace VictorianAnimalGame.Scripts.Critters
 {
     [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct CritterEntry
+    public record struct CritterEntry
     {
         private readonly short _year;
         private readonly CritterSpecies _species;
         private readonly CritterCulture _culture;
-        private readonly CritterDetails _critterDetails;
+        private CritterDetails _critterDetails;
         
         public CritterEntry(short newYear, CritterSpecies newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
@@ -19,7 +19,6 @@ namespace VictorianAnimalGame.Scripts.Critters
             _species = newSpecies;
             _culture = newCulture;
             _critterDetails = newDetails;
-            UpdateCritterYear();
         }
         
         public short GetCritterYear()
@@ -42,26 +41,24 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _critterDetails.GetCritterCount();
         }
 
-        public void UpdateCritterYear()
+        private CritterLifeStage UpdateCritterYear()
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
-            int age = MapDefines.GetCurrentYear() - _year;
+            int age = MapDefines.Year - _year;
             if (age < species.AdolescentAge)
             {
-                _critterDetails.SetCritterAge(CritterLifeStage.Young);
+                return CritterLifeStage.Young;
             }
-            else if (age < species.AdultAge)
+            if (age < species.AdultAge)
             {
-                _critterDetails.SetCritterAge(CritterLifeStage.Adolescent);
-            } 
-            else if (age < species.ElderAge)
-            {
-                _critterDetails.SetCritterAge(CritterLifeStage.Adult);
+                return CritterLifeStage.Adolescent;
             }
-            else
+            if (age < species.ElderAge)
             {
-                _critterDetails.SetCritterAge(CritterLifeStage.Elder);
+                return CritterLifeStage.Adult;
             }
+
+            return CritterLifeStage.Elder;
         }
         
         public bool Equals(CritterEntry newCritter) =>
@@ -78,7 +75,7 @@ namespace VictorianAnimalGame.Scripts.Critters
             return $"Current {_species}: " +
                    $"{_culture}" +
                    $"/{_year}" +
-                   $"/{GetHashCode()}/{_critterDetails}";
+                   $"/{GetHashCode()}/{UpdateCritterYear()}/{_critterDetails}";
         }
     }
 }

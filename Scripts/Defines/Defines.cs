@@ -30,15 +30,10 @@ public static class CritterDefines
 
 public static class MapDefines
 {
-    private static short _currentYear = 1819;
-        
-    public static short GetCurrentYear()
-    {
-        return _currentYear;
-    }
+    public static short Year = 1819;
 
     private static void IncreaseCurrentYear()
     {
-        _currentYear += 1;
+        Year += 1;
     }
 }

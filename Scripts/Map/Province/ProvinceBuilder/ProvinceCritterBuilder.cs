@@ -59,7 +59,7 @@ public class ProvinceCritterBuilder
             {
                 (uint lower, uint middle, uint upper) = _classRatio.Execute(count);
                 var newDetails = new CritterDetails(lower, middle, upper);
-                province.ProvinceCritters.Add(new CritterEntry((short)(MapDefines.GetCurrentYear() - age), 
+                province.ProvinceCritters.Add(new CritterEntry((short)(MapDefines.Year - age), 
                     _species.SpeciesType, _culture, newDetails));
             }
         }
