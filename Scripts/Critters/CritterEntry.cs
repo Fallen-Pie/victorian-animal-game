@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Scripts.Critters.Species;
 using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Critters
@@ -8,11 +9,11 @@ namespace VictorianAnimalGame.Scripts.Critters
     public record struct CritterEntry
     {
         private readonly short _year;
-        private readonly CritterSpecies _species;
+        private readonly SpeciesType _species;
         private readonly CritterCulture _culture;
         private CritterDetails _critterDetails;
         
-        public CritterEntry(short newYear, CritterSpecies newSpecies, 
+        public CritterEntry(short newYear, SpeciesType newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
         {
             _year = newYear;
@@ -31,7 +32,7 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _critterDetails;
         }
         
-        public CritterSpecies GetCritterSpecies()
+        public SpeciesType GetCritterSpecies()
         {
             return _species;
         }
@@ -72,7 +73,7 @@ namespace VictorianAnimalGame.Scripts.Critters
 
         public override string ToString()
         {
-            return $"Current {_species}: " +
+            return $"Current {CritterDefines.SpeciesNames[_species]}: " +
                    $"{_culture}" +
                    $"/{_year}" +
                    $"/{GetHashCode()}/{UpdateCritterYear()}/{_critterDetails}";

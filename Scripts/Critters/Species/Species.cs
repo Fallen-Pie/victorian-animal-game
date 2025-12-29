@@ -9,14 +9,14 @@ public readonly record struct Species
     public readonly sbyte FertileAge;
     public readonly sbyte ElderAge;
     
-    public readonly CritterSpecies SpeciesType;
+    public readonly SpeciesType SpeciesType;
     public readonly float FoodConsumption;
     public readonly float WorkforceValue;
     
     //private readonly Consumption _speciesConsumption;
     
 
-    public Species(CritterSpecies species, float foodConsumption, float workforce, 
+    public Species(SpeciesType species, float foodConsumption, float workforce, 
         sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge)
     {
         SpeciesType = species;

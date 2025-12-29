@@ -1,5 +1,7 @@
 ﻿using System;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Critters.Species;
+using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
@@ -12,7 +14,7 @@ public record ProvinceCritterData
         _amount = amount;
     }
     
-    public ProvinceCritterData(CritterSpecies species, uint amount)
+    public ProvinceCritterData(SpeciesType species, uint amount)
     {
         _dataType = ProvinceDataFlags.Species;
         _species = species;
@@ -22,7 +24,7 @@ public record ProvinceCritterData
     private ProvinceDataFlags _dataType { get; }
     private CritterCulture _culture { get; }
     private short _year { get; }
-    private CritterSpecies _species { get; }
+    private SpeciesType _species { get; }
     private uint _amount { get; set; }
     
     public virtual bool Equals(ProvinceCritterData newCritter) =>
@@ -34,7 +36,7 @@ public record ProvinceCritterData
 
     public override string ToString()
     {
-        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|Species:{_species}|Count:{_amount}";
+        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|Species:{CritterDefines.SpeciesNames[_species]}|Count:{_amount}";
     }
     
     public void AddAmount(uint newAmount)

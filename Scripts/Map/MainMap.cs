@@ -40,7 +40,7 @@ namespace VictorianAnimalGame.Scripts.Map {
             ProvinceCritterBuilder newBuilder = new ProvinceCritterBuilder();
             newBuilder.SetDistribution(new Stage1Distribution());
             newBuilder.SetRatio(new RuralRatio());
-            CritterDefines.Species.TryGetValue(CritterSpecies.Otter, out var value);
+            CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var value);
             newBuilder.SetSpecies(value);
             newBuilder.SetCulture(CritterCulture.Dutch);
             return newBuilder.AddCritterToProvince(30000, province);
