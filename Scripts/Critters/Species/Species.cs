@@ -1,27 +1,42 @@
-﻿namespace VictorianAnimalGame.Scripts.Critters.Species;
+﻿using System;
+
+namespace VictorianAnimalGame.Scripts.Critters.Species;
 
 public readonly record struct Species
 {
-    private readonly CritterSpecies _speciesType;
-    private readonly float _foodConsumption;
-    private readonly float _workforceValue;
+    public readonly sbyte AdolescentAge;
+    public readonly sbyte AdultAge;
+    public readonly sbyte FertileAge;
+    public readonly sbyte ElderAge;
+    
+    public readonly SpeciesType SpeciesType;
+    public readonly float FoodConsumption;
+    public readonly float WorkforceValue;
+    
     //private readonly Consumption _speciesConsumption;
+    
 
-    public Species(CritterSpecies species, float foodConsumption, float workforce)
+    public Species(SpeciesType species, float foodConsumption, float workforce, 
+        sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge)
     {
-        _speciesType = species;
-        _foodConsumption = foodConsumption;
-        _workforceValue = workforce;
+        SpeciesType = species;
+        FoodConsumption = foodConsumption;
+        WorkforceValue = workforce;
+        AdolescentAge = adolescentAge;
+        AdultAge = adultAge;
+        FertileAge = fertileAge;
+        ElderAge = elderAge;
     }
 
     public float GetWorkforce()
     {
-        return _workforceValue;
+        return WorkforceValue;
     }
 
     public override string ToString()
     {
-        return $"Name:{_speciesType}|Food:{_foodConsumption}|Work:{_workforceValue}";
+        return $"Name:{SpeciesType}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
+               $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}";
     }
 }
 

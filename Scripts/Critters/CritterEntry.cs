@@ -1,23 +1,30 @@
 using System;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Scripts.Critters.Species;
+using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
     [StructLayout(LayoutKind.Sequential)]
-    public readonly record struct CritterEntry
+    public record struct CritterEntry
     {
+        private readonly short _year;
+        private readonly SpeciesType _species;
         private readonly CritterCulture _culture;
-        private readonly CritterSpecies _species;
-        private readonly CritterOccupation _occupation;
-        private readonly CritterDetails _critterDetails;
-
-        public CritterEntry(CritterSpecies newSpecies, CritterOccupation newOccupation, 
+        private CritterDetails _critterDetails;
+        
+        public CritterEntry(short newYear, SpeciesType newSpecies, 
             CritterCulture newCulture, CritterDetails newDetails)
         {
+            _year = newYear;
             _species = newSpecies;
-            _occupation = newOccupation;
             _culture = newCulture;
             _critterDetails = newDetails;
+        }
+        
+        public short GetCritterYear()
+        {
+            return _year;
         }
 
         public CritterDetails GetCritterDetails()
@@ -25,12 +32,7 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _critterDetails;
         }
         
-        public CritterOccupation GetCritterOccupation()
-        {
-            return _occupation;
-        }
-        
-        public CritterSpecies GetCritterSpecies()
+        public SpeciesType GetCritterSpecies()
         {
             return _species;
         }
@@ -39,22 +41,42 @@ namespace VictorianAnimalGame.Scripts.Critters
         {
             return _critterDetails.GetCritterCount();
         }
+
+        private CritterLifeStage UpdateCritterYear()
+        {
+            CritterDefines.Species.TryGetValue(_species, out var species);
+            int age = MapDefines.Year - _year;
+            if (age < species.AdolescentAge)
+            {
+                return CritterLifeStage.Young;
+            }
+            if (age < species.AdultAge)
+            {
+                return CritterLifeStage.Adolescent;
+            }
+            if (age < species.ElderAge)
+            {
+                return CritterLifeStage.Adult;
+            }
+
+            return CritterLifeStage.Elder;
+        }
         
         public bool Equals(CritterEntry newCritter) =>
-            (_culture, _species, _occupation).Equals(
-                (newCritter._culture, newCritter._species, newCritter._occupation));
+            (_culture, _species, _year).Equals(
+                (newCritter._culture, newCritter._species, newCritter._year));
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_culture, _species, _occupation);
+            return HashCode.Combine(_culture, _species, _year);
         }
 
         public override string ToString()
         {
-            return $"Info on this {_species}: " +
+            return $"Current {CritterDefines.SpeciesNames[_species]}: " +
                    $"{_culture}" +
-                   $"/{_occupation}" +
-                   $"/{GetHashCode()}/{_critterDetails}";
+                   $"/{_year}" +
+                   $"/{GetHashCode()}/{UpdateCritterYear()}/{_critterDetails}";
         }
     }
 }

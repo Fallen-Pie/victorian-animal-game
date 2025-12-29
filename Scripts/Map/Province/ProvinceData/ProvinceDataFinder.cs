@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Scripts.Map.Province.ProvinceData.Strategies;
 
 namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceData
 {
     public class ProvinceDataFinder
     {
-        private IProvinceDataStrategy _strategyMethod;
+        private IDataStrategy _strategyMethod;
 
-        public void ChangeBehaviour(IProvinceDataStrategy newStrategy)
+        public void ChangeBehaviour(IDataStrategy newStrategy)
         {
             _strategyMethod = newStrategy;
         }
