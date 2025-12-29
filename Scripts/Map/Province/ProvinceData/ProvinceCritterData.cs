@@ -36,7 +36,7 @@ public record ProvinceCritterData
 
     public override string ToString()
     {
-        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|Species:{CritterDefines.SpeciesNames[_species]}|Count:{_amount}";
+        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|Species:{_species}|Count:{_amount}";
     }
     
     public void AddAmount(uint newAmount)
