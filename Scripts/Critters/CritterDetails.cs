@@ -44,8 +44,8 @@ namespace VictorianAnimalGame.Scripts.Critters
             public override string ToString()
             {
                 return
-                    $"({Total})";
-                //$"/{Trained}/{Literate})";
+                    $"({Total}" +
+                    $"/{Trained}/{Literate})";
                 //$"Rates={Love}/{Hate})";
             }
         }
