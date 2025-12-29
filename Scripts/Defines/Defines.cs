@@ -1,8 +1,7 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.Scripts.Critters.Species;
 
 namespace VictorianAnimalGame.Scripts.Defines;
@@ -15,6 +14,7 @@ public static class CritterDefines
 
     private static FrozenDictionary<string, SpeciesType> CreateFrozenTypes()
     {
+        SpeciesReader.ReadSpeciesYaml("Data/Species/Otter.yaml");
         Dictionary<string, SpeciesType> species = [];
         species.Add("None", new(0));
         species.Add("Otter", new(1));
