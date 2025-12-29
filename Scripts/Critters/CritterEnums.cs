@@ -2,14 +2,6 @@ using System;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
-    public enum CritterSpecies : ushort
-    {
-        None = 0,
-        Otter,
-        Beaver,
-        Raccoon
-    }
-
     public enum CritterCulture : ushort
     {
         None = 0,
