@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using VictorianAnimalGame.Scripts.Critters.Species;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -8,19 +8,27 @@ namespace VictorianAnimalGame.FileReader;
 
 public static class SpeciesReader
 {
-    public static void ReadSpeciesYaml(string filePath)
+    public static List<SpeciesConfig> ReadSpeciesYaml()
     {
-        var yamlInput = new StreamReader(filePath);
+        List<SpeciesConfig> speciesData = [];
+        
+        var speciesFiles = Directory.GetFiles("Data/Species/","*.yaml");
         
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(PascalCaseNamingConvention.Instance)
             .Build();
+        
+        foreach (string file in speciesFiles)
+        {
+            var yamlSpeciesInput = new StreamReader(file);
+            var newSpeciesData = deserializer.Deserialize<SpeciesConfig>(yamlSpeciesInput);
+            speciesData.Add(newSpeciesData);
+            Console.WriteLine($"Species: {newSpeciesData.Species.Name}");
+            Console.WriteLine($"Food: {newSpeciesData.Species.WorkforceValue}");
+            Console.WriteLine($"Adult Age: {newSpeciesData.Species.Ages.Adult}");
+        }
 
-        var data = deserializer.Deserialize<SpeciesConfig>(yamlInput);
-
-        Console.WriteLine($"Species: {data.Species.Name}");
-        Console.WriteLine($"Food: {data.Species.WorkforceValue}");
-        Console.WriteLine($"Adult Age: {data.Species.Ages.Adult}");
+        return speciesData;
     }
 }
 
@@ -33,19 +41,19 @@ public class SpeciesData
 {
     public string Name { get; set; }
     
-    public double FoodConsumption { get; set; }
+    public float FoodConsumption { get; set; }
     
-    public double WorkforceValue { get; set; }
+    public float WorkforceValue { get; set; }
 
     public AgeStages Ages { get; set; }
     
-    public int PeakFertility { get; set; }
+    public sbyte PeakFertility { get; set; }
 }
 
 public class AgeStages
 {
-    public int Adolescent { get; set; }
-    public int Adult { get; set; }
-    public int Elder { get; set; }
+    public sbyte Adolescent { get; set; }
+    public sbyte Adult { get; set; }
+    public sbyte Elder { get; set; }
 }
 
