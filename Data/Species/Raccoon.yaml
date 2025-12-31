@@ -1,0 +1,9 @@
+﻿Species:
+  Name: Raccoon
+  FoodConsumption: 1.0 
+  WorkforceValue: 1.0
+  Ages:
+    Adolescent: 5
+    Adult: 10
+    Elder: 15
+  PeakFertility: 12

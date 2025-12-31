@@ -1,0 +1,9 @@
+﻿Species:
+  Name: Beaver
+  FoodConsumption: 1.0 
+  WorkforceValue: 0.9
+  Ages:
+    Adolescent: 5
+    Adult: 10
+    Elder: 15
+  PeakFertility: 12

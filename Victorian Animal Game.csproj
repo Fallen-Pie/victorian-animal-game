@@ -11,6 +11,8 @@
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Species\Beaver.yaml" />
     <Content Include="Data\Species\Otter.yaml" />
+    <Content Include="Data\Species\Raccoon.yaml" />
   </ItemGroup>
 </Project>
