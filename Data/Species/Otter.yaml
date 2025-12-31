@@ -1,9 +1,9 @@
-﻿species:
-  name: Otter
-  food consumption: 1.1 
-  workforce value: 1.1
-  ages:
-    adolescent: 6
-    adult: 10
-    elder: 22
-  peak fertility: 13
+﻿Species:
+  Name: Otter
+  FoodConsumption: 1.1 
+  WorkforceValue: 1.1
+  Ages:
+    Adolescent: 6
+    Adult: 10
+    Elder: 22
+  PeakFertility: 13
