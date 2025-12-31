@@ -8,36 +8,51 @@ namespace VictorianAnimalGame.Scripts.Defines;
 
 public static class CritterDefines
 {
-    public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes = CreateFrozenTypes();
-    public static readonly FrozenDictionary<SpeciesType, string> SpeciesNames = CreateFrozenTypeNames();
-    public static readonly FrozenDictionary<SpeciesType, Species> Species = CreateFrozenSpecies();
+    //private FileReader fileReader = new()
+    
+    public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes;
+    public static readonly FrozenDictionary<SpeciesType, string> SpeciesNames;
+    public static readonly FrozenDictionary<SpeciesType, Species> Species;
 
-    private static FrozenDictionary<string, SpeciesType> CreateFrozenTypes()
+    static CritterDefines()
     {
-        SpeciesReader.ReadSpeciesYaml("Data/Species/Otter.yaml");
-        Dictionary<string, SpeciesType> species = [];
-        species.Add("None", new(0));
-        species.Add("Otter", new(1));
-        species.Add("Beaver", new(2));
-        species.Add("Raccoon", new(3));
-        return species.ToFrozenDictionary();
+        var (newSpeciesTypes, newSpecies) = CreateFrozenTypes();
+        SpeciesTypes = newSpeciesTypes;
+        Species = newSpecies;
+        SpeciesNames = CreateFrozenTypeNames();
+    }
+    
+    private static (FrozenDictionary<string, SpeciesType>, FrozenDictionary<SpeciesType, Species>) CreateFrozenTypes()
+    {
+        List<SpeciesConfig> data = SpeciesReader.ReadSpeciesYaml();
+        Dictionary<string, SpeciesType> speciesTypes = [];
+        Dictionary<SpeciesType, Species> species = [];
+        
+        speciesTypes.Add("None", new(0));
+        
+        for (ushort i = 1; i <= data.Count; i++)
+        {
+            var speciesData = data[i - 1].Species;
+            
+            SpeciesType newSpeciesType = new SpeciesType(i);
+            speciesTypes.Add(speciesData.Name, newSpeciesType);
+
+            Species newSpecies = new SpeciesBuilder()
+                .SetSpeciesType(newSpeciesType)
+                .SetAges(speciesData.Ages)
+                .SetPeakFertility(speciesData.PeakFertility)
+                .SetFoodConsumption(speciesData.FoodConsumption)
+                .SetWorkforceValue(speciesData.WorkforceValue)
+                .Build();
+            species.Add(newSpeciesType, newSpecies);
+        }
+        
+        return (speciesTypes.ToFrozenDictionary(), species.ToFrozenDictionary());
     }
     
     private static FrozenDictionary<SpeciesType, string> CreateFrozenTypeNames()
     {
         return SpeciesTypes.ToDictionary(kvp => kvp.Value, kvp => kvp.Key).ToFrozenDictionary();
-    }
-    
-    private static FrozenDictionary<SpeciesType, Species> CreateFrozenSpecies()
-    {
-        Dictionary<SpeciesType, Species> species = [];
-        species.Add(SpeciesTypes["Otter"], new Species(SpeciesTypes["Otter"], 1, 1.1f,
-            6, 10, 13, 22));
-        species.Add(SpeciesTypes["Beaver"], new Species(SpeciesTypes["Otter"], 1, 0.9f,
-            5, 10, 12, 15));
-        species.Add(SpeciesTypes["Raccoon"], new Species(SpeciesTypes["Otter"], 1, 1, 
-            5, 10, 12, 15));
-        return species.ToFrozenDictionary();
     }
 }
 
