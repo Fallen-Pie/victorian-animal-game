@@ -1,5 +1,4 @@
 ﻿using System;
-using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Critters.Species;
 
@@ -12,5 +11,7 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public override int GetHashCode() => SpeciesId.GetHashCode();
     public static bool operator ==(SpeciesType left, SpeciesType right) => left.Equals(right);
     public static bool operator !=(SpeciesType left, SpeciesType right) => !(left == right);
-    public override string ToString() => CritterDefines.SpeciesNames[this];
+    public override string ToString() => SpeciesId.ToString();
+
+
 }
