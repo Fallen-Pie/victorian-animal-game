@@ -42,7 +42,7 @@ namespace VictorianAnimalGame.Scripts.Critters
             return _critterDetails.GetCritterCount();
         }
 
-        private CritterLifeStage UpdateCritterYear()
+        private CritterLifeStage GetCritterAge()
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
             int age = MapDefines.Year - _year;
@@ -73,10 +73,10 @@ namespace VictorianAnimalGame.Scripts.Critters
 
         public override string ToString()
         {
-            return $"Current {_species}: " +
+            return $"Current {CritterDefines.Species[_species].SpeciesName}: " +
                    $"{_culture}" +
                    $"/{_year}" +
-                   $"/{GetHashCode()}/{UpdateCritterYear()}/{_critterDetails}";
+                   $"/{GetHashCode()}/{GetCritterAge()}/{_critterDetails}";
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Critters.Species;
+using VictorianAnimalGame.Scripts.Defines;
 using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
 namespace VictorianAnimalGame.Scripts.Map.ProvinceData;
@@ -36,7 +37,8 @@ public record ProvinceCritterData
 
     public override string ToString()
     {
-        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|Species:{_species}|Count:{_amount}";
+        return $"DataType:{_dataType}|Year:{_year}|Culture:{_culture}|" +
+               $"Species:{CritterDefines.Species[_species].SpeciesName}|Count:{_amount}";
     }
     
     public void AddAmount(uint newAmount)
