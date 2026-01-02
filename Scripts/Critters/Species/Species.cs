@@ -13,11 +13,13 @@ public readonly record struct Species
     public readonly float FoodConsumption;
     public readonly float WorkforceValue;
     
+    public readonly string SpeciesName;
+    
     //private readonly Consumption _speciesConsumption;
     
 
     public Species(SpeciesType species, float foodConsumption, float workforce, 
-        sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge)
+        sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge, string speciesName)
     {
         SpeciesType = species;
         FoodConsumption = foodConsumption;
@@ -26,6 +28,7 @@ public readonly record struct Species
         AdultAge = adultAge;
         FertileAge = fertileAge;
         ElderAge = elderAge;
+        SpeciesName = speciesName;
     }
 
     public float GetWorkforce()
@@ -38,9 +41,4 @@ public readonly record struct Species
         return $"Name:{SpeciesType}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
                $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}";
     }
-}
-
-public class Consumption
-{
-    
 }

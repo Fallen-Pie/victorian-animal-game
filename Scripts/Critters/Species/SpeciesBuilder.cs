@@ -15,6 +15,14 @@ public class SpeciesBuilder
     private float _foodConsumption;
     private float _workforceValue;
     
+    private string _speciesName;
+    
+    public SpeciesBuilder SetSpeciesName(string name)
+    {
+        _speciesName = name;
+        return this;
+    }
+    
     public SpeciesBuilder SetAges(AgeStages ages)
     {
         _adolescentAge = ages.Adolescent;
@@ -50,6 +58,6 @@ public class SpeciesBuilder
     public Species Build()
     {
         return new Species(_speciesType, _foodConsumption, _workforceValue, 
-            _adolescentAge, _adultAge, _fertileAge, _elderAge);
+            _adolescentAge, _adultAge, _fertileAge, _elderAge, _speciesName);
     }
 }
