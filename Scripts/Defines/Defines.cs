@@ -10,16 +10,14 @@ public static class CritterDefines
 {
     //private FileReader fileReader = new()
     
-    public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes;
-    public static readonly FrozenDictionary<SpeciesType, string> SpeciesNames;
     public static readonly FrozenDictionary<SpeciesType, Species> Species;
+    public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes;
 
     static CritterDefines()
     {
         var (newSpeciesTypes, newSpecies) = CreateFrozenTypes();
         SpeciesTypes = newSpeciesTypes;
         Species = newSpecies;
-        SpeciesNames = CreateFrozenTypeNames();
     }
     
     private static (FrozenDictionary<string, SpeciesType>, FrozenDictionary<SpeciesType, Species>) CreateFrozenTypes()
@@ -28,8 +26,8 @@ public static class CritterDefines
         Dictionary<string, SpeciesType> speciesTypes = [];
         Dictionary<SpeciesType, Species> species = [];
         
-        speciesTypes.Add("None", new(0));
-        
+        SetEmptySpecies(ref speciesTypes, ref species);
+
         for (ushort i = 1; i <= data.Count; i++)
         {
             var speciesData = data[i - 1].Species;
@@ -38,6 +36,7 @@ public static class CritterDefines
             speciesTypes.Add(speciesData.Name, newSpeciesType);
 
             Species newSpecies = new SpeciesBuilder()
+                .SetSpeciesName(speciesData.Name)
                 .SetSpeciesType(newSpeciesType)
                 .SetAges(speciesData.Ages)
                 .SetPeakFertility(speciesData.PeakFertility)
@@ -49,10 +48,18 @@ public static class CritterDefines
         
         return (speciesTypes.ToFrozenDictionary(), species.ToFrozenDictionary());
     }
-    
-    private static FrozenDictionary<SpeciesType, string> CreateFrozenTypeNames()
+
+    private static void SetEmptySpecies(ref Dictionary<string, SpeciesType> speciesTypes, 
+        ref Dictionary<SpeciesType, Species> species)
     {
-        return SpeciesTypes.ToDictionary(kvp => kvp.Value, kvp => kvp.Key).ToFrozenDictionary();
+        const string noneName = "None";
+        SpeciesType noneType = new(0);
+        Species noneSpecies = new SpeciesBuilder()
+            .SetSpeciesName(noneName)
+            .Build();
+        
+        speciesTypes.Add(noneName, noneType);
+        species.Add(noneType, noneSpecies);
     }
 }
 
