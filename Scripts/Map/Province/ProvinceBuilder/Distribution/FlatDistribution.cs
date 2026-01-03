@@ -10,6 +10,6 @@ public class FlatDistribution : ICritterDistribution
         {
             return 1.0 - (0.2 * ((double)age / species.FertileAge)); 
         }
-        return 0.8 * (1.0 - (double)(age - species.FertileAge) / (species.ElderAge - species.FertileAge));
+        return 0.8 * (1.0 - (double)(age - species.FertileAge) / (species.ElderAge * 1.2 - species.FertileAge));
     }
 }
