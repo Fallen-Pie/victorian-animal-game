@@ -47,13 +47,13 @@ public class SpeciesData
 
     public AgeStages Ages { get; set; }
     
-    public sbyte PeakFertility { get; set; }
+    public byte PeakFertility { get; set; }
 }
 
 public class AgeStages
 {
-    public sbyte Adolescent { get; set; }
-    public sbyte Adult { get; set; }
-    public sbyte Elder { get; set; }
+    public byte Adolescent { get; set; }
+    public byte Adult { get; set; }
+    public byte Elder { get; set; }
 }
 

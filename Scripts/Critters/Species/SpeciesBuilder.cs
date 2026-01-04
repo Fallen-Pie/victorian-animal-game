@@ -6,10 +6,10 @@ namespace VictorianAnimalGame.Scripts.Critters.Species;
 
 public class SpeciesBuilder
 {
-    private sbyte _adolescentAge;
-    private sbyte _adultAge;
-    private sbyte _elderAge;
-    private sbyte _fertileAge;
+    private byte _adolescentAge;
+    private byte _adultAge;
+    private byte _elderAge;
+    private byte _fertileAge;
     
     private SpeciesType _speciesType;
     private float _foodConsumption;
@@ -28,7 +28,7 @@ public class SpeciesBuilder
         _adolescentAge = ages.Adolescent;
         _adultAge = ages.Adult;
         _elderAge = ages.Elder;    
-        return this; // Return the builder instance for chaining
+        return this;
     }
 
     public SpeciesBuilder SetSpeciesType(SpeciesType type)
@@ -37,7 +37,7 @@ public class SpeciesBuilder
         return this;
     }
     
-    public SpeciesBuilder SetPeakFertility(sbyte age)
+    public SpeciesBuilder SetPeakFertility(byte age)
     {
         _fertileAge = age;
         return this;

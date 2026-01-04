@@ -4,10 +4,10 @@ namespace VictorianAnimalGame.Scripts.Critters.Species;
 
 public readonly record struct Species
 {
-    public readonly sbyte AdolescentAge;
-    public readonly sbyte AdultAge;
-    public readonly sbyte FertileAge;
-    public readonly sbyte ElderAge;
+    public readonly byte AdolescentAge;
+    public readonly byte AdultAge;
+    public readonly byte FertileAge;
+    public readonly byte ElderAge;
     
     public readonly SpeciesType SpeciesType;
     public readonly float FoodConsumption;
@@ -19,7 +19,7 @@ public readonly record struct Species
     
 
     public Species(SpeciesType species, float foodConsumption, float workforce, 
-        sbyte adolescentAge, sbyte adultAge, sbyte fertileAge, sbyte elderAge, string speciesName)
+        byte adolescentAge, byte adultAge, byte fertileAge, byte elderAge, string speciesName)
     {
         SpeciesType = species;
         FoodConsumption = foodConsumption;
