@@ -12,7 +12,7 @@ public static class SpeciesReader
     {
         List<SpeciesConfig> speciesData = [];
         
-        var speciesFiles = Directory.GetFiles("Data/Species/","*.yaml");
+        string[] speciesFiles = Directory.GetFiles("Data/Species/","*.yaml");
         
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(PascalCaseNamingConvention.Instance)
@@ -23,9 +23,10 @@ public static class SpeciesReader
             var yamlSpeciesInput = new StreamReader(file);
             var newSpeciesData = deserializer.Deserialize<SpeciesConfig>(yamlSpeciesInput);
             speciesData.Add(newSpeciesData);
-            Console.WriteLine($"Species: {newSpeciesData.Species.Name}");
-            Console.WriteLine($"Food: {newSpeciesData.Species.WorkforceValue}");
-            Console.WriteLine($"Adult Age: {newSpeciesData.Species.Ages.Adult}");
+            string debugString = $"Species: {newSpeciesData.Species.Name}|" +
+                    $"Food: {newSpeciesData.Species.WorkforceValue}|" +
+                    $"Adult Age: {newSpeciesData.Species.Ages.Adult}";
+            Console.WriteLine(debugString);
         }
 
         return speciesData;
