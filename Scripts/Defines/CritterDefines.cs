@@ -1,6 +1,5 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Linq;
 using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.Scripts.Critters.Species;
 
@@ -60,15 +59,5 @@ public static class CritterDefines
         
         speciesTypes.Add(noneName, noneType);
         species.Add(noneType, noneSpecies);
-    }
-}
-
-public static class MapDefines
-{
-    public static short Year = 1819;
-
-    private static void IncreaseCurrentYear()
-    {
-        Year += 1;
     }
 }
