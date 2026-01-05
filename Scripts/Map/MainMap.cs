@@ -19,12 +19,14 @@ namespace VictorianAnimalGame.Scripts.Map {
             foreach (var critter in province.ProvinceCritters) 
             {
                 GD.Print(critter);
-            } 
+            }
+            foreach (var good in GoodDefines.GoodTypes)
+            {
+                Console.WriteLine($"{good.Value}");
+            }
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
-            
-
             base._Ready();
         }
         
