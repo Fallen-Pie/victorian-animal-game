@@ -2,6 +2,7 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using VictorianAnimalGame.FileReader;
+using VictorianAnimalGame.FileReader.CreationStrategies;
 using VictorianAnimalGame.FileReader.DataConfig;
 using VictorianAnimalGame.Scripts.Goods.GoodTypes;
 
@@ -20,21 +21,25 @@ public static class GoodDefines
     private static FrozenDictionary<string, GoodType> CreateFrozenGoods()
     {
         List<GoodsConfig> data = YamlReader.ReadFiles<GoodsConfig>("Data/Goods/");
-        Dictionary<string, GoodType> goodTypes = [];
         
-        foreach (GoodsConfig good in data)
-        {
-            var goodData = good.Goods;
-            
-            var builder = new GoodTypeBuilder();
-            GoodType newGood = builder.SetGoodName(goodData.Name)
-                .SetGoodPrice(goodData.Price)
-                .SetGoodBulk(goodData.Bulk)
-                .Build();
-            goodTypes.Add(goodData.Name, newGood);
-            
-            Console.WriteLine(newGood);
-        }
+        //Dictionary<string, GoodType> goodTypes = [];
+        YamlReader.ChangeStrategy(new GoodsCreation());
+        
+        Dictionary<string, GoodType> goodTypes = (Dictionary<string, GoodType>)YamlReader.Create(data);
+        
+        // foreach (GoodsConfig good in data)
+        // {
+        //     var goodData = good.Goods;
+        //     
+        //     var builder = new GoodTypeBuilder();
+        //     GoodType newGood = builder.SetGoodName(goodData.Name)
+        //         .SetGoodPrice(goodData.Price)
+        //         .SetGoodBulk(goodData.Bulk)
+        //         .Build();
+        //     goodTypes.Add(goodData.Name, newGood);
+        //     
+        //     Console.WriteLine(newGood);
+        // }
         
         return goodTypes.ToFrozenDictionary();
     }
