@@ -1,21 +1,36 @@
 ﻿using System.Collections.Generic;
-using VictorianAnimalGame.FileReader.DataConfig;
-using VictorianAnimalGame.FileReader.ReaderStrategies;
+using System.IO;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace VictorianAnimalGame.FileReader;
 
 public static class YamlReader
 {
-    public const string FileExtension = "*.yaml";
-    private static StrategyReader _strategyMethod;
-
-    public static void ChangeBehaviour(StrategyReader newStrategy)
+    private const string FileExtension = "*.yaml";
+    
+    public static List<TDataConfig> ReadFiles<TDataConfig>(string fileLocation)
     {
-        _strategyMethod = newStrategy;
-    }
+        List<TDataConfig> fileData = [];
         
-    public static List<IDataConfig> RunBehaviour(string fileLocation)
+        string[] speciesFiles = Directory.GetFiles(fileLocation, FileExtension);
+        
+        foreach (string file in speciesFiles)
+        {
+            TDataConfig newSpeciesData = DeserializerFile<TDataConfig>(file);
+            fileData.Add(newSpeciesData);
+        }
+
+        return fileData;
+    }
+    
+    private static TDataConfig DeserializerFile<TDataConfig>(string fileName)
     {
-        return _strategyMethod.ReadFiles(fileLocation);
+        IDeserializer deserializer = new DeserializerBuilder()
+            .WithNamingConvention(PascalCaseNamingConvention.Instance)
+            .Build();
+        
+        using var yamlSpeciesInput = new StreamReader(fileName);
+        return deserializer.Deserialize<TDataConfig>(yamlSpeciesInput);
     }
 }
