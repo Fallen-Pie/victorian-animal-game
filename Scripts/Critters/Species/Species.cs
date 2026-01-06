@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VictorianAnimalGame.Scripts.Critters.Species;
+﻿namespace VictorianAnimalGame.Scripts.Critters.Species;
 
 public readonly record struct Species
 {
@@ -38,7 +36,7 @@ public readonly record struct Species
 
     public override string ToString()
     {
-        return $"Name:{SpeciesType}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
+        return $"Name:{SpeciesName}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
                $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}";
     }
 }
