@@ -20,10 +20,8 @@ namespace VictorianAnimalGame.Scripts.Map {
             {
                 GD.Print(critter);
             }
-            foreach (var good in GoodDefines.GoodTypes)
-            {
-                Console.WriteLine($"{good.Value}");
-            }
+            var frozenDictionary = GoodDefines.GoodTypes;
+
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
