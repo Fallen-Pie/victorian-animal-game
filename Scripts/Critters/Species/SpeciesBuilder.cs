@@ -1,6 +1,4 @@
-﻿using System;
-using Godot.Collections;
-using VictorianAnimalGame.FileReader;
+﻿using VictorianAnimalGame.FileReader.DataConfig;
 
 namespace VictorianAnimalGame.Scripts.Critters.Species;
 

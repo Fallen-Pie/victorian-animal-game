@@ -17,11 +17,11 @@ public readonly record struct GoodType
         PricePerBulk = (float)Math.Round(Price / Bulk, 2);
     }
 
-    public string Name { get; init; }
-    public float Price { get; init; }
-    public float Bulk { get; init; }
+    public string Name { get; }
+    public float Price { get; }
+    public float Bulk { get; }
     public float MinPrice { get; }
-    public float MaxPrice { get;}
+    public float MaxPrice { get; }
     public float PricePerBulk { get; }
 
     public override string ToString()
