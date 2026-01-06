@@ -1,14 +1,14 @@
 ﻿using System.Collections.Frozen;
 using System.Collections.Generic;
 using VictorianAnimalGame.FileReader;
+using VictorianAnimalGame.FileReader.DataConfig;
+using VictorianAnimalGame.FileReader.ReaderStrategies;
 using VictorianAnimalGame.Scripts.Critters.Species;
 
 namespace VictorianAnimalGame.Scripts.Defines;
 
 public static class CritterDefines
 {
-    //private FileReader fileReader = new()
-    
     public static readonly FrozenDictionary<SpeciesType, Species> Species;
     public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes;
 
@@ -21,7 +21,8 @@ public static class CritterDefines
     
     private static (FrozenDictionary<string, SpeciesType>, FrozenDictionary<SpeciesType, Species>) CreateFrozenTypes()
     {
-        List<SpeciesConfig> data = SpeciesReader.ReadSpeciesYaml();
+        YamlReader.ChangeBehaviour(new SpeciesStrategyReader());
+        List<IDataConfig> data = YamlReader.RunBehaviour("Data/Species/");
         Dictionary<string, SpeciesType> speciesTypes = [];
         Dictionary<SpeciesType, Species> species = [];
         
@@ -29,7 +30,7 @@ public static class CritterDefines
 
         for (ushort i = 1; i <= data.Count; i++)
         {
-            var speciesData = data[i - 1].Species;
+            var speciesData = ((SpeciesConfig)data[i - 1]).Species;
             
             SpeciesType newSpeciesType = new SpeciesType(i);
             speciesTypes.Add(speciesData.Name, newSpeciesType);
