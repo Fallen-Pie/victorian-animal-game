@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Map.ProvinceData;
+using VictorianAnimalGame.Engine.Map.ProvinceData.Strategies;
 using VictorianAnimalGame.Scripts.Critters;
-using VictorianAnimalGame.Scripts.Map.ProvinceData;
-using VictorianAnimalGame.Scripts.Map.ProvinceData.Strategies;
 
-namespace VictorianAnimalGame.Scripts.Map.Province;
+namespace VictorianAnimalGame.Engine.Map.Province;
 
 public class LandProvince : IProvince
 {

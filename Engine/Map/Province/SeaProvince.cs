@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VictorianAnimalGame.Scripts.Map.Province;
+namespace VictorianAnimalGame.Engine.Map.Province;
 
 public class SeaProvince : IProvince
 {

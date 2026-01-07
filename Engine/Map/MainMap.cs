@@ -1,15 +1,14 @@
-using Godot;
 using System;
 using System.Linq;
+using Godot;
+using VictorianAnimalGame.Engine.Map.Province;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
 using VictorianAnimalGame.Scripts.Critters;
-using VictorianAnimalGame.Scripts.Critters.Species;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder;
 using VictorianAnimalGame.Scripts.Defines;
-using VictorianAnimalGame.Scripts.Map.Province;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.ClassRatio;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.Distribution;
 
-namespace VictorianAnimalGame.Scripts.Map {
+namespace VictorianAnimalGame.Engine.Map {
     public partial class MainMap : Node2D
     {
         public override void _Ready()

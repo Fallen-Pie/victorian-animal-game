@@ -2,9 +2,8 @@
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Critters.Species;
 using VictorianAnimalGame.Scripts.Defines;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
 
-namespace VictorianAnimalGame.Scripts.Map.ProvinceData;
+namespace VictorianAnimalGame.Engine.Map.ProvinceData;
 
 public record ProvinceCritterData
 {

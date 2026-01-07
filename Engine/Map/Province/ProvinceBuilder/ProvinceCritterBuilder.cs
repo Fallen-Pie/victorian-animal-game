@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Critters.Species;
 using VictorianAnimalGame.Scripts.Defines;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.ClassRatio;
-using VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.Distribution;
 
-namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder;
+namespace VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
 
 public class ProvinceCritterBuilder
 {

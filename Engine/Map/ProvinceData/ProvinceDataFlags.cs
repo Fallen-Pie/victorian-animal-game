@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceData;
+namespace VictorianAnimalGame.Engine.Map.ProvinceData;
 
 [Flags]
 public enum ProvinceDataFlags : ushort

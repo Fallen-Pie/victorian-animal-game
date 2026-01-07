@@ -1,6 +1,6 @@
 ﻿using VictorianAnimalGame.Scripts.Critters.Species;
 
-namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.Distribution;
+namespace VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
 
 public class FlatDistribution : ICritterDistribution
 {

@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.Scripts.Map.Province.ProvinceBuilder.ClassRatio;
+﻿namespace VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
 
 public class RuralRatio : IClassRatio
 {
