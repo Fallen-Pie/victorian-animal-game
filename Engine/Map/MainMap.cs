@@ -24,6 +24,7 @@ namespace VictorianAnimalGame.Engine.Map {
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
+            TestTime(3000);
             base._Ready();
         }
         
@@ -43,6 +44,15 @@ namespace VictorianAnimalGame.Engine.Map {
             newBuilder.SetSpecies(value);
             newBuilder.SetCulture(CritterCulture.Dutch);
             return newBuilder.AddCritterToProvince(30000, province);
+        }
+
+        public void TestTime(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                DateDefines.IncrementTime();
+                Console.WriteLine(DateDefines.GetTime());
+            }
         }
     }
 }
