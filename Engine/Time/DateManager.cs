@@ -20,30 +20,30 @@ public class DateManager
     public int Day { get; private set; }
     public int Month { get; private set; }
     public int Year { get; private set; }
-    
-    public void IncrementTime()
+
+    public void IncrementPhase()
     {
-        if ((int)Phase < DateDefines.PhasesAmount - 1)
-        {
-            Phase += 1;
-        }
-        else if (Day < daysPerMonth[Month - 1])
-        {
-            Phase = 0;
-            Day += 1;
-        }
-        else if (Month < DateDefines.MonthsAmount)
-        {
-            Phase = 0;
-            Day = 1;
-            Month += 1;
-        }
-        else
-        {
-            Phase = 0;
-            Day = 1;
-            Month = 1;
-            Year += 1;
-        }
+        if ((int)++Phase < DateDefines.PhasesAmount) return;
+        Phase = 0;
+        IncrementDay();
+    }
+
+    private void IncrementDay()
+    {
+        if (Day++ < daysPerMonth[Month - 1]) return;
+        Day = 1;
+        IncrementMonth();
+    }
+    
+    private void IncrementMonth()
+    {
+        if (Month++ < DateDefines.MonthsAmount) return;
+        Month = 1;
+        IncrementYear();
+    }
+    
+    private void IncrementYear()
+    {
+        Year++;
     }
 }
