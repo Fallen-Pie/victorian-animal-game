@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
 using Godot;
+using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Map.Province;
 using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
 using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
 using VictorianAnimalGame.Scripts.Critters;
-using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Engine.Map {
     public partial class MainMap : Node2D

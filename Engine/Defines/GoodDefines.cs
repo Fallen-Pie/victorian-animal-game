@@ -5,7 +5,7 @@ using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.FileReader.DataConfig;
 using VictorianAnimalGame.Scripts.Goods.GoodTypes;
 
-namespace VictorianAnimalGame.Scripts.Defines;
+namespace VictorianAnimalGame.Engine.Defines;
 
 public static class GoodDefines
 {

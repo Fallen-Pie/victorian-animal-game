@@ -5,7 +5,7 @@ using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.FileReader.DataConfig;
 using VictorianAnimalGame.Scripts.Critters.Species;
 
-namespace VictorianAnimalGame.Scripts.Defines;
+namespace VictorianAnimalGame.Engine.Defines;
 
 public static class CritterDefines
 {

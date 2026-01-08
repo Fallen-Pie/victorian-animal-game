@@ -1,9 +1,9 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Critters.Species;
-using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
 
@@ -58,7 +58,7 @@ public class ProvinceCritterBuilder
             {
                 (uint lower, uint middle, uint upper) = _classRatio.Execute(count);
                 var newDetails = new CritterDetails(lower, middle, upper);
-                province.ProvinceCritters.Add(new CritterEntry((short)(MapDefines.Year - age), 
+                province.ProvinceCritters.Add(new CritterEntry((short)(DateDefines.Year - age), 
                     _species.SpeciesType, _culture, newDetails));
             }
         }

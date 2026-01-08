@@ -1,7 +1,7 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Scripts.Critters;
 using VictorianAnimalGame.Scripts.Critters.Species;
-using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Engine.Map.ProvinceData;
 
