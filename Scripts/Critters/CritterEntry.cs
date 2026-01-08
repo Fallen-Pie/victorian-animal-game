@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Scripts.Critters.Species;
-using VictorianAnimalGame.Scripts.Defines;
 
 namespace VictorianAnimalGame.Scripts.Critters
 {
@@ -45,7 +45,7 @@ namespace VictorianAnimalGame.Scripts.Critters
         private CritterLifeStage GetCritterAge()
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
-            int age = MapDefines.Year - _year;
+            int age = DateDefines.Year - _year;
             if (age < species.AdolescentAge)
             {
                 return CritterLifeStage.Young;
