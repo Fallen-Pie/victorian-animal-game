@@ -26,9 +26,8 @@ namespace VictorianAnimalGame.Engine.Map {
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
-            Task<int> d = TestTime(30000);
+            TestTime();
             base._Ready();
-            int s = await d;
 
         }
         
@@ -50,16 +49,16 @@ namespace VictorianAnimalGame.Engine.Map {
             return newBuilder.AddCritterToProvince(30000, province);
         }
 
-        public async Task<int> TestTime(int count)
+        public async void TestTime()
         {
-            for (int i = 0; i < count; i++)
+            while (true)
             {
-                await Task.Delay(500);
+                await Task.Delay(100);
                 DateDefines.IncrementTime();
                 Console.WriteLine(DateDefines.GetTime());
             }
 
-            return await Task.FromResult(0);
+            //return await Task.FromResult(0);
         }
     }
 }
