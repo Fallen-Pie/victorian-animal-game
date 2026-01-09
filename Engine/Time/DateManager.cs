@@ -1,14 +1,16 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Time;
 
 public class DateManager
 {
-    public DateManager(DayPhase startPhase, int startDay, int startMonth, int startYear)
+    public DateManager(DayPhase startPhase, int startDay, DayOfWeek h, int startMonth, int startYear)
     {
         Phase = startPhase;
         Day = startDay;
+        WeekDay = h;
         Month = startMonth;
         Year = startYear;
         daysPerMonth = Enumerable.Repeat(DateDefines.DaysPerMonth, DateDefines.MonthsAmount).ToArray();
@@ -18,14 +20,16 @@ public class DateManager
     
     public DayPhase Phase { get; private set; }
     public int Day { get; private set; }
+    public DayOfWeek WeekDay { get; private set; }
     public int Month { get; private set; }
     public int Year { get; private set; }
 
     public void IncrementPhase()
     {
-        if ((int)++Phase < DateDefines.PhasesAmount) return;
+        if ((int)++Phase < Enum.GetNames<DayPhase>().Length) return;
         Phase = 0;
         IncrementDay();
+        IncrementWeek();
     }
 
     private void IncrementDay()
@@ -33,6 +37,12 @@ public class DateManager
         if (Day++ < daysPerMonth[Month - 1]) return;
         Day = 1;
         IncrementMonth();
+    }
+    
+    private void IncrementWeek()
+    {
+        if ((int)++WeekDay < Enum.GetNames<DayOfWeek>().Length) return;
+        WeekDay = 0;
     }
     
     private void IncrementMonth()
