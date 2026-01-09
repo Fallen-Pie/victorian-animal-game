@@ -14,11 +14,11 @@ public class DateManager
         WeekDay = startDayOfWeek;
         Month = startMonth;
         Year = startYear;
-        daysPerMonth = Enumerable.Repeat(DateDefines.DaysPerMonth, DateDefines.MonthsAmount).ToArray();
+        _daysPerMonth = Enumerable.Repeat(DateDefines.DaysPerMonth, DateDefines.MonthsAmount).ToArray();
     }
     
-    private readonly int[] daysPerMonth;
-    private int currentMonth => Month - 1;
+    private readonly int[] _daysPerMonth;
+    private int _currentMonth => Month - 1;
     
     public DayPhase Phase { get; private set; }
     public int Day { get; private set; }
@@ -36,7 +36,7 @@ public class DateManager
 
     private void IncrementDay()
     {
-        if (Day++ < daysPerMonth[currentMonth]) return;
+        if (Day++ < _daysPerMonth[_currentMonth]) return;
         Day = 1;
         IncrementMonth();
     }
