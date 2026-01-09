@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Map.Province;
@@ -11,7 +13,7 @@ using VictorianAnimalGame.Scripts.Critters;
 namespace VictorianAnimalGame.Engine.Map {
     public partial class MainMap : Node2D
     {
-        public override void _Ready()
+        public override async void _Ready()
         {
             LandProvince province = new();
             province = InitialiseProvince(province);
@@ -24,8 +26,10 @@ namespace VictorianAnimalGame.Engine.Map {
             province.SetName();
             GD.Print(province.GetDetails());
             //AddChild(province);
-            TestTime(3000);
+            Task<int> d = TestTime(30000);
             base._Ready();
+            int s = await d;
+
         }
         
         static Random _r = new Random ();
@@ -46,13 +50,16 @@ namespace VictorianAnimalGame.Engine.Map {
             return newBuilder.AddCritterToProvince(30000, province);
         }
 
-        public void TestTime(int count)
+        public async Task<int> TestTime(int count)
         {
             for (int i = 0; i < count; i++)
             {
+                await Task.Delay(500);
                 DateDefines.IncrementTime();
                 Console.WriteLine(DateDefines.GetTime());
             }
+
+            return await Task.FromResult(0);
         }
     }
 }
