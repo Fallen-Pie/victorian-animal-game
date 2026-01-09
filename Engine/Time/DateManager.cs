@@ -6,17 +6,19 @@ namespace VictorianAnimalGame.Engine.Time;
 
 public class DateManager
 {
-    public DateManager(DayPhase startPhase, int startDay, DayOfWeek h, int startMonth, int startYear)
+    public DateManager(DayPhase startPhase, int startDay, DayOfWeek startDayOfWeek, 
+        int startMonth, int startYear)
     {
         Phase = startPhase;
         Day = startDay;
-        WeekDay = h;
+        WeekDay = startDayOfWeek;
         Month = startMonth;
         Year = startYear;
         daysPerMonth = Enumerable.Repeat(DateDefines.DaysPerMonth, DateDefines.MonthsAmount).ToArray();
     }
     
     private readonly int[] daysPerMonth;
+    private int currentMonth => Month - 1;
     
     public DayPhase Phase { get; private set; }
     public int Day { get; private set; }
@@ -34,7 +36,7 @@ public class DateManager
 
     private void IncrementDay()
     {
-        if (Day++ < daysPerMonth[Month - 1]) return;
+        if (Day++ < daysPerMonth[currentMonth]) return;
         Day = 1;
         IncrementMonth();
     }
@@ -55,5 +57,26 @@ public class DateManager
     private void IncrementYear()
     {
         Year++;
+    }
+
+    public override string ToString()
+    {
+        return $"{Phase} on {WeekDay} the {FormatDay(Day)}, {FormatMonth(Month)}, {Year}";
+    }
+
+    private static string FormatDay(int day)
+    {
+        return (day % 10) switch
+        {
+            1 => $"{day}st",
+            2 => $"{day}nd",
+            3 => $"{day}rd",
+            _ => $"{day}th"
+        };
+    }
+    
+    private static string FormatMonth(int month)
+    {
+        return $"MonthName({month})";
     }
 }

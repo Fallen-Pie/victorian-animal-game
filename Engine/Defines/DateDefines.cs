@@ -24,6 +24,6 @@ public static class DateDefines
 
     public static string GetTime()
     {
-        return $"{Phase}.{WeekDay} the {Day}.{Month}.{Year}";
+        return DateManager.ToString();
     }
 }
