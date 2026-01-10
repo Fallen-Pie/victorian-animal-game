@@ -2,7 +2,7 @@
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Scripts.Critters;
 
-namespace VictorianAnimalGame.Engine.Map.ProvinceData.Strategies;
+namespace VictorianAnimalGame.Engine.Map.Province.ProvinceData.Strategies;
 
 public class DataWorkforceSpecies : IDataStrategy
 {

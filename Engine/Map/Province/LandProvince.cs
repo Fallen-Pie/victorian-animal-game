@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using VictorianAnimalGame.Engine.Map.ProvinceData;
-using VictorianAnimalGame.Engine.Map.ProvinceData.Strategies;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceData;
+using VictorianAnimalGame.Engine.Map.Province.ProvinceData.Strategies;
 using VictorianAnimalGame.Scripts.Critters;
 
 namespace VictorianAnimalGame.Engine.Map.Province;
