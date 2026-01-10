@@ -46,20 +46,14 @@ namespace VictorianAnimalGame.Scripts.Critters
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
             int age = DateDefines.Year - _year;
-            if (age < species.AdolescentAge)
-            {
-                return CritterLifeStage.Young;
-            }
-            if (age < species.AdultAge)
-            {
-                return CritterLifeStage.Adolescent;
-            }
-            if (age < species.ElderAge)
-            {
-                return CritterLifeStage.Adult;
-            }
 
-            return CritterLifeStage.Elder;
+            return age switch
+            {
+                _ when age < species.AdolescentAge => CritterLifeStage.Young,
+                _ when age < species.AdultAge => CritterLifeStage.Adolescent,
+                _ when age < species.ElderAge => CritterLifeStage.Adult,
+                _ => CritterLifeStage.Elder
+            };
         }
         
         public bool Equals(CritterEntry newCritter) =>
