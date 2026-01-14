@@ -2,5 +2,5 @@
 
 public interface ICritterDistribution
 {
-    public double Execute(short age, Species.Species species);
+    public double Execute(short age, Species.SpeciesDetails speciesDetails);
 }

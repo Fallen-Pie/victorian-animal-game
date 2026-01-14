@@ -9,7 +9,7 @@ namespace VictorianAnimalGame.Engine.Defines;
 
 public static class CritterDefines
 {
-    public static readonly FrozenDictionary<SpeciesType, Species> Species;
+    public static readonly FrozenDictionary<SpeciesType, SpeciesDetails> Species;
     public static readonly FrozenDictionary<string, SpeciesType> SpeciesTypes;
 
     static CritterDefines()
@@ -19,11 +19,11 @@ public static class CritterDefines
         Species = newSpecies;
     }
     
-    private static (FrozenDictionary<string, SpeciesType>, FrozenDictionary<SpeciesType, Species>) CreateFrozenTypes()
+    private static (FrozenDictionary<string, SpeciesType>, FrozenDictionary<SpeciesType, SpeciesDetails>) CreateFrozenTypes()
     {
         List<SpeciesConfig> data = YamlReader.ReadFiles<SpeciesConfig>("Data/Species/");
         Dictionary<string, SpeciesType> speciesTypes = [];
-        Dictionary<SpeciesType, Species> species = [];
+        Dictionary<SpeciesType, SpeciesDetails> species = [];
         
         SetEmptySpecies(ref speciesTypes, ref species);
 
@@ -34,7 +34,7 @@ public static class CritterDefines
             SpeciesType newSpeciesType = new SpeciesType(i);
             speciesTypes.Add(speciesData.Name, newSpeciesType);
 
-            Species newSpecies = new SpeciesBuilder()
+            SpeciesDetails newSpeciesDetails = new SpeciesBuilder()
                 .SetSpeciesName(speciesData.Name)
                 .SetSpeciesType(newSpeciesType)
                 .SetAges(speciesData.Ages)
@@ -42,24 +42,24 @@ public static class CritterDefines
                 .SetFoodConsumption(speciesData.FoodConsumption)
                 .SetWorkforceValue(speciesData.WorkforceValue)
                 .Build();
-            species.Add(newSpeciesType, newSpecies);
+            species.Add(newSpeciesType, newSpeciesDetails);
             
-            Console.WriteLine(newSpecies);
+            Console.WriteLine(newSpeciesDetails);
         }
         
         return (speciesTypes.ToFrozenDictionary(), species.ToFrozenDictionary());
     }
 
     private static void SetEmptySpecies(ref Dictionary<string, SpeciesType> speciesTypes, 
-        ref Dictionary<SpeciesType, Species> species)
+        ref Dictionary<SpeciesType, SpeciesDetails> species)
     {
         const string noneName = "None";
         SpeciesType noneType = new(0);
-        Species noneSpecies = new SpeciesBuilder()
+        SpeciesDetails noneSpeciesDetails = new SpeciesBuilder()
             .SetSpeciesName(noneName)
             .Build();
         
         speciesTypes.Add(noneName, noneType);
-        species.Add(noneType, noneSpecies);
+        species.Add(noneType, noneSpeciesDetails);
     }
 }

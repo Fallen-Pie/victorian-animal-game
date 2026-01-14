@@ -1,6 +1,6 @@
 ﻿namespace VictorianAnimalGame.Engine.Province.Critters.Species;
 
-public readonly record struct Species
+public readonly record struct SpeciesDetails
 {
     public readonly byte AdolescentAge;
     public readonly byte AdultAge;
@@ -16,7 +16,7 @@ public readonly record struct Species
     //private readonly Consumption _speciesConsumption;
     
 
-    public Species(SpeciesType species, float foodConsumption, float workforce, 
+    public SpeciesDetails(SpeciesType species, float foodConsumption, float workforce, 
         byte adolescentAge, byte adultAge, byte fertileAge, byte elderAge, string speciesName)
     {
         SpeciesType = species;

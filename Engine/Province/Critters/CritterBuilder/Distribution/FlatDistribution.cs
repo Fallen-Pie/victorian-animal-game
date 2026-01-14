@@ -2,12 +2,12 @@
 
 public class FlatDistribution : ICritterDistribution
 {
-    public double Execute(short age, Species.Species species)
+    public double Execute(short age, Species.SpeciesDetails speciesDetails)
     {
-        if (age <= species.FertileAge)
+        if (age <= speciesDetails.FertileAge)
         {
-            return 1.0 - (0.2 * ((double)age / species.FertileAge)); 
+            return 1.0 - (0.2 * ((double)age / speciesDetails.FertileAge)); 
         }
-        return 0.8 * (1.0 - (double)(age - species.FertileAge) / (species.ElderAge * 1.2 - species.FertileAge));
+        return 0.8 * (1.0 - (double)(age - speciesDetails.FertileAge) / (speciesDetails.ElderAge * 1.2 - speciesDetails.FertileAge));
     }
 }

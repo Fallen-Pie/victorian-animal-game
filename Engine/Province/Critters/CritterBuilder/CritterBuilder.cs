@@ -12,7 +12,7 @@ public class CritterBuilder
     private ICritterDistribution _critterDistribution;
     private IClassRatio _classRatio;
     private CritterCulture _culture;
-    private Species.Species _species;
+    private SpeciesDetails _species;
     private uint _totalCount;
 
 
@@ -28,9 +28,9 @@ public class CritterBuilder
         return this;
     }
     
-    public CritterBuilder SetSpecies(Species.Species newSpecies)
+    public CritterBuilder SetSpecies(SpeciesDetails newSpeciesDetails)
     {
-        _species = newSpecies;
+        _species = newSpeciesDetails;
         return this;
     }
     

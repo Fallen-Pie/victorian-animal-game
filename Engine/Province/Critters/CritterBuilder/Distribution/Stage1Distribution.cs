@@ -2,12 +2,12 @@
 
 public class Stage1Distribution : ICritterDistribution
 {
-    public double Execute(short age, Species.Species species)
+    public double Execute(short age, Species.SpeciesDetails speciesDetails)
     {
-        if (age < species.AdultAge)
+        if (age < speciesDetails.AdultAge)
         {
-            return 1.0 - (0.4 * ((double)age / species.AdultAge)); 
+            return 1.0 - (0.4 * ((double)age / speciesDetails.AdultAge)); 
         }
-        return 0.8 * (1.0 - (double)(age - species.AdultAge) / (species.ElderAge * 1.2 - species.FertileAge));
+        return 0.8 * (1.0 - (double)(age - speciesDetails.AdultAge) / (speciesDetails.ElderAge * 1.2 - speciesDetails.FertileAge));
     }
 }

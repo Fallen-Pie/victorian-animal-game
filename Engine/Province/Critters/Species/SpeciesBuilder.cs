@@ -53,9 +53,9 @@ public class SpeciesBuilder
         return this;
     }
     
-    public Species Build()
+    public SpeciesDetails Build()
     {
-        return new Species(_speciesType, _foodConsumption, _workforceValue, 
+        return new SpeciesDetails(_speciesType, _foodConsumption, _workforceValue, 
             _adolescentAge, _adultAge, _fertileAge, _elderAge, _speciesName);
     }
 }
