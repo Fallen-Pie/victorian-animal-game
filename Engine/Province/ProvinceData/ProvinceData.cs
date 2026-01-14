@@ -22,11 +22,6 @@ public record struct ProvinceData
         Class = newClass;
         Count = newCount;
     }
-
-    public void AddCount(uint newCount)
-    {
-        Count += newCount;
-    }
     
     public bool Equals(ProvinceData newData) =>
         (_culture: Culture, _species: Species, _lifeStage: LifeStage, _class: Class).Equals(
