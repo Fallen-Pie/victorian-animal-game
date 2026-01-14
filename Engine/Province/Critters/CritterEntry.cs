@@ -43,6 +43,11 @@ namespace VictorianAnimalGame.Engine.Province.Critters
             return _culture;
         }
         
+        public uint GetCritterClassCount(CritterClass critterClass)
+        {
+            return _critterDetails.GetCritterCount(critterClass);
+        }
+        
         public uint GetCritterTotalCount()
         {
             return _critterDetails.GetCritterTotalCount();
