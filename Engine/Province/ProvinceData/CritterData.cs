@@ -8,12 +8,6 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public record struct CritterData
 {
-    private CultureType Culture { get; }
-    private CritterLifeStage LifeStage { get; }
-    private SpeciesType Species { get; }
-    private CritterClass Class { get; }
-    public uint Count { get; set; }
-
     public CritterData(CultureType newCulture, CritterLifeStage newLifeStage, 
         SpeciesType newSpecies, CritterClass newClass, uint newCount)
     {
@@ -23,6 +17,12 @@ public record struct CritterData
         Class = newClass;
         Count = newCount;
     }
+    
+    public CultureType Culture { get; }
+    public CritterLifeStage LifeStage { get; }
+    public SpeciesType Species { get; }
+    public CritterClass Class { get; }
+    public uint Count { get; set; }
     
     public bool Equals(CritterData newData) =>
         (_culture: Culture, _species: Species, _lifeStage: LifeStage, _class: Class).Equals(
