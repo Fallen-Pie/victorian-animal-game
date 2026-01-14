@@ -11,60 +11,59 @@ using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
 
-namespace VictorianAnimalGame.Engine.Map {
-    public partial class MainMap : Node2D
+namespace VictorianAnimalGame.Engine.Map;
+
+public partial class MainMap : Node2D
+{
+    public override async void _Ready()
     {
-        public override async void _Ready()
+        LandProvince province = new();
+        province = InitialiseProvince(province);
+        foreach (var critter in province.ProvinceCritters) 
         {
-            LandProvince province = new();
-            province = InitialiseProvince(province);
-            foreach (var critter in province.ProvinceCritters) 
-            {
-                GD.Print(critter);
-            }
-            var frozenDictionary = GoodDefines.GoodTypes;
-
-            province.SetName();
-            GD.Print(province.GetDetails());
-            //AddChild(province);
-            TestTime();
-            base._Ready();
-
+            GD.Print(critter);
         }
+        var frozenDictionary = GoodDefines.GoodTypes;
+
+        province.SetName();
+        GD.Print(province.GetDetails());
+        //AddChild(province);
+        TestTime();
+        base._Ready();
+
+    }
         
-        // static Random _r = new Random ();
-        // static T RandomEnumValue<T> ()
-        // {
-        //     var v = Enum.GetValues(typeof (T)).Cast<T>().Where(value => value.ToString() != "None").ToArray();
-        //     return (T) v.GetValue (_r.Next(v.Length));
-        // }
+    // static Random _r = new Random ();
+    // static T RandomEnumValue<T> ()
+    // {
+    //     var v = Enum.GetValues(typeof (T)).Cast<T>().Where(value => value.ToString() != "None").ToArray();
+    //     return (T) v.GetValue (_r.Next(v.Length));
+    // }
         
-        public LandProvince InitialiseProvince(LandProvince province)
-        {
-            CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var value);
+    public LandProvince InitialiseProvince(LandProvince province)
+    {
+        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var value);
 
-            HashSet<CritterEntry> critterEntries = new CritterBuilder()
-                .SetAmount(30000)
-                .SetDistribution(new Stage1Distribution())
-                .SetRatio(new RuralRatio())
-                .SetSpecies(value)
-                .SetCulture(CritterCulture.Dutch)
-                .Build();
-            province.AddCritterToProvince(critterEntries);
-            return province;
+        HashSet<CritterEntry> critterEntries = new CritterBuilder()
+            .SetAmount(30000)
+            .SetDistribution(new Stage1Distribution())
+            .SetRatio(new RuralRatio())
+            .SetSpecies(value)
+            .SetCulture(CritterCulture.Dutch)
+            .Build();
+        province.AddCritterToProvince(critterEntries);
+        return province;
+    }
+
+    public async void TestTime()
+    {
+        while (true)
+        {
+            await Task.Delay(100);
+            DateDefines.IncrementTime();
+            Console.WriteLine(DateDefines.GetTime());
         }
 
-        public async void TestTime()
-        {
-            while (true)
-            {
-                await Task.Delay(100);
-                DateDefines.IncrementTime();
-                Console.WriteLine(DateDefines.GetTime());
-            }
-
-            //return await Task.FromResult(0);
-        }
+        //return await Task.FromResult(0);
     }
 }
-
