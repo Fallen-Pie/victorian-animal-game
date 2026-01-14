@@ -1,27 +1,54 @@
+using System;
+
 namespace VictorianAnimalGame.Engine.Province.Critters
 {
     public record struct CritterDetails
     {
-        private CritterClass _critterLower;
-        private CritterClass _critterMiddle;
-        private CritterClass _critterUpper;
+        private CritterClassDetails _critterLower;
+        private CritterClassDetails _critterMiddle;
+        private CritterClassDetails _critterUpper;
 
         public CritterDetails(ushort low, ushort middle, ushort upper)
         {
-            _critterLower = new CritterClass(low);
-            _critterMiddle = new CritterClass(middle);
-            _critterUpper = new CritterClass(upper);
+            _critterLower = new CritterClassDetails(low);
+            _critterMiddle = new CritterClassDetails(middle);
+            _critterUpper = new CritterClassDetails(upper);
         }
         
-        public uint GetCritterCount()
+        public uint GetCritterTotalCount()
         {
             return (uint)(_critterLower.Total + 
                    _critterMiddle.Total + 
                    _critterUpper.Total);
         }
-        public void AddCritterCount(ushort newCount)
+
+        public uint GetCritterCount(CritterClass newCritterClass)
         {
-            _critterLower.Total += newCount;
+            return newCritterClass switch
+            {
+                CritterClass.Lower => _critterLower.Total,
+                CritterClass.Middle => _critterMiddle.Total,
+                CritterClass.Upper => _critterUpper.Total,
+                _ => throw new ArgumentException("Unknown CritterClass Value", nameof(newCritterClass))
+            };
+        }
+        
+        public void AddCritterCount(ushort newCount, CritterClass newCritterClass = CritterClass.Lower)
+        {
+            switch (newCritterClass)
+            {
+                case CritterClass.Lower:
+                    _critterLower.Total += newCount;
+                    break;
+                case CritterClass.Middle:
+                    _critterMiddle.Total += newCount;
+                    break;
+                case CritterClass.Upper:
+                    _critterUpper.Total += newCount;
+                    break;
+                default:
+                    throw new ArgumentException("Unknown CritterClass Value", nameof(newCritterClass));
+            }
         }
         
         public override string ToString()
@@ -31,7 +58,7 @@ namespace VictorianAnimalGame.Engine.Province.Critters
                    $"UpperClass={_critterUpper}";
         }
 
-        private struct CritterClass(ushort newCount)
+        private struct CritterClassDetails(ushort newCount)
         {
             public ushort Total = newCount;
             public ushort Trained;
