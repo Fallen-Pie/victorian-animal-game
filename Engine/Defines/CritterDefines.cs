@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.FileReader.DataConfig;
-using VictorianAnimalGame.Scripts.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Defines;
 

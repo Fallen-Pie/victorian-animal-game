@@ -26,14 +26,14 @@ public static class GoodDefines
         {
             var goodData = good.Goods;
             
-            var builder = new GoodTypeBuilder();
-            GoodType newGood = builder.SetGoodName(goodData.Name)
+            GoodType newGood = new GoodTypeBuilder()
+                .SetGoodName(goodData.Name)
                 .SetGoodPrice(goodData.Price)
                 .SetGoodBulk(goodData.Bulk)
                 .Build();
             goodTypes.Add(goodData.Name, newGood);
             
-            Console.WriteLine(newGood);
+            Console.WriteLine(newGood.ToString());
         }
         
         return goodTypes.ToFrozenDictionary();
