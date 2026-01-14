@@ -1,41 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
-using VictorianAnimalGame.Scripts.Critters;
-using VictorianAnimalGame.Scripts.Critters.Species;
+using VictorianAnimalGame.Engine.Province.Critters.Species;
+using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
 
-namespace VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
+namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
 
-public class ProvinceCritterBuilder
+public class CritterBuilder
 {
     private ICritterDistribution _critterDistribution;
     private IClassRatio _classRatio;
     private CritterCulture _culture;
-    private Species _species;
-    
-    public void SetDistribution(ICritterDistribution newDistribution)
+    private Species.Species _species;
+    private uint _totalCount;
+
+
+    public CritterBuilder SetDistribution(ICritterDistribution newDistribution)
     {
         _critterDistribution = newDistribution;
+        return this;
     }
     
-    public void SetRatio(IClassRatio newRatio)
+    public CritterBuilder SetRatio(IClassRatio newRatio)
     {
         _classRatio = newRatio;
+        return this;
     }
     
-    public void SetSpecies(Species newSpecies)
+    public CritterBuilder SetSpecies(Species.Species newSpecies)
     {
         _species = newSpecies;
+        return this;
     }
     
-    public void SetCulture(CritterCulture newCulture)
+    public CritterBuilder SetCulture(CritterCulture newCulture)
     {
         _culture = newCulture;
+        return this;
     }
     
-    public LandProvince AddCritterToProvince(uint totalCount, LandProvince province)
+    public CritterBuilder SetAmount(uint newTotalCount)
     {
+        _totalCount = newTotalCount;
+        return this;
+    }
+    
+    public HashSet<CritterEntry> Build()
+    {
+        HashSet<CritterEntry> h = [];
+        
         uint maxAge = (uint)(_species.ElderAge * 1.2);
         double[] weights = new double[maxAge + 1];
         double totalWeight = 0;
@@ -52,17 +66,17 @@ public class ProvinceCritterBuilder
 
         for (short age = 0; age <= maxAge; age++)
         {
-            uint count = (uint)Math.Round((weights[age] / totalWeight) * totalCount);
+            uint count = (uint)Math.Round((weights[age] / totalWeight) * _totalCount);
 
             if (count != 0)
             {
                 (uint lower, uint middle, uint upper) = _classRatio.Execute(count);
                 var newDetails = new CritterDetails(lower, middle, upper);
-                province.ProvinceCritters.Add(new CritterEntry((short)(DateDefines.Year - age), 
+                h.Add(new CritterEntry((short)(DateDefines.Year - age), 
                     _species.SpeciesType, _culture, newDetails));
             }
         }
 
-        return province;
+        return h;
     }
 }

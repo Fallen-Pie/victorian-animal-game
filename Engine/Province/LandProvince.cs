@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceData;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceData.Strategies;
-using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Engine.Province.Critters;
+using VictorianAnimalGame.Engine.Province.ProvinceData;
+using VictorianAnimalGame.Engine.Province.ProvinceData.Strategies;
 
-namespace VictorianAnimalGame.Engine.Map.Province;
+namespace VictorianAnimalGame.Engine.Province;
 
 public class LandProvince : IProvince
 {
@@ -53,5 +53,10 @@ public class LandProvince : IProvince
     public void SetName()
     {
         ProvinceName = $"LandProvince-{GetHashCode()}";
+    }
+
+    public void AddCritterToProvince(HashSet<CritterEntry> critterEntries)
+    {
+        ProvinceCritters.IntersectWith(critterEntries);
     }
 }

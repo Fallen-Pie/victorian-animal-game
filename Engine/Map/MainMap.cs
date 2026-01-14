@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Map.Province;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Map.Province.ProvinceBuilder.Distribution;
-using VictorianAnimalGame.Scripts.Critters;
+using VictorianAnimalGame.Engine.Province;
+using VictorianAnimalGame.Engine.Province.Critters;
+using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
+using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
 
 namespace VictorianAnimalGame.Engine.Map {
     public partial class MainMap : Node2D
@@ -31,22 +32,26 @@ namespace VictorianAnimalGame.Engine.Map {
 
         }
         
-        static Random _r = new Random ();
-        static T RandomEnumValue<T> ()
-        {
-            var v = Enum.GetValues(typeof (T)).Cast<T>().Where(value => value.ToString() != "None").ToArray();
-            return (T) v.GetValue (_r.Next(v.Length));
-        }
+        // static Random _r = new Random ();
+        // static T RandomEnumValue<T> ()
+        // {
+        //     var v = Enum.GetValues(typeof (T)).Cast<T>().Where(value => value.ToString() != "None").ToArray();
+        //     return (T) v.GetValue (_r.Next(v.Length));
+        // }
         
         public LandProvince InitialiseProvince(LandProvince province)
         {
-            ProvinceCritterBuilder newBuilder = new ProvinceCritterBuilder();
-            newBuilder.SetDistribution(new Stage1Distribution());
-            newBuilder.SetRatio(new RuralRatio());
             CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var value);
-            newBuilder.SetSpecies(value);
-            newBuilder.SetCulture(CritterCulture.Dutch);
-            return newBuilder.AddCritterToProvince(30000, province);
+
+            HashSet<CritterEntry> critterEntries = new CritterBuilder()
+                .SetAmount(30000)
+                .SetDistribution(new Stage1Distribution())
+                .SetRatio(new RuralRatio())
+                .SetSpecies(value)
+                .SetCulture(CritterCulture.Dutch)
+                .Build();
+            province.AddCritterToProvince(critterEntries);
+            return province;
         }
 
         public async void TestTime()
