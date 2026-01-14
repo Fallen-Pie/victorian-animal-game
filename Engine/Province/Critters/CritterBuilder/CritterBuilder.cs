@@ -4,6 +4,7 @@ using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Province.Critters.Cultures;
 
 namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
 
@@ -11,7 +12,7 @@ public class CritterBuilder
 {
     private ICritterDistribution _critterDistribution;
     private IClassRatio _classRatio;
-    private CritterCulture _culture;
+    private CultureType _culture;
     private SpeciesDetails _species;
     private uint _totalCount;
 
@@ -34,7 +35,7 @@ public class CritterBuilder
         return this;
     }
     
-    public CritterBuilder SetCulture(CritterCulture newCulture)
+    public CritterBuilder SetCulture(CultureType newCulture)
     {
         _culture = newCulture;
         return this;

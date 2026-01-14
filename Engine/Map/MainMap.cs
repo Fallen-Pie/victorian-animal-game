@@ -10,6 +10,7 @@ using VictorianAnimalGame.Engine.Province.Critters;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Province.Critters.Cultures;
 
 namespace VictorianAnimalGame.Engine.Map;
 
@@ -49,7 +50,7 @@ public partial class MainMap : Node2D
             .SetDistribution(new Stage1Distribution())
             .SetRatio(new RuralRatio())
             .SetSpecies(value)
-            .SetCulture(CritterCulture.Dutch)
+            .SetCulture(new CultureType(0))
             .Build();
         province.AddCritterToProvince(critterEntries);
         return province;

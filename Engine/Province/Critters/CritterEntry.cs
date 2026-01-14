@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Province.Critters.Cultures;
 using VictorianAnimalGame.Engine.Province.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Province.Critters
@@ -10,11 +11,11 @@ namespace VictorianAnimalGame.Engine.Province.Critters
     {
         private readonly short _year;
         private readonly SpeciesType _species;
-        private readonly CritterCulture _culture;
+        private readonly CultureType _culture;
         private CritterDetails _critterDetails;
         
         public CritterEntry(short newYear, SpeciesType newSpecies, 
-            CritterCulture newCulture, CritterDetails newDetails)
+            CultureType newCulture, CritterDetails newDetails)
         {
             _year = newYear;
             _species = newSpecies;
@@ -37,12 +38,17 @@ namespace VictorianAnimalGame.Engine.Province.Critters
             return _species;
         }
         
+        public CultureType GetCritterCulture()
+        {
+            return _culture;
+        }
+        
         public uint GetCritterCount()
         {
-            return _critterDetails.GetCritterCount();
+            return _critterDetails.GetCritterTotalCount();
         }
 
-        private CritterLifeStage GetCritterAge()
+        public CritterLifeStage GetCritterAge()
         {
             CritterDefines.Species.TryGetValue(_species, out var species);
             int age = DateDefines.Year - _year;
