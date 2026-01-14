@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using VictorianAnimalGame.Engine.Province.Critters;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private HashSet<ProvinceData> ProvinceData { get; set; }
+    private HashSet<ProvinceData> ProvinceData = [];
     
     public void GetData(HashSet<CritterEntry> g)
     {
@@ -24,7 +23,9 @@ public class ProvinceManager
                     critter.GetCritterClassCount(critterClass));
                 if (ProvinceData.TryGetValue(newProvinceData, out var currentData))
                 {
-                    currentData.AddCount(critter.GetCritterClassCount(critterClass));
+                    currentData.Count += critter.GetCritterClassCount(critterClass);
+                    ProvinceData.Remove(newProvinceData);
+                    ProvinceData.Add(currentData);
                 }
                 else
                 {
