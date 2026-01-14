@@ -11,10 +11,10 @@ public record struct ProvinceData
     private CritterLifeStage LifeStage { get; }
     private SpeciesType Species { get; }
     private CritterClass Class { get; }
-    public int Count { get; set; }
+    public uint Count { get; set; }
 
     public ProvinceData(CultureType newCulture, CritterLifeStage newLifeStage, 
-        SpeciesType newSpecies, CritterClass newClass, int newCount)
+        SpeciesType newSpecies, CritterClass newClass, uint newCount)
     {
         Culture = newCulture;
         LifeStage = newLifeStage;
@@ -23,7 +23,7 @@ public record struct ProvinceData
         Count = newCount;
     }
 
-    public void AddCount(int newCount)
+    public void AddCount(uint newCount)
     {
         Count += newCount;
     }
