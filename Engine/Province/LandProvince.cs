@@ -57,6 +57,6 @@ public class LandProvince : IProvince
 
     public void AddCritterToProvince(HashSet<CritterEntry> critterEntries)
     {
-        ProvinceCritters.IntersectWith(critterEntries);
+        ProvinceCritters.UnionWith(critterEntries);
     }
 }
