@@ -6,7 +6,7 @@ namespace VictorianAnimalGame.Engine.Province.Critters
         private CritterClass _critterMiddle;
         private CritterClass _critterUpper;
 
-        public CritterDetails(uint low, uint middle, uint upper)
+        public CritterDetails(ushort low, ushort middle, ushort upper)
         {
             _critterLower = new CritterClass(low);
             _critterMiddle = new CritterClass(middle);
@@ -15,11 +15,11 @@ namespace VictorianAnimalGame.Engine.Province.Critters
         
         public uint GetCritterCount()
         {
-            return _critterLower.Total + 
+            return (uint)(_critterLower.Total + 
                    _critterMiddle.Total + 
-                   _critterUpper.Total;
+                   _critterUpper.Total);
         }
-        public void AddCritterCount(uint newCount)
+        public void AddCritterCount(ushort newCount)
         {
             _critterLower.Total += newCount;
         }
@@ -31,11 +31,11 @@ namespace VictorianAnimalGame.Engine.Province.Critters
                    $"UpperClass={_critterUpper}";
         }
 
-        private struct CritterClass(uint newCount)
+        private struct CritterClass(ushort newCount)
         {
-            public uint Total = newCount;
-            public uint Trained;
-            public uint Literate;
+            public ushort Total = newCount;
+            public ushort Trained;
+            public ushort Literate;
             //public uint Love;
             //public uint Hate;
 

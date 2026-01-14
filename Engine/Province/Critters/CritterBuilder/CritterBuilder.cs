@@ -66,11 +66,11 @@ public class CritterBuilder
 
         for (short age = 0; age <= maxAge; age++)
         {
-            uint count = (uint)Math.Round((weights[age] / totalWeight) * _totalCount);
+            ushort count = (ushort)Math.Round((weights[age] / totalWeight) * _totalCount);
 
             if (count != 0)
             {
-                (uint lower, uint middle, uint upper) = _classRatio.Execute(count);
+                (ushort lower, ushort middle, ushort upper) = _classRatio.Execute(count);
                 var newDetails = new CritterDetails(lower, middle, upper);
                 h.Add(new CritterEntry((short)(DateDefines.Year - age), 
                     _species.SpeciesType, _culture, newDetails));

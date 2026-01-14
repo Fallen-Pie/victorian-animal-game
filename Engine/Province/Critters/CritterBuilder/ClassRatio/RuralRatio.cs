@@ -2,12 +2,12 @@
 
 public class RuralRatio : IClassRatio
 {
-    public (uint Lower, uint Middle, uint Upper) Execute(uint count)
+    public (ushort Lower, ushort Middle, ushort Upper) Execute(ushort count)
     {
-        uint lowerCount = count;
-        uint upperCount = (uint)(lowerCount * 0.03);
-        uint middleCount = (uint)(lowerCount * 0.12);
-        lowerCount = lowerCount - upperCount - middleCount;
+        ushort lowerCount = count;
+        ushort upperCount = (ushort)(lowerCount * 0.03);
+        ushort middleCount = (ushort)(lowerCount * 0.12);
+        lowerCount = (ushort)(lowerCount - upperCount - middleCount);
         return (lowerCount, middleCount, upperCount);
     }
 }
