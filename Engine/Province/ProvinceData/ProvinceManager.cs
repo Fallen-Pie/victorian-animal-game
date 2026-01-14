@@ -6,7 +6,7 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private HashSet<ProvinceData> ProvinceData = [];
+    private HashSet<CritterData> ProvinceData = [];
     
     public void GetData(HashSet<CritterEntry> g)
     {
@@ -15,26 +15,26 @@ public class ProvinceManager
         {
             foreach (CritterClass critterClass in Enum.GetValues<CritterClass>())
             {
-                ProvinceData newProvinceData = new ProvinceData(
+                CritterData newCritterData = new CritterData(
                     critter.GetCritterCulture(),
                     critter.GetCritterAge(),
                     critter.GetCritterSpecies(),
                     critterClass, 
                     critter.GetCritterClassCount(critterClass));
-                if (ProvinceData.TryGetValue(newProvinceData, out var currentData))
+                if (ProvinceData.TryGetValue(newCritterData, out var currentData))
                 {
                     currentData.Count += critter.GetCritterClassCount(critterClass);
-                    ProvinceData.Remove(newProvinceData);
+                    ProvinceData.Remove(newCritterData);
                     ProvinceData.Add(currentData);
                 }
                 else
                 {
-                    ProvinceData.Add(newProvinceData);
+                    ProvinceData.Add(newCritterData);
                 }
             }
         }
 
-        foreach (ProvinceData critter in ProvinceData)
+        foreach (CritterData critter in ProvinceData)
         {
             Console.WriteLine(critter.ToString());
         }

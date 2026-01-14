@@ -48,8 +48,8 @@ public class LandProvince : IProvince
         {
             details += $"{critter}\n";
         }
-        Console.WriteLine($"Size of {typeof(CritterEntry)} is {Marshal.SizeOf(typeof(CritterEntry))}");
-        Console.WriteLine($"Size of {typeof(ProvinceData.ProvinceData)} is {Marshal.SizeOf(typeof(ProvinceData.ProvinceData))}");
+        Console.WriteLine($"Size of {typeof(CritterEntry)} is {Marshal.SizeOf<CritterEntry>()}");
+        Console.WriteLine($"Size of {typeof(CritterData)} is {Marshal.SizeOf<CritterData>()}");
         _provinceManager.GetData(ProvinceCritters);
         return details;
     }
