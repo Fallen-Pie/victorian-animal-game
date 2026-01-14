@@ -2,22 +2,22 @@
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province.Critters;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData.Strategies;
+namespace VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 
-public class DataWorkforceSpecies : IDataStrategy
+public class DataWorkforceYear : IDataStrategy
 {
     public HashSet<ProvinceCritterData> Execute(HashSet<CritterEntry> critters)
     {
         HashSet<ProvinceCritterData> workforce = [];
         foreach (CritterEntry critter in critters)
         {
-            CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var workforceModifier);
-            //uint workforceAmount = (uint)(critter.GetCritterCount() * workforceModifier.GetWorkforce());
-            uint workforceAmount = critter.GetCritterCount();
-            ProvinceCritterData critterData = new(critter.GetCritterSpecies(), workforceAmount);
+            CritterDefines.Species.TryGetValue(critter.GetCritterSpecies(), out var value);
+            //uint workAmountYear = (uint)(critter.GetCritterCount() * value.GetWorkforce());
+            uint workAmountYear = critter.GetCritterCount();
+            ProvinceCritterData critterData = new(critter.GetCritterYear(), workAmountYear);
             if (workforce.TryGetValue(critterData, out var oldData))
             {
-                oldData.AddAmount(workforceAmount);
+                oldData.AddAmount(workAmountYear);
             }
             else
             {

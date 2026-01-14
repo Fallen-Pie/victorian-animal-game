@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Province.Critters;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData.Strategies;
+namespace VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 
 public interface IDataStrategy
 {

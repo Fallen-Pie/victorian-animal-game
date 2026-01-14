@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Province.Critters;
-using VictorianAnimalGame.Engine.Province.ProvinceData.Strategies;
+using VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData
+namespace VictorianAnimalGame.Scripts.ProvinceData
 {
     public class ProvinceDataFinder
     {
