@@ -6,11 +6,13 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private HashSet<CritterData> ProvinceData = [];
-    
-    public void GetData(HashSet<CritterEntry> g)
+    private HashSet<CritterData> CritterData { get; set; }
+    private HashSet<WorkforceData> WorkforceData { get; set; }
+
+    public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
-        Span<CritterEntry> critterEntrySpan = [.. g];
+        CritterData = [];
+        Span<CritterEntry> critterEntrySpan = [.. provincialCritterData];
         foreach (CritterEntry critter in critterEntrySpan)
         {
             foreach (CritterClass critterClass in Enum.GetValues<CritterClass>())
@@ -21,22 +23,48 @@ public class ProvinceManager
                     critter.GetCritterSpecies(),
                     critterClass, 
                     critter.GetCritterClassCount(critterClass));
-                if (ProvinceData.TryGetValue(newCritterData, out var currentData))
+                if (CritterData.TryGetValue(newCritterData, out var currentData))
                 {
                     currentData.Count += critter.GetCritterClassCount(critterClass);
-                    ProvinceData.Remove(newCritterData);
-                    ProvinceData.Add(currentData);
+                    CritterData.Remove(newCritterData);
+                    CritterData.Add(currentData);
                 }
                 else
                 {
-                    ProvinceData.Add(newCritterData);
+                    CritterData.Add(newCritterData);
                 }
             }
         }
 
-        foreach (CritterData critter in ProvinceData)
+        foreach (CritterData critter in CritterData)
         {
             Console.WriteLine(critter.ToString());
+        }
+    }
+
+    public void GetWorkforceData()
+    {
+        WorkforceData = [];
+        Span<CritterData> critterDataSpan = [.. CritterData];
+        foreach (CritterData critter in critterDataSpan)
+        {
+            if (critter.LifeStage == CritterLifeStage.Young) continue;
+            WorkforceData newWorkforceData = new WorkforceData(critter.Species, critter.Class, critter.Count);
+            if (WorkforceData.TryGetValue(newWorkforceData, out var currentData))
+            {
+                WorkforceData.Remove(newWorkforceData);
+                currentData.AddWorkforce(newWorkforceData.WorkforceAmount);
+                WorkforceData.Add(currentData);
+            }
+            else
+            { 
+                WorkforceData.Add(newWorkforceData);
+            }
+        }
+        
+        foreach (WorkforceData workforce in WorkforceData)
+        {
+            Console.WriteLine(workforce.ToString());
         }
     }
 }
