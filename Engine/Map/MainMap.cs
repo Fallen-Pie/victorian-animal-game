@@ -31,7 +31,6 @@ public partial class MainMap : Node2D
         //AddChild(province);
         TestTime();
         base._Ready();
-
     }
         
     // static Random _r = new Random ();

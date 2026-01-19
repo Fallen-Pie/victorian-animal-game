@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using VictorianAnimalGame.Engine.Province.Critters;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private HashSet<CritterData> CritterData { get; set; }
-    private HashSet<WorkforceData> WorkforceData { get; set; }
-
+    private CritterData[] CritterData { get; set; }
+    private WorkforceData[] WorkforceData { get; set; }
+ 
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
-        CritterData = [];
+        HashSet<CritterData> newCritterArray = [];
         Span<CritterEntry> critterEntrySpan = [.. provincialCritterData];
         foreach (CritterEntry critter in critterEntrySpan)
         {
@@ -23,18 +24,20 @@ public class ProvinceManager
                     critter.GetCritterSpecies(),
                     critterClass, 
                     critter.GetCritterClassCount(critterClass));
-                if (CritterData.TryGetValue(newCritterData, out var currentData))
+                if (newCritterArray.TryGetValue(newCritterData, out var currentData))
                 {
                     currentData.Count += critter.GetCritterClassCount(critterClass);
-                    CritterData.Remove(newCritterData);
-                    CritterData.Add(currentData);
+                    newCritterArray.Remove(newCritterData);
+                    newCritterArray.Add(currentData);
                 }
                 else
                 {
-                    CritterData.Add(newCritterData);
+                    newCritterArray.Add(newCritterData);
                 }
             }
         }
+
+        CritterData = [.. newCritterArray];
 
         foreach (CritterData critter in CritterData)
         {
@@ -44,23 +47,25 @@ public class ProvinceManager
 
     public void GetWorkforceData()
     {
-        WorkforceData = [];
-        Span<CritterData> critterDataSpan = [.. CritterData];
+        HashSet<WorkforceData> workforceDataHashSet = [];
+        Span<CritterData> critterDataSpan = CritterData;
         foreach (CritterData critter in critterDataSpan)
         {
             if (critter.LifeStage == CritterLifeStage.Young) continue;
             WorkforceData newWorkforceData = new WorkforceData(critter.Species, critter.Class, critter.Count);
-            if (WorkforceData.TryGetValue(newWorkforceData, out var currentData))
+            if (workforceDataHashSet.TryGetValue(newWorkforceData, out var currentData))
             {
-                WorkforceData.Remove(newWorkforceData);
+                workforceDataHashSet.Remove(newWorkforceData);
                 currentData.AddWorkforce(newWorkforceData.WorkforceAmount);
-                WorkforceData.Add(currentData);
+                workforceDataHashSet.Add(currentData);
             }
             else
             { 
-                WorkforceData.Add(newWorkforceData);
+                workforceDataHashSet.Add(newWorkforceData);
             }
         }
+        
+        WorkforceData = [.. workforceDataHashSet];
         
         foreach (WorkforceData workforce in WorkforceData)
         {
