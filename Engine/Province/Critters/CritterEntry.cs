@@ -10,16 +10,18 @@ namespace VictorianAnimalGame.Engine.Province.Critters
     public record struct CritterEntry
     {
         private readonly short _year;
-        private readonly SpeciesType _species;
-        private readonly CultureType _culture;
         private CritterDetails _critterDetails;
+        public SpeciesType Species { get; }
+        public CultureType Culture { get; }
+        
+        public CritterLifeStage LifeStage => GetCritterAge();
         
         public CritterEntry(short newYear, SpeciesType newSpecies, 
             CultureType newCulture, CritterDetails newDetails)
         {
             _year = newYear;
-            _species = newSpecies;
-            _culture = newCulture;
+            Species = newSpecies;
+            Culture = newCulture;
             _critterDetails = newDetails;
         }
         
@@ -35,12 +37,12 @@ namespace VictorianAnimalGame.Engine.Province.Critters
         
         public SpeciesType GetCritterSpecies()
         {
-            return _species;
+            return Species;
         }
         
         public CultureType GetCritterCulture()
         {
-            return _culture;
+            return Culture;
         }
         
         public uint GetCritterClassCount(CritterClass critterClass)
@@ -55,7 +57,7 @@ namespace VictorianAnimalGame.Engine.Province.Critters
 
         public CritterLifeStage GetCritterAge()
         {
-            CritterDefines.Species.TryGetValue(_species, out var species);
+            CritterDefines.Species.TryGetValue(Species, out var species);
             int age = DateDefines.Year - _year;
 
             return age switch
@@ -68,20 +70,20 @@ namespace VictorianAnimalGame.Engine.Province.Critters
         }
         
         public bool Equals(CritterEntry newCritter) =>
-            (_culture, _species, _year).Equals(
-                (newCritter._culture, newCritter._species, newCritter._year));
+            (_culture: Culture, _species: Species, _year).Equals(
+                (newCritter.Culture, newCritter.Species, newCritter._year));
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_culture, _species, _year);
+            return HashCode.Combine(Culture, Species, _year);
         }
 
         public override string ToString()
         {
-            return $"Current {CritterDefines.Species[_species].SpeciesName}: " +
-                   $"{_culture}" +
+            return $"Current {CritterDefines.Species[Species].SpeciesName}: " +
+                   $"{Culture}" +
                    $"/{_year}" +
-                   $"/{GetHashCode()}/{GetCritterAge()}/{_critterDetails}";
+                   $"/{GetHashCode()}/{LifeStage}/{_critterDetails}";
         }
     }
 }
