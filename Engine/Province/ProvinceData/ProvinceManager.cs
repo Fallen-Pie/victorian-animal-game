@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province.Critters;
 using VictorianAnimalGame.Engine.Province.Critters.Species;
 
@@ -50,31 +52,21 @@ public class ProvinceManager
         }
     }
 
-    // public void GetWorkforceData()
-    // {
-    //     Dictionary<SpeciesType, float> workforceDataHashSet = [];
-    //     Span<CritterData> critterDataSpan = CritterData;
-    //     foreach (CritterData critter in critterDataSpan)
-    //     {
-    //         if (critter.LifeStage == CritterLifeStage.Young) continue;
-    //         WorkforceData newWorkforceData = new WorkforceData(critter.Species, critter.Class, critter.Count);
-    //         if (workforceDataHashSet.TryGetValue(newWorkforceData, out var currentData))
-    //         {
-    //             workforceDataHashSet.Remove(newWorkforceData);
-    //             currentData.AddWorkforce(newWorkforceData.WorkforceAmount);
-    //             workforceDataHashSet.Add(currentData);
-    //         }
-    //         else
-    //         { 
-    //             workforceDataHashSet.Add(newWorkforceData);
-    //         }
-    //     }
-    //     
-    //     WorkforceData = [.. workforceDataHashSet];
-    //     
-    //     foreach (WorkforceData workforce in WorkforceData)
-    //     {
-    //         Console.WriteLine(workforce.ToString());
-    //     }
-    // }
+    public void GetWorkforceData()
+    {
+        Dictionary<SpeciesType, float> workforceDictionary = [];
+        Span<CritterDataGroup> critterDataSpan = CritterData;
+        foreach (CritterDataGroup critterGroup in critterDataSpan)
+        {
+            (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
+            ref float existingWorkforce = 
+                ref CollectionsMarshal.GetValueRefOrAddDefault(workforceDictionary, species, out bool exists);
+            existingWorkforce = !exists ? workforceValue : MathF.Round(existingWorkforce + workforceValue, 2);
+        }
+        
+        foreach (var workforce in workforceDictionary)
+        {
+            Console.WriteLine($"{CritterDefines.Species[workforce.Key].SpeciesName} workforce: {workforce.Value}");;
+        }
+    }
 }
