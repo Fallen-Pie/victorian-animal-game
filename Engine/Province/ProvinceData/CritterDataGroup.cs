@@ -35,9 +35,9 @@ public record struct CritterDataGroup(SpeciesType Species, CultureType Culture, 
     {
         float workforceModifier = Class switch
         {
-            CritterClass.Lower => CritterDefines.Species[Species].WorkforceValue,
-            CritterClass.Middle => CritterDefines.Species[Species].WorkforceValue,
-            CritterClass.Upper => CritterDefines.Species[Species].WorkforceValue,
+            CritterClass.Lower => Species.Workforce,
+            CritterClass.Middle => Species.Workforce,
+            CritterClass.Upper => Species.Workforce,
             _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(CritterClass)}: {Class}")
         };
         float workforceTotal = MathF.Round((_counts.Workers - _special.Indisposed) * workforceModifier, 2);
@@ -46,7 +46,7 @@ public record struct CritterDataGroup(SpeciesType Species, CultureType Culture, 
 
     public override string ToString()
     {
-        return $"Data of {CritterDefines.Species[Species].SpeciesName}, {Culture}, {Class}: " +
+        return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{_counts.ToString()}|{_special.ToString()}";
     }
 
