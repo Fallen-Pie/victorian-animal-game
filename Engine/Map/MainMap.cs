@@ -20,13 +20,13 @@ public partial class MainMap : Node2D
     {
         LandProvince province = new();
         province = InitialiseProvince(province);
-        foreach (var critter in province.ProvinceCritters) 
-        {
-            GD.Print(critter);
-        }
+        // foreach (var critter in province.ProvinceCritters) 
+        // {
+        //     GD.Print(critter);
+        // }
         var frozenDictionary = GoodDefines.GoodTypes;
 
-        province.SetName();
+        //province.SetName();
         GD.Print(province.GetDetails());
         //AddChild(province);
         TestTime();
@@ -42,13 +42,23 @@ public partial class MainMap : Node2D
         
     public LandProvince InitialiseProvince(LandProvince province)
     {
-        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var value);
+        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var otter);
+        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Beaver"], out var beaver);
 
         HashSet<CritterEntry> critterEntries = new CritterBuilder()
             .SetAmount(30000)
             .SetDistribution(new Stage1Distribution())
             .SetRatio(new RuralRatio())
-            .SetSpecies(value)
+            .SetSpecies(otter)
+            .SetCulture(new CultureType(0))
+            .Build();
+        province.AddCritterToProvince(critterEntries);
+        
+        critterEntries = new CritterBuilder()
+            .SetAmount(10000)
+            .SetDistribution(new FlatDistribution())
+            .SetRatio(new RuralRatio())
+            .SetSpecies(beaver)
             .SetCulture(new CultureType(0))
             .Build();
         province.AddCritterToProvince(critterEntries);
