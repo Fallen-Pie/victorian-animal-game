@@ -60,13 +60,13 @@ public class ProvinceManager
         {
             (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
             ref float existingWorkforce = 
-                ref CollectionsMarshal.GetValueRefOrAddDefault(workforceDictionary, species, out bool exists);
-            existingWorkforce = !exists ? workforceValue : MathF.Round(existingWorkforce + workforceValue, 2);
+                ref CollectionsMarshal.GetValueRefOrAddDefault(workforceDictionary, species, out bool _);
+            existingWorkforce = MathF.Round(existingWorkforce + workforceValue, 2);
         }
         
         foreach (var workforce in workforceDictionary)
         {
-            Console.WriteLine($"{CritterDefines.Species[workforce.Key].SpeciesName} workforce: {workforce.Value}");;
+            Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
         }
     }
 }
