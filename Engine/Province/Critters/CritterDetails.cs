@@ -1,78 +1,44 @@
 using System;
+using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Province.Critters
 {
-    public record struct CritterDetails
+    public record struct CritterDetails : IComparable<CritterDetails>
     {
-        private CritterClassDetails _critterLower;
-        private CritterClassDetails _critterMiddle;
-        private CritterClassDetails _critterUpper;
+        public short Year { get; }
+        public ushort Dependants;
+        public ushort Workers;
+        public ushort Incapacitated;
+        public ushort Soldiers;
+        public int Total => Dependants + Workers + Incapacitated + Soldiers;
+        
+        public ushort Literate;
+        public ushort Trained;
+        public float LiteratePercentage => MathF.Round((float)Literate / Total * 100, 2);
+        public float TrainedPercentage => MathF.Round((float)Trained / Total * 100, 2);
 
-        public CritterDetails(ushort low, ushort middle, ushort upper)
+        public CritterDetails(short newYear, ushort dependants, ushort workers, 
+            ushort incapacitated, ushort soldiers, ushort literate, ushort trained)
         {
-            _critterLower = new CritterClassDetails(low);
-            _critterMiddle = new CritterClassDetails(middle);
-            _critterUpper = new CritterClassDetails(upper);
+            Year = newYear;
+            Dependants = dependants;
+            Workers = workers;
+            Incapacitated = incapacitated;
+            Soldiers = soldiers;
+            Literate = literate;
+            Trained = trained;
         }
         
-        public uint GetCritterTotalCount()
+        public int CompareTo(CritterDetails other)
         {
-            return (uint)(_critterLower.Total + 
-                   _critterMiddle.Total + 
-                   _critterUpper.Total);
+            return Year.CompareTo(other.Year);
         }
 
-        public uint GetCritterCount(CritterClass newCritterClass)
-        {
-            return newCritterClass switch
-            {
-                CritterClass.Lower => _critterLower.Total,
-                CritterClass.Middle => _critterMiddle.Total,
-                CritterClass.Upper => _critterUpper.Total,
-                _ => throw new ArgumentException("Unknown CritterClass Value", nameof(newCritterClass))
-            };
-        }
-        
-        public void AddCritterCount(ushort newCount, CritterClass newCritterClass = CritterClass.Lower)
-        {
-            switch (newCritterClass)
-            {
-                case CritterClass.Lower:
-                    _critterLower.Total += newCount;
-                    break;
-                case CritterClass.Middle:
-                    _critterMiddle.Total += newCount;
-                    break;
-                case CritterClass.Upper:
-                    _critterUpper.Total += newCount;
-                    break;
-                default:
-                    throw new ArgumentException("Unknown CritterClass Value", nameof(newCritterClass));
-            }
-        }
-        
         public override string ToString()
         {
-            return $"LowerClass={_critterLower}|" +
-                   $"MiddleClass={_critterMiddle}|" +
-                   $"UpperClass={_critterUpper}";
-        }
-
-        private struct CritterClassDetails(ushort newCount)
-        {
-            public ushort Total = newCount;
-            public ushort Trained;
-            public ushort Literate;
-            //public uint Love;
-            //public uint Hate;
-
-            public override string ToString()
-            {
-                return
-                    $"({Total}" +
-                    $"/{Trained}/{Literate})";
-                //$"Rates={Love}/{Hate})";
-            }
+            return $"Year:{Year}|Total:{Total}/Dependants:{Dependants}/" +
+                   $"Workers:{Workers}/Incapacitated:{Incapacitated}/Soldiers:{Soldiers}|" +
+                   $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%";
         }
     }
 
