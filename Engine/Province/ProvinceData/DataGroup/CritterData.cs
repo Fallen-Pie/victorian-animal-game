@@ -31,10 +31,16 @@ public record struct CritterData(SpeciesType Species, CultureType Culture, Critt
         set => _counts.Soldiers = value;
     }
     
-    public uint Student => _rates.Students;
-    public uint Trained => _rates.Trained;
-    
-
+    public uint Literate
+    {
+        get => _rates.Literate;
+        set => _rates.Literate = value;
+    }
+    public uint Trained
+    {
+        get => _rates.Trained;
+        set => _rates.Trained = value;
+    }
     
     public (SpeciesType, float) GetWorkforce()
     {

@@ -2,11 +2,11 @@
 
 public struct CritterDataRates
 {
-    public uint Students;
+    public uint Literate;
     public uint Trained;
 
     public override string ToString()
     {
-        return $"({Students}.{Trained})";
+        return $"({Literate}.{Trained})";
     }
 }
