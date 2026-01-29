@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using VictorianAnimalGame.Engine.Province.Critters;
+using VictorianAnimalGame.Engine.Critters;
 
 namespace VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 

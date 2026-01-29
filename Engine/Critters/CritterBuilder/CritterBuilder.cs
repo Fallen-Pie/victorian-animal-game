@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Godot;
+using VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Critters.Cultures;
+using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Province.Critters.Species;
-using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
-using VictorianAnimalGame.Engine.Province.Critters.Cultures;
 
-namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
+namespace VictorianAnimalGame.Engine.Critters.CritterBuilder;
 
 public class CritterBuilder
 {

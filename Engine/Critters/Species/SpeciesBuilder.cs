@@ -1,6 +1,6 @@
 ﻿using VictorianAnimalGame.FileReader.DataConfig;
 
-namespace VictorianAnimalGame.Engine.Province.Critters.Species;
+namespace VictorianAnimalGame.Engine.Critters.Species;
 
 public class SpeciesBuilder
 {

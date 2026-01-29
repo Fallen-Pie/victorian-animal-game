@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.Engine.Province.Critters.Species;
+﻿namespace VictorianAnimalGame.Engine.Critters.Species;
 
 public readonly record struct SpeciesDetails(
     SpeciesType SpeciesType,

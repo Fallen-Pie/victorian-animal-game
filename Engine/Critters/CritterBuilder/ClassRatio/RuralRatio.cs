@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
+namespace VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
 
 public class RuralRatio : IClassRatio
 {

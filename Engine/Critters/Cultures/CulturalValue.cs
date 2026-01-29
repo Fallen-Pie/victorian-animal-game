@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.Engine.Province.Critters.Cultures;
+﻿namespace VictorianAnimalGame.Engine.Critters.Cultures;
 
 public struct CulturalValue
 {

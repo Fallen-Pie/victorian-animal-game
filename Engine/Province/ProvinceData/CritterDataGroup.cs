@@ -1,8 +1,8 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Critters;
+using VictorianAnimalGame.Engine.Critters.Cultures;
+using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Province.Critters;
-using VictorianAnimalGame.Engine.Province.Critters.Cultures;
-using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.Engine.Province.ProvinceData.DataGroupParts;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
@@ -35,9 +35,9 @@ public record struct CritterDataGroup(SpeciesType Species, CultureType Culture, 
     {
         float workforceModifier = Class switch
         {
-            CritterClass.Lower => Species.Workforce,
-            CritterClass.Middle => Species.Workforce,
-            CritterClass.Upper => Species.Workforce,
+            CritterClass.Commoners => Species.Workforce,
+            CritterClass.Bourgeoisie => Species.Workforce,
+            CritterClass.Elites => Species.Workforce,
             _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(CritterClass)}: {Class}")
         };
         float workforceTotal = MathF.Round((_counts.Workers - _special.Indisposed) * workforceModifier, 2);

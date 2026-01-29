@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using VictorianAnimalGame.Engine.Province.Critters.Species;
+using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.FileReader.DataConfig;
 

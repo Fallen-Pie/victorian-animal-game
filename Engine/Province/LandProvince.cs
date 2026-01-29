@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Critters;
+using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.Critters;
-using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.Engine.Province.ProvinceData;
 using VictorianAnimalGame.Scripts.ProvinceData;
 using VictorianAnimalGame.Scripts.ProvinceData.Strategies;

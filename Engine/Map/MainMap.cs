@@ -4,14 +4,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
+using VictorianAnimalGame.Engine.Critters;
+using VictorianAnimalGame.Engine.Critters.CritterBuilder;
+using VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
-using VictorianAnimalGame.Engine.Province.Critters;
-using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
-using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
-using VictorianAnimalGame.Engine.Province.Critters.Cultures;
-using VictorianAnimalGame.Engine.Province.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Map;
 

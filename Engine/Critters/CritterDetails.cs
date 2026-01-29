@@ -1,7 +1,6 @@
 using System;
-using VictorianAnimalGame.Engine.Defines;
 
-namespace VictorianAnimalGame.Engine.Province.Critters
+namespace VictorianAnimalGame.Engine.Critters
 {
     public record struct CritterDetails : IComparable<CritterDetails>
     {

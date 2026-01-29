@@ -1,6 +1,6 @@
 using System;
 
-namespace VictorianAnimalGame.Engine.Province.Critters;
+namespace VictorianAnimalGame.Engine.Critters;
 
 public enum CritterCulture : ushort
 {
