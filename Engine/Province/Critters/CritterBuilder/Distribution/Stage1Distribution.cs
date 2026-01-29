@@ -1,8 +1,10 @@
-﻿namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
+﻿using VictorianAnimalGame.Engine.Province.Critters.Species;
+
+namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
 
 public class Stage1Distribution : ICritterDistribution
 {
-    public double Execute(short age, Species.SpeciesDetails speciesDetails)
+    public double Execute(short age, SpeciesType speciesDetails)
     {
         if (age < speciesDetails.AdultAge)
         {
