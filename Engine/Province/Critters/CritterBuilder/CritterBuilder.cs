@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Godot;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
@@ -13,7 +14,7 @@ public class CritterBuilder
     private ICritterDistribution _critterDistribution;
     private IClassRatio _classRatio;
     private CultureType _culture;
-    private SpeciesDetails _species;
+    private SpeciesType _species;
     private uint _totalCount;
 
 
@@ -29,7 +30,7 @@ public class CritterBuilder
         return this;
     }
     
-    public CritterBuilder SetSpecies(SpeciesDetails newSpeciesDetails)
+    public CritterBuilder SetSpecies(SpeciesType newSpeciesDetails)
     {
         _species = newSpeciesDetails;
         return this;
@@ -64,20 +65,31 @@ public class CritterBuilder
                 totalWeight += weight;
             }
         }
+        
+        List<int> l = _classRatio.Execute(_totalCount);
 
-        for (short age = 0; age <= maxAge; age++)
+        for (int i = 0; i <= 2; i++)
         {
-            ushort count = (ushort)Math.Round((weights[age] / totalWeight) * _totalCount);
-
-            if (count != 0)
+            CritterClass newClass = (CritterClass)i;
+            int k = l[i];
+            var crit = new CritterEntry(_species, _culture, newClass);
+            
+            for (short age = 0; age <= maxAge; age++)
             {
-                (ushort lower, ushort middle, ushort upper) = _classRatio.Execute(count);
-                var newDetails = new CritterDetails(lower, middle, upper);
-                h.Add(new CritterEntry((short)(DateDefines.Year - age), 
-                    _species.SpeciesType, _culture, newDetails));
-            }
-        }
+                ushort count = (ushort)Math.Round((weights[age] / totalWeight) * k);
 
+                if (count != 0)
+                {
+                    var newDetails = new CritterDetails(
+                        (short)(DateDefines.Year - age),
+                        count, 0, 0, 0, 0, 0);
+                    crit.Details.Add(newDetails);
+                }
+            }
+            crit.SortDetails();
+            h.Add(crit);
+        }
+        
         return h;
     }
 }
