@@ -51,7 +51,7 @@ public enum CritterLifeStage : ushort
 
 public enum CritterClass : byte
 {
-    Lower,
-    Middle,
-    Upper
+    Commoners,
+    Bourgeoisie,
+    Elites
 }
