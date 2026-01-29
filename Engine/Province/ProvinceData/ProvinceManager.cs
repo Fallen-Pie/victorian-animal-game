@@ -11,43 +11,27 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private CritterData[] CritterData { get; set; }
+    private readonly List<CritterData> _critterData = [];
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
-        HashSet<CritterData> newCritterArray = [];
-        Span<CritterEntry> critterEntrySpan = [.. provincialCritterData];
-        foreach (CritterEntry critter in critterEntrySpan)
+        foreach (CritterEntry critter in provincialCritterData)
         {
-            foreach (CritterClass currentClass in Enum.GetValues<CritterClass>())
+            CritterData newCritterData = new CritterData(critter.Species, critter.Culture, critter.Class);
+            ReadOnlySpan<CritterDetails> critterSpan =  CollectionsMarshal.AsSpan(critter.Details);
+            foreach (CritterDetails currentDetails in critterSpan)
             {
-                CritterData newData = new CritterData(
-                    critter.Species, critter.Culture, currentClass);
-                if (newCritterArray.TryGetValue(newData, out var updatedData))
-                {
-                    newCritterArray.Remove(newData);
-                }
-                else
-                {
-                    updatedData = newData;
-                }
-
-                // switch (critter.LifeStage)
-                // {
-                //     case CritterLifeStage.Young:
-                //         updatedData.Dependants += critter.GetCritterClassCount(currentClass);
-                //         break;
-                //     default:
-                //         updatedData.Workers += critter.GetCritterClassCount(currentClass);
-                //         break;
-                // }
-                newCritterArray.Add(updatedData);
+                newCritterData.Dependants += currentDetails.Dependants;
+                newCritterData.Workers += currentDetails.Workers;
+                newCritterData.Incapacitated += currentDetails.Incapacitated;
+                newCritterData.Soldiers += currentDetails.Soldiers;
+                newCritterData.Literate += currentDetails.Literate;
+                newCritterData.Trained += currentDetails.Trained;
             }
+            _critterData.Add(newCritterData);
         }
 
-        CritterData = [.. newCritterArray];
-
-        foreach (CritterData critter in CritterData)
+        foreach (CritterData critter in _critterData)
         {
             Console.WriteLine(critter.ToString());
         }
@@ -56,7 +40,7 @@ public class ProvinceManager
     public void GetWorkforceData()
     {
         Dictionary<SpeciesType, float> workforceDictionary = [];
-        Span<CritterData> critterDataSpan = CritterData;
+        Span<CritterData> critterDataSpan = CollectionsMarshal.AsSpan(_critterData);
         foreach (CritterData critterGroup in critterDataSpan)
         {
             (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
