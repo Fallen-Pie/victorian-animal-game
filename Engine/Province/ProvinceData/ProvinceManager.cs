@@ -31,15 +31,15 @@ public class ProvinceManager
                     updatedData = newData;
                 }
 
-                switch (critter.LifeStage)
-                {
-                    case CritterLifeStage.Young:
-                        updatedData.Dependants += critter.GetCritterClassCount(currentClass);
-                        break;
-                    default:
-                        updatedData.Workers += critter.GetCritterClassCount(currentClass);
-                        break;
-                }
+                // switch (critter.LifeStage)
+                // {
+                //     case CritterLifeStage.Young:
+                //         updatedData.Dependants += critter.GetCritterClassCount(currentClass);
+                //         break;
+                //     default:
+                //         updatedData.Workers += critter.GetCritterClassCount(currentClass);
+                //         break;
+                // }
                 newCritterArray.Add(updatedData);
             }
         }
