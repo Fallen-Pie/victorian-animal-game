@@ -11,6 +11,7 @@ using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.Distribution;
 using VictorianAnimalGame.Engine.Province.Critters.Cultures;
+using VictorianAnimalGame.Engine.Province.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Map;
 
@@ -42,8 +43,8 @@ public partial class MainMap : Node2D
         
     public LandProvince InitialiseProvince(LandProvince province)
     {
-        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Otter"], out var otter);
-        CritterDefines.Species.TryGetValue(CritterDefines.SpeciesTypes["Beaver"], out var beaver);
+        CritterDefines.SpeciesTypes.TryGetValue("Otter", out var otter);
+        CritterDefines.SpeciesTypes.TryGetValue("Beaver", out var beaver);
 
         HashSet<CritterEntry> critterEntries = new CritterBuilder()
             .SetAmount(30000)
