@@ -1,33 +1,28 @@
 ﻿namespace VictorianAnimalGame.Engine.Province.Critters.Species;
 
-public readonly record struct SpeciesDetails
+public readonly record struct SpeciesDetails(
+    SpeciesType SpeciesType,
+    float FoodConsumption,
+    float WorkforceValue,
+    byte AdolescentAge,
+    byte AdultAge,
+    byte FertileAge,
+    byte ElderAge,
+    string SpeciesName)
 {
-    public readonly byte AdolescentAge;
-    public readonly byte AdultAge;
-    public readonly byte FertileAge;
-    public readonly byte ElderAge;
+    public readonly byte AdolescentAge = AdolescentAge;
+    public readonly byte AdultAge = AdultAge;
+    public readonly byte FertileAge = FertileAge;
+    public readonly byte ElderAge = ElderAge;
     
-    public readonly SpeciesType SpeciesType;
-    public readonly float FoodConsumption;
-    public readonly float WorkforceValue;
+    public readonly SpeciesType SpeciesType = SpeciesType;
+    public readonly float FoodConsumption = FoodConsumption;
+    public readonly float WorkforceValue = WorkforceValue;
     
-    public readonly string SpeciesName;
+    public readonly string SpeciesName = SpeciesName;
     
     //private readonly Consumption _speciesConsumption;
-    
 
-    public SpeciesDetails(SpeciesType species, float foodConsumption, float workforce, 
-        byte adolescentAge, byte adultAge, byte fertileAge, byte elderAge, string speciesName)
-    {
-        SpeciesType = species;
-        FoodConsumption = foodConsumption;
-        WorkforceValue = workforce;
-        AdolescentAge = adolescentAge;
-        AdultAge = adultAge;
-        FertileAge = fertileAge;
-        ElderAge = elderAge;
-        SpeciesName = speciesName;
-    }
 
     public float GetWorkforce()
     {
