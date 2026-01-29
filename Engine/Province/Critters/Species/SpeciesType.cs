@@ -9,6 +9,10 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     
     public string Name => CritterDefines.Species[this].SpeciesName;
     public float Workforce => CritterDefines.Species[this].WorkforceValue;
+    
+    public ushort AdultAge => CritterDefines.Species[this].AdultAge;
+    public ushort FertileAge => CritterDefines.Species[this].FertileAge;
+    public ushort ElderAge => CritterDefines.Species[this].ElderAge;
 
     public override bool Equals(object obj) => obj is SpeciesType other && Equals(other);
     public bool Equals(SpeciesType other) => SpeciesId == other.SpeciesId;
