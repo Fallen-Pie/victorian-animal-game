@@ -5,22 +5,23 @@ using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public class ProvinceManager
 {
-    private CritterDataGroup[] CritterData { get; set; }
+    private CritterData[] CritterData { get; set; }
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
-        HashSet<CritterDataGroup> newCritterArray = [];
+        HashSet<CritterData> newCritterArray = [];
         Span<CritterEntry> critterEntrySpan = [.. provincialCritterData];
         foreach (CritterEntry critter in critterEntrySpan)
         {
             foreach (CritterClass currentClass in Enum.GetValues<CritterClass>())
             {
-                CritterDataGroup newData = new CritterDataGroup(
+                CritterData newData = new CritterData(
                     critter.Species, critter.Culture, currentClass);
                 if (newCritterArray.TryGetValue(newData, out var updatedData))
                 {
@@ -46,7 +47,7 @@ public class ProvinceManager
 
         CritterData = [.. newCritterArray];
 
-        foreach (CritterDataGroup critter in CritterData)
+        foreach (CritterData critter in CritterData)
         {
             Console.WriteLine(critter.ToString());
         }
@@ -55,8 +56,8 @@ public class ProvinceManager
     public void GetWorkforceData()
     {
         Dictionary<SpeciesType, float> workforceDictionary = [];
-        Span<CritterDataGroup> critterDataSpan = CritterData;
-        foreach (CritterDataGroup critterGroup in critterDataSpan)
+        Span<CritterData> critterDataSpan = CritterData;
+        foreach (CritterData critterGroup in critterDataSpan)
         {
             (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
             ref float existingWorkforce = 
