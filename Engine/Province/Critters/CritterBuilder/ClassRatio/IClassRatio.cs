@@ -1,6 +1,8 @@
-﻿namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
+﻿using System.Collections.Generic;
+
+namespace VictorianAnimalGame.Engine.Province.Critters.CritterBuilder.ClassRatio;
 
 public interface IClassRatio
 {
-    public (ushort Lower, ushort Middle, ushort Upper) Execute(ushort count);
+    public List<int> Execute(uint count);
 }
