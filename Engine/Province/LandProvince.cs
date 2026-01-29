@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Province.Critters;
+using VictorianAnimalGame.Engine.Province.Critters.Species;
 using VictorianAnimalGame.Engine.Province.ProvinceData;
 using VictorianAnimalGame.Scripts.ProvinceData;
 using VictorianAnimalGame.Scripts.ProvinceData.Strategies;
@@ -48,8 +50,11 @@ public class LandProvince : IProvince
         {
             details += $"{critter}\n";
         }
-        Console.WriteLine($"Size of {typeof(CritterEntry)} is {Marshal.SizeOf<CritterEntry>()}");
-        Console.WriteLine($"Size of {typeof(CritterDataGroup)} is {Marshal.SizeOf<CritterDataGroup>()}");
+
+        ConsoleExtensions.GetByteSize<SpeciesType>();
+        //ConsoleExtensions.GetByteSize<CritterEntry>();
+        ConsoleExtensions.GetByteSize<CritterDetails>();
+
         _provinceManager.GetCritterData(ProvinceCritters);
         _provinceManager.GetWorkforceData();
         return details;
