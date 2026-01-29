@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
@@ -18,7 +19,8 @@ public class ProvinceManager
         foreach (CritterEntry critter in provincialCritterData)
         {
             CritterData newCritterData = new CritterData(critter.Species, critter.Culture, critter.Class);
-            ReadOnlySpan<CritterDetails> critterSpan =  CollectionsMarshal.AsSpan(critter.Details);
+            ReadOnlySpan<CritterDetails> critterSpan = CollectionsMarshal.AsSpan(critter.Details);
+            GetFertilityData(critter.Species, critterSpan);
             foreach (CritterDetails currentDetails in critterSpan)
             {
                 newCritterData.Dependants += currentDetails.Dependants;
@@ -53,5 +55,15 @@ public class ProvinceManager
         {
             Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
         }
+    }
+
+    public CritterFertility GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
+    {
+        int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge);
+        int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
+        ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
+        Console.WriteLine($"Index {elderIndex} to {adultIndex}|" +
+                          $"{fertileRange.Length} fertile range");
+        return new CritterFertility();
     }
 }
