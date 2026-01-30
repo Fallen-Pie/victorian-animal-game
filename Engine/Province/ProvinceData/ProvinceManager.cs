@@ -59,11 +59,32 @@ public class ProvinceManager
 
     public CritterFertility GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
     {
-        int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge);
+        int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge + 1);
         int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
         ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
-        Console.WriteLine($"Index {elderIndex} to {adultIndex}|" +
-                          $"{fertileRange.Length} fertile range");
+        Dictionary<ushort, float> fertilityValues = GetFertilityByYear(speciesType);
+        // string st = "";
+        // foreach (var year in d)
+        // {
+        //     st += $"{DateDefines.Year - year.Key}:{year.Value}/";
+        // }
+        // Console.WriteLine(st);
+        // string s = $"Index {elderIndex} to {adultIndex}|";
+        // foreach (var critter in fertileRange)
+        // {
+        //     s += $"{critter.Year}/";
+        // }
+        // Console.WriteLine(s);
         return new CritterFertility();
+    }
+
+    public Dictionary<ushort, float> GetFertilityByYear(SpeciesType speciesType)
+    {
+        Dictionary<ushort, float> fertilityByYear = [];
+        for (ushort year = speciesType.AdultAge; year <= speciesType.ElderAge; year++)
+        {
+            fertilityByYear.Add(year, 1.0f);
+        }
+        return fertilityByYear;
     }
 }
