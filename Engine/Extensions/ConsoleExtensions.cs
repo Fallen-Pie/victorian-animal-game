@@ -8,6 +8,5 @@ public static class ConsoleExtensions
     public static void GetByteSize<T>() where T : struct
     {
         Console.WriteLine($"Size of {typeof(T)} is {Marshal.SizeOf<T>()}");
-
     }
 }

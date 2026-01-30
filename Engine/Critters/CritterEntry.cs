@@ -30,7 +30,7 @@ namespace VictorianAnimalGame.Engine.Critters
 
         public override string ToString()
         {
-            string s = $"Current {Class} {Species.Name}: {Culture}/{GetHashCode()}";
+            string s = $"Current {Class} {Species.Name} {Culture}/{GetHashCode()}";
             foreach (var v in Details)
             {
                 s += $"\n{v}";
