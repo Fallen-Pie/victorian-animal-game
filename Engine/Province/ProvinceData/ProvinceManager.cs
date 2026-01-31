@@ -57,7 +57,7 @@ public class ProvinceManager
         }
     }
 
-    public CritterFertility GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
+    public CritterBirthRate GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
     {
         int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge + 1);
         int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
@@ -75,7 +75,7 @@ public class ProvinceManager
         //     s += $"{critter.Year}/";
         // }
         // Console.WriteLine(s);
-        return new CritterFertility();
+        return new CritterBirthRate();
     }
 
     public Dictionary<ushort, float> GetFertilityByYear(SpeciesType speciesType)
