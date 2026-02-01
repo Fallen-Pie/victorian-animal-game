@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -62,7 +63,7 @@ public class ProvinceManager
         int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge + 1);
         int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
         ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
-        Dictionary<int, double> fertilityValues = GetFertilityByYear(speciesType);
+        FrozenDictionary<int, float> fertilityValues = GetFertilityByYear(speciesType);
         // string st = "";
         // foreach (var year in d)
         // {
@@ -78,13 +79,9 @@ public class ProvinceManager
         return new CritterBirthRate();
     }
 
-    public Dictionary<int, double> GetFertilityByYear(SpeciesType speciesType)
+    public FrozenDictionary<int, float> GetFertilityByYear(SpeciesType speciesType)
     {
-        Dictionary<int, double> fertilityByYear = GenerateIntegerCurve(speciesType.AdultAge, speciesType.FertileAge, speciesType.ElderAge);
-        // for (ushort year = speciesType.AdultAge; year <= speciesType.ElderAge; year++)
-        // {
-        //     fertilityByYear.Add(year, 1.0f);
-        // }
+        FrozenDictionary<int, float> fertilityByYear = speciesType.BirthsByAge;
         foreach (var d in fertilityByYear)
         {
             Console.WriteLine($"Age:{d.Key}, Weight:{d.Value}");
@@ -92,50 +89,5 @@ public class ProvinceManager
         return fertilityByYear;
     }
     
-    public Dictionary<int, double> GenerateIntegerCurve(
-        int startX, 
-        int peakX, 
-        int endX, 
-        double steepness = 1.0, 
-        double maxHeight = 1.0)
-    {
-        var results = new Dictionary<int, double>();
-
-        // Validation: Start < Peak < End
-        if (startX >= peakX || peakX >= endX)
-        {
-            throw new ArgumentException("Constraints violated: Start must be < Peak and Peak must be < End.");
-        }
-
-        startX--;
-        endX++;
-        
-        // Shift coordinates to relative space
-        double L = endX - startX; // Relative End
-        double P = peakX - startX; // Relative Peak
-        double k = steepness;
-        double n = (k * (L - P)) / P;
-
-        // Normalization factor based on the relative peak
-        double normalization = Math.Pow(P, k) * Math.Pow(L - P, n);
-
-        for (int x = startX; x <= endX; x++)
-        {
-            if (x == startX || x == endX)
-            {
-                results[x] = 0.0;
-                continue;
-            }
-
-            // Calculate relative x
-            double relX = x - startX;
-            double raw = Math.Pow(relX, k) * Math.Pow(L - relX, n);
-        
-            results[x] = (raw / normalization) * maxHeight;
-        }
-
-        results.Remove(startX);
-        results.Remove(endX);
-        return results;
-    }
+    
 }
