@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Critters.Species;
@@ -10,9 +11,11 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public string Name => CritterDefines.Species[this].SpeciesName;
     public float Workforce => CritterDefines.Species[this].WorkforceValue;
     
-    public ushort AdultAge => CritterDefines.Species[this].AdultAge;
-    public ushort FertileAge => CritterDefines.Species[this].FertileAge;
-    public ushort ElderAge => CritterDefines.Species[this].ElderAge;
+    public int AdultAge => CritterDefines.Species[this].AdultAge;
+    public int FertileAge => CritterDefines.Species[this].FertileAge;
+    public int ElderAge => CritterDefines.Species[this].ElderAge;
+    
+    public FrozenDictionary<int, float> BirthsByAge => CritterDefines.Species[this].FertilityByAge;
 
     public override bool Equals(object obj) => obj is SpeciesType other && Equals(other);
     public bool Equals(SpeciesType other) => SpeciesId == other.SpeciesId;
