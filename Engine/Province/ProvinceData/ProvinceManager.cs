@@ -64,28 +64,23 @@ public class ProvinceManager
         int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
         ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
         FrozenDictionary<int, float> fertilityValues = GetFertilityByYear(speciesType);
-        // string st = "";
-        // foreach (var year in d)
-        // {
-        //     st += $"{DateDefines.Year - year.Key}:{year.Value}/";
-        // }
-        // Console.WriteLine(st);
-        // string s = $"Index {elderIndex} to {adultIndex}|";
-        // foreach (var critter in fertileRange)
-        // {
-        //     s += $"{critter.Year}/";
-        // }
-        // Console.WriteLine(s);
-        return new CritterBirthRate();
+        CritterBirthRate critterBirthRate = new CritterBirthRate();
+        foreach (var critter in fertileRange)
+        {
+            float yearlyValue = fertilityValues[DateDefines.Year - critter.Year];
+            critterBirthRate.BirthRate += yearlyValue * critter.Dependants;
+        }
+        Console.WriteLine($"{critterBirthRate}");
+        return critterBirthRate;
     }
 
     public FrozenDictionary<int, float> GetFertilityByYear(SpeciesType speciesType)
     {
         FrozenDictionary<int, float> fertilityByYear = speciesType.BirthsByAge;
-        foreach (var d in fertilityByYear)
-        {
-            Console.WriteLine($"Age:{d.Key}, Weight:{d.Value}");
-        }
+        // foreach (var d in fertilityByYear)
+        // {
+        //     Console.WriteLine($"Age:{d.Key}, Weight:{d.Value}");
+        // }
         return fertilityByYear;
     }
     
