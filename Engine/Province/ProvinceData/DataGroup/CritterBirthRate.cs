@@ -1,6 +1,11 @@
 ﻿namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
-public struct CritterBirthRate
+public record struct CritterBirthRate
 {
-    
+    public float BirthRate;
+
+    public override string ToString()
+    {
+        return $"Current birth rate: {BirthRate}";
+    }
 }
