@@ -46,46 +46,64 @@ public readonly record struct SpeciesDetails
 
     private FrozenDictionary<int, float> GenerateFertilityCurve()
     {
-        var results = new Dictionary<int, float>();
+        var rawValues = new Dictionary<int, float>();
 
         int startX = AdultAge;
         int peakX = FertileAge;
         int endX = ElderAge;
+        float averageBirths = 4f;
         double steepness = 1.0;
-        double maxHeight = 1.0;
-        
-        // Validation: Start < Peak < End
+    
         if (startX >= peakX || peakX >= endX)
         {
-            throw new ArgumentException("Constraints violated: Start must be < Peak and Peak must be < End.");
+            throw new ArgumentException("Constraints violated: Start < Peak < End.");
         }
 
         startX--;
         endX++;
-        
-        // Shift coordinates to relative space
-        double L = endX - startX; // Relative End
-        double P = peakX - startX; // Relative Peak
+    
+        double L = endX - startX; 
+        double P = peakX - startX; 
         double k = steepness;
         double n = (k * (L - P)) / P;
 
-        // Normalization factor based on the relative peak
+        // 1. Calculate raw curve values (maxHeight is irrelevant here)
         double normalization = Math.Pow(P, k) * Math.Pow(L - P, n);
+        double rawSum = 0;
 
         for (int x = startX + 1; x < endX; x++)
         {
-            // if (x == startX || x == endX)
-            // {
-            //     results[x] = 0.0;
-            //     continue;
-            // }
-
-            // Calculate relative x
             double relX = x - startX;
-            double raw = Math.Pow(relX, k) * Math.Pow(L - relX, n);
-        
-            results[x] = MathF.Round((float)((raw / normalization) * maxHeight), 3);
+            double raw = (Math.Pow(relX, k) * Math.Pow(L - relX, n)) / normalization;
+            rawValues[x] = (float)raw;
+            rawSum += raw;
         }
+
+        // 2. Calculate the scale factor to reach target sum
+        // Factor = Target / CurrentSum
+        float scaleFactor = averageBirths / (float)rawSum;
+
+        // 3. Apply the scale factor and build the FrozenDictionary
+        var results = new Dictionary<int, float>();
+        float currentSum = 0;
+
+        foreach (var kvp in rawValues)
+        {
+            float roundedValue = MathF.Round(kvp.Value * scaleFactor, 3);
+            results[kvp.Key] = roundedValue;
+            currentSum += roundedValue;
+        }
+
+        // --- VERIFICATION & ADJUSTMENT ---
+        float difference = averageBirths - currentSum;
+    
+        // If the rounded sum doesn't match exactly, adjust the peak age
+        // to absorb the rounding error (typically < 0.005)
+        if (MathF.Abs(difference) > 0.0001f) 
+        {
+            results[FertileAge] = MathF.Round(results[FertileAge] + difference, 3);
+        }
+
         return results.ToFrozenDictionary();
     }
 
