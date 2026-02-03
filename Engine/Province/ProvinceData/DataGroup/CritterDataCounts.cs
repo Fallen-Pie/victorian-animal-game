@@ -8,6 +8,7 @@ public struct CritterDataCounts
     public uint Soldiers;
     
     public uint Total => Dependants + Workers + Incapacitated + Soldiers;
+    public uint Occupied => Workers + Soldiers;
 
     public override string ToString()
     {

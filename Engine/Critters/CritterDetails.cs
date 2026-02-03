@@ -9,6 +9,7 @@ namespace VictorianAnimalGame.Engine.Critters
         public ushort Workers;
         public ushort Incapacitated;
         public ushort Soldiers;
+        public int Occupied => Workers + Soldiers;
         public int Total => Dependants + Workers + Incapacitated + Soldiers;
         
         public ushort Literate;
