@@ -68,15 +68,16 @@ public class ProvinceManager
         foreach (var critter in fertileRange)
         {
             float yearlyValue = fertilityValues[DateDefines.Year - critter.Year];
-            if (critter.Occupied > critter.Dependants)
-            {
-                critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
-            }
-            else
-            {
-                critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Occupied));
-            }
-            
+            critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
+            // if (critter.Occupied > critter.Dependants)
+            // {
+            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
+            // }
+            // else
+            // {
+            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Occupied));
+            // }
+
         }
         Console.WriteLine($"{speciesType.Name} {critterBirthRate}");
         return critterBirthRate;
