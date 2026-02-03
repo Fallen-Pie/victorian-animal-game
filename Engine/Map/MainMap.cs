@@ -16,8 +16,18 @@ public partial class MainMap : Node2D
 {
     public override async void _Ready()
     {
-        LandProvince province = new();
-        province = InitialiseProvince(province);
+        List<LandProvince> provinces = [];
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Random rnd = new Random();
+        for (int i = 0; i < 1000; i++)
+        {
+            LandProvince province = new();
+            province = InitialiseProvince(province, rnd);
+            provinces.Add(province);
+        }
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
         // foreach (var critter in province.ProvinceCritters) 
         // {
         //     GD.Print(critter);
@@ -25,7 +35,7 @@ public partial class MainMap : Node2D
         var frozenDictionary = GoodDefines.GoodTypes;
 
         //province.SetName();
-        GD.Print(province.GetDetails());
+        GD.Print(provinces[^1].GetDetails());
         //AddChild(province);
         TestTime();
         base._Ready();
@@ -38,13 +48,13 @@ public partial class MainMap : Node2D
     //     return (T) v.GetValue (_r.Next(v.Length));
     // }
         
-    public LandProvince InitialiseProvince(LandProvince province)
+    public LandProvince InitialiseProvince(LandProvince province, Random rnd)
     {
         CritterDefines.SpeciesTypes.TryGetValue("Otter", out var otter);
         CritterDefines.SpeciesTypes.TryGetValue("Beaver", out var beaver);
 
         HashSet<CritterEntry> critterEntries = new CritterBuilder()
-            .SetAmount(30000)
+            .SetAmount((uint)rnd.Next(20000, 40000))
             .SetDistribution(new Stage1Distribution())
             .SetRatio(new RuralRatio())
             .SetSpecies(otter)
@@ -53,7 +63,7 @@ public partial class MainMap : Node2D
         province.AddCritterToProvince(critterEntries);
         
         critterEntries = new CritterBuilder()
-            .SetAmount(10000)
+            .SetAmount((uint)rnd.Next(5000, 15000))
             .SetDistribution(new FlatDistribution())
             .SetRatio(new RuralRatio())
             .SetSpecies(beaver)
