@@ -8,6 +8,7 @@ public static class DateDefines
     public const int WeeklyDaysAmount = 7;
     public const int MonthsAmount = 16;
     public const int DaysPerMonth = 30;
+    public const int DaysPerYear = MonthsAmount * DaysPerMonth;
     
     private static readonly DateManager DateManager = new (DayPhase.Dawn, 1, DayOfWeek.Monday, 1, 1819);
     
