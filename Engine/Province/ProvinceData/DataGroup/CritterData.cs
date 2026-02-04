@@ -7,40 +7,13 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
 public record struct CritterData(SpeciesType Species, CultureType Culture, CritterClass CritterClass)
 {
-    private CritterDataCounts _counts = new();
-    private CritterDataRates _rates = new();
-
-    public uint Dependants
-    {
-        get => _counts.Dependants;
-        set => _counts.Dependants = value;
-    }
-    public uint Workers
-    {
-        get => _counts.Workers;
-        set => _counts.Workers = value;
-    }
-    public uint Incapacitated
-    {
-        get => _counts.Incapacitated;
-        set => _counts.Incapacitated = value;
-    }
-    public uint Soldiers
-    {
-        get => _counts.Soldiers;
-        set => _counts.Soldiers = value;
-    }
+    public int Dependants { get; set; }
+    public int Workers { get; set; }
+    public int Incapacitated { get; set; }
+    public int Soldiers { get; set; }
     
-    public uint Literate
-    {
-        get => _rates.Literate;
-        set => _rates.Literate = value;
-    }
-    public uint Trained
-    {
-        get => _rates.Trained;
-        set => _rates.Trained = value;
-    }
+    public int Literate { get; set; }
+    public int Trained { get; set; }
     
     public (SpeciesType, float) GetWorkforce()
     {
@@ -51,14 +24,15 @@ public record struct CritterData(SpeciesType Species, CultureType Culture, Critt
             CritterClass.Elites => Species.Workforce,
             _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Critters.CritterClass)}: {CritterClass}")
         };
-        float workforceTotal = MathF.Round(_counts.Workers * workforceModifier, 2);
+        float workforceTotal = MathF.Round(Workers * workforceModifier, 2);
         return (Species, workforceTotal);
     }
 
     public override string ToString()
     {
         return $"Data of {Species.Name}, {Culture}, {CritterClass}: " +
-               $"{_counts.ToString()}|{_rates.ToString()}";
+               $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
+               $"{Literate}.{Trained}";
     }
 
     public override int GetHashCode() =>
