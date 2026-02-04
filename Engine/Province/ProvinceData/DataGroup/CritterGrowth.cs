@@ -10,13 +10,22 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 public record struct CritterGrowth
 {
     public float BirthRate;
+    private int _adultIndex;
+    private int _elderIndex;
+    private int _length;
+    private SpeciesType _species;
+    
 
-    public CritterGrowth GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
+    private void AdjustIndex(ReadOnlySpan<CritterDetails> critterSpan)
     {
-        int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge + 1);
-        int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
-        ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
-        FrozenDictionary<int, float> fertilityValues = GetFertilityByYear(speciesType);
+        _adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - _species.AdultAge + 1);
+        _elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - _species.ElderAge);
+    }
+    
+    public CritterGrowth GetFertilityData(ReadOnlySpan<CritterDetails> critterSpan)
+    {
+        ReadOnlySpan<CritterDetails> fertileRange = critterSpan[_elderIndex.._adultIndex];
+        FrozenDictionary<int, float> fertilityValues = _species.BirthsByAge;
         CritterGrowth critterGrowth = new CritterGrowth();
         foreach (var critter in fertileRange)
         {
@@ -32,18 +41,8 @@ public record struct CritterGrowth
             // }
 
         }
-        //Console.WriteLine($"{speciesType.Name} {critterBirthRate}");
+        //Console.WriteLine($"{_species.Name} {critterBirthRate}");
         return critterGrowth;
-    }
-    
-    public FrozenDictionary<int, float> GetFertilityByYear(SpeciesType speciesType)
-    {
-        FrozenDictionary<int, float> fertilityByYear = speciesType.BirthsByAge;
-        // foreach (var d in fertilityByYear)
-        // {
-        //     Console.WriteLine($"Age:{d.Key}, Weight:{d.Value}");
-        // }
-        return fertilityByYear;
     }
     
     public override string ToString()
