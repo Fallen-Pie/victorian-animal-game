@@ -19,7 +19,7 @@ public class ProvinceManager
     {
         foreach (CritterEntry critter in provincialCritterData)
         {
-            CritterData newCritterData = new CritterData(critter.Species, critter.Culture, critter.Class);
+            CritterData newCritterData = new CritterData(critter);
             ReadOnlySpan<CritterDetails> critterSpan = CollectionsMarshal.AsSpan(critter.Details);
             GetFertilityData(critter.Species, critterSpan);
             foreach (CritterDetails currentDetails in critterSpan)

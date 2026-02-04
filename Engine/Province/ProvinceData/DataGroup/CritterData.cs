@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Cultures;
 using VictorianAnimalGame.Engine.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
-public record struct CritterData(SpeciesType Species, CultureType Culture, CritterClass CritterClass)
+public record struct CritterData(CritterEntry _critterDetail)
 {
+    private readonly CritterEntry _critterDetail = _critterDetail;
+    private SpeciesType Species => _critterDetail.Species;
+    private CultureType Culture => _critterDetail.Culture;
+    private CritterClass Class => _critterDetail.Class;
+    private Span<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
+    
     public int Dependants { get; set; }
     public int Workers { get; set; }
     public int Incapacitated { get; set; }
@@ -17,12 +25,12 @@ public record struct CritterData(SpeciesType Species, CultureType Culture, Critt
     
     public (SpeciesType, float) GetWorkforce()
     {
-        float workforceModifier = CritterClass switch
+        float workforceModifier = Class switch
         {
             CritterClass.Commoners => Species.Workforce,
             CritterClass.Bourgeoisie => Species.Workforce,
             CritterClass.Elites => Species.Workforce,
-            _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Critters.CritterClass)}: {CritterClass}")
+            _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Class)}: {Class}")
         };
         float workforceTotal = MathF.Round(Workers * workforceModifier, 2);
         return (Species, workforceTotal);
@@ -30,16 +38,14 @@ public record struct CritterData(SpeciesType Species, CultureType Culture, Critt
 
     public override string ToString()
     {
-        return $"Data of {Species.Name}, {Culture}, {CritterClass}: " +
+        return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
                $"{Literate}.{Trained}";
     }
 
-    public override int GetHashCode() =>
-        HashCode.Combine(Culture, Species, CritterClass);
+    public override int GetHashCode() => HashCode.Combine(_critterDetail);
 
-    public bool Equals(CritterData other) =>
-        (Species, Culture, Class: CritterClass).Equals((other.Species, other.Culture, other.CritterClass));
+    public bool Equals(CritterData other) => _critterDetail.Equals(other._critterDetail);
 }
 
 // public struct CritterDataConsumption
