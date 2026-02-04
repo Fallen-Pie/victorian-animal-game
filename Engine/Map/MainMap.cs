@@ -17,12 +17,13 @@ public partial class MainMap : Node2D
     public override async void _Ready()
     {
         List<LandProvince> provinces = [];
-        var watch = System.Diagnostics.Stopwatch.StartNew();
         Random rnd = new Random();
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         for (int i = 0; i < 1000; i++)
         {
             LandProvince province = new();
             province = InitialiseProvince(province, rnd);
+            province.GetData();
             provinces.Add(province);
         }
         watch.Stop();

@@ -60,6 +60,11 @@ public class LandProvince : IProvince
         return details;
     }
 
+    public void GetData()
+    {
+        _provinceManager.GetCritterData(ProvinceCritters);
+    }
+
     public void SetName()
     {
         ProvinceName = $"LandProvince-{GetHashCode()}";

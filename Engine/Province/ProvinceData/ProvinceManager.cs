@@ -36,7 +36,7 @@ public class ProvinceManager
 
         foreach (CritterData critter in _critterData)
         {
-            Console.WriteLine(critter.ToString());
+            //Console.WriteLine(critter.ToString());
         }
     }
 
@@ -54,7 +54,7 @@ public class ProvinceManager
         
         foreach (var workforce in workforceDictionary)
         {
-            Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
+            //Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
         }
     }
 
@@ -79,7 +79,7 @@ public class ProvinceManager
             // }
 
         }
-        Console.WriteLine($"{speciesType.Name} {critterBirthRate}");
+        //Console.WriteLine($"{speciesType.Name} {critterBirthRate}");
         return critterBirthRate;
     }
 
