@@ -28,7 +28,6 @@ public partial class MainMap : Node2D
         }
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
-        Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
         // foreach (var critter in province.ProvinceCritters) 
         // {
         //     GD.Print(critter);
@@ -38,6 +37,7 @@ public partial class MainMap : Node2D
         //province.SetName();
         GD.Print(provinces[^1].GetDetails());
         //AddChild(province);
+        Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
         TestTime();
         base._Ready();
     }

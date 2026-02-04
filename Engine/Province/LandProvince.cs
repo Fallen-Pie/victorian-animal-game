@@ -56,7 +56,7 @@ public class LandProvince : IProvince
         ConsoleExtensions.GetByteSize<CritterDetails>();
 
         _provinceManager.GetCritterData(ProvinceCritters);
-        _provinceManager.GetWorkforceData();
+        //_provinceManager.GetWorkforceData();
         return details;
     }
 

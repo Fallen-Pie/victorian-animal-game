@@ -13,7 +13,7 @@ public record struct CritterData(CritterEntry _critterDetail)
     private SpeciesType Species => _critterDetail.Species;
     private CultureType Culture => _critterDetail.Culture;
     private CritterClass Class => _critterDetail.Class;
-    private Span<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
+    private ReadOnlySpan<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
     
     public int Dependants { get; set; }
     public int Workers { get; set; }
@@ -22,8 +22,10 @@ public record struct CritterData(CritterEntry _critterDetail)
     
     public int Literate { get; set; }
     public int Trained { get; set; }
-    
-    public (SpeciesType, float) GetWorkforce()
+
+    public float Workforce => GetWorkforce();
+
+    public float GetWorkforce()
     {
         float workforceModifier = Class switch
         {
@@ -32,8 +34,7 @@ public record struct CritterData(CritterEntry _critterDetail)
             CritterClass.Elites => Species.Workforce,
             _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Class)}: {Class}")
         };
-        float workforceTotal = MathF.Round(Workers * workforceModifier, 2);
-        return (Species, workforceTotal);
+        return MathF.Round(Workers * workforceModifier, 2);
     }
 
     public override string ToString()
