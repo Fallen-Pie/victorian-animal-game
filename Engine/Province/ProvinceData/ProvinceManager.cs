@@ -14,6 +14,8 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 public class ProvinceManager
 {
     private readonly List<CritterData> _critterData = [];
+    private readonly CritterGrowth _critterGrowth;
+    //private readonly CritterDecline _critterDecline;
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
@@ -21,7 +23,7 @@ public class ProvinceManager
         {
             CritterData newCritterData = new CritterData(critter);
             ReadOnlySpan<CritterDetails> critterSpan = CollectionsMarshal.AsSpan(critter.Details);
-            GetFertilityData(critter.Species, critterSpan);
+            //GetFertilityData(critter.Species, critterSpan);
             foreach (CritterDetails currentDetails in critterSpan)
             {
                 newCritterData.Dependants += currentDetails.Dependants;
@@ -40,58 +42,27 @@ public class ProvinceManager
         }
     }
 
-    public void GetWorkforceData()
-    {
-        Dictionary<SpeciesType, float> workforceDictionary = [];
-        Span<CritterData> critterDataSpan = CollectionsMarshal.AsSpan(_critterData);
-        foreach (CritterData critterGroup in critterDataSpan)
-        {
-            (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
-            ref float existingWorkforce = 
-                ref CollectionsMarshal.GetValueRefOrAddDefault(workforceDictionary, species, out bool _);
-            existingWorkforce = MathF.Round(existingWorkforce + workforceValue, 2);
-        }
-        
-        foreach (var workforce in workforceDictionary)
-        {
-            //Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
-        }
-    }
+    // public void GetWorkforceData()
+    // {
+    //     Dictionary<SpeciesType, float> workforceDictionary = [];
+    //     Span<CritterData> critterDataSpan = CollectionsMarshal.AsSpan(_critterData);
+    //     foreach (CritterData critterGroup in critterDataSpan)
+    //     {
+    //         (SpeciesType species, float workforceValue) = critterGroup.GetWorkforce();
+    //         ref float existingWorkforce = 
+    //             ref CollectionsMarshal.GetValueRefOrAddDefault(workforceDictionary, species, out bool _);
+    //         existingWorkforce = MathF.Round(existingWorkforce + workforceValue, 2);
+    //     }
+    //     
+    //     foreach (var workforce in workforceDictionary)
+    //     {
+    //         //Console.WriteLine($"{workforce.Key.Name} workforce: {workforce.Value}");;
+    //     }
+    // }
 
-    public CritterBirthRate GetFertilityData(SpeciesType speciesType, ReadOnlySpan<CritterDetails> critterSpan)
-    {
-        int adultIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.AdultAge + 1);
-        int elderIndex = critterSpan.BinarySearchByYearValue(DateDefines.Year - speciesType.ElderAge);
-        ReadOnlySpan<CritterDetails> fertileRange = critterSpan[elderIndex..adultIndex];
-        FrozenDictionary<int, float> fertilityValues = GetFertilityByYear(speciesType);
-        CritterBirthRate critterBirthRate = new CritterBirthRate();
-        foreach (var critter in fertileRange)
-        {
-            float yearlyValue = fertilityValues[DateDefines.Year - critter.Year];
-            critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
-            // if (critter.Occupied > critter.Dependants)
-            // {
-            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
-            // }
-            // else
-            // {
-            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Occupied));
-            // }
+    
 
-        }
-        //Console.WriteLine($"{speciesType.Name} {critterBirthRate}");
-        return critterBirthRate;
-    }
 
-    public FrozenDictionary<int, float> GetFertilityByYear(SpeciesType speciesType)
-    {
-        FrozenDictionary<int, float> fertilityByYear = speciesType.BirthsByAge;
-        // foreach (var d in fertilityByYear)
-        // {
-        //     Console.WriteLine($"Age:{d.Key}, Weight:{d.Value}");
-        // }
-        return fertilityByYear;
-    }
     
     
 }
