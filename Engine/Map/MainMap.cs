@@ -35,7 +35,7 @@ public partial class MainMap : Node2D
         var frozenDictionary = GoodDefines.GoodTypes;
 
         //province.SetName();
-        GD.Print(provinces[^1].GetDetails());
+        GD.Print(provinces[rnd.Next(0, 1000)].GetDetails());
         //AddChild(province);
         Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
         TestTime();
