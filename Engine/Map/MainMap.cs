@@ -23,7 +23,7 @@ public partial class MainMap : Node2D
         {
             LandProvince province = new();
             province = InitialiseProvince(province, rnd);
-            province.GetData();
+            province.SetData();
             provinces.Add(province);
         }
         watch.Stop();
@@ -35,7 +35,9 @@ public partial class MainMap : Node2D
         var frozenDictionary = GoodDefines.GoodTypes;
 
         //province.SetName();
-        GD.Print(provinces[rnd.Next(0, 1000)].GetDetails());
+        int randomProvince = rnd.Next(0, 1000);
+        GD.Print(provinces[randomProvince].GetDetails());
+        GD.Print(provinces[randomProvince].GetData());
         //AddChild(province);
         Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
         TestTime();

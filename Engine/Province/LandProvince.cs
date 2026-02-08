@@ -37,32 +37,36 @@ public class LandProvince : IProvince
             // }
             
         }
-        _provinceData.ChangeBehaviour(new DataWorkforceYear());
-        var i = _provinceData.RunBehaviour(ProvinceCritters);
-        foreach (var critter in i)
-        {
-            details += $"{critter}\n";
-        }
-            
-        _provinceData.ChangeBehaviour(new DataWorkforceSpecies());
-        i = _provinceData.RunBehaviour(ProvinceCritters);
-        foreach (var critter in i)
-        {
-            details += $"{critter}\n";
-        }
+        // _provinceData.ChangeBehaviour(new DataWorkforceYear());
+        // var i = _provinceData.RunBehaviour(ProvinceCritters);
+        // foreach (var critter in i)
+        // {
+        //     details += $"{critter}\n";
+        // }
+        //     
+        // _provinceData.ChangeBehaviour(new DataWorkforceSpecies());
+        // i = _provinceData.RunBehaviour(ProvinceCritters);
+        // foreach (var critter in i)
+        // {
+        //     details += $"{critter}\n";
+        // }
 
         ConsoleExtensions.GetByteSize<SpeciesType>();
         //ConsoleExtensions.GetByteSize<CritterEntry>();
         ConsoleExtensions.GetByteSize<CritterDetails>();
-
-        _provinceManager.GetCritterData(ProvinceCritters);
         //_provinceManager.GetWorkforceData();
         return details;
     }
 
-    public void GetData()
+    public void SetData()
     {
         _provinceManager.GetCritterData(ProvinceCritters);
+    }
+
+    public string GetData()
+    {
+        string s = _provinceManager.ToString();
+        return s;
     }
 
     public void SetName()

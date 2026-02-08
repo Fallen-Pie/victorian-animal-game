@@ -14,11 +14,12 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 public class ProvinceManager
 {
     private readonly List<CritterData> _critterData = [];
-    private readonly CritterGrowth _critterGrowth;
+    //private readonly CritterGrowth _critterGrowth;
     //private readonly CritterDecline _critterDecline;
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
+        Console.WriteLine($"{provincialCritterData.Count}");
         foreach (CritterEntry critter in provincialCritterData)
         {
             CritterData newCritterData = new CritterData(critter);
@@ -35,11 +36,16 @@ public class ProvinceManager
             }
             _critterData.Add(newCritterData);
         }
+    }
 
-        foreach (CritterData critter in _critterData)
+    public override string ToString()
+    {
+        string s = $"Province Manager|Length:{_critterData.Count}";
+        foreach (CritterData critterData in _critterData)
         {
-            //Console.WriteLine(critter.ToString());
+            s += $"\n{critterData}";
         }
+        return s;
     }
 
     // public void GetWorkforceData()
