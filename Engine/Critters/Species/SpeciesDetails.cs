@@ -109,7 +109,12 @@ public readonly record struct SpeciesDetails
 
     public override string ToString()
     {
-        return $"Name:{SpeciesName}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
-               $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}";
+        string result = $"Name:{SpeciesName}|Food:{FoodConsumption}|Work:{WorkforceValue}|" +
+                        $"Age:{AdolescentAge}/{AdultAge}/{ElderAge}\r\n";
+        foreach (var age in FertilityByAge)
+        {
+            result += $"{age.Key}:{age.Value}|";
+        }
+        return result;
     }
 }
