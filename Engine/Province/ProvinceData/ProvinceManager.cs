@@ -19,7 +19,6 @@ public class ProvinceManager
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
-        Console.WriteLine($"{provincialCritterData.Count}");
         foreach (CritterEntry critter in provincialCritterData)
         {
             CritterData newCritterData = new CritterData(critter);

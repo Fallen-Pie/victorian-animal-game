@@ -30,7 +30,7 @@ public record struct CritterGrowth
         }
         
         ReadOnlySpan<CritterDetails> fertileRange = critterSpan[_elderIndex.._adultIndex];
-        FrozenDictionary<int, float> fertilityValues = _species.BirthsByAge;
+        FrozenDictionary<int, float> fertilityValues = _species.BirthDistribution;
         foreach (var critter in fertileRange)
         {
             float yearlyValue = fertilityValues[DateDefines.Year - critter.Year];
