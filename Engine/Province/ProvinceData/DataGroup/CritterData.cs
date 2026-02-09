@@ -10,10 +10,11 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 public record struct CritterData(CritterEntry _critterDetail)
 {
     private readonly CritterEntry _critterDetail = _critterDetail;
+    private readonly CritterGrowth _critterGrowth = new(_critterDetail.Species);
     private SpeciesType Species => _critterDetail.Species;
     private CultureType Culture => _critterDetail.Culture;
     private CritterClass Class => _critterDetail.Class;
-    private ReadOnlySpan<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
+    private Span<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
     
     public int Dependants { get; set; }
     public int Workers { get; set; }
@@ -22,7 +23,7 @@ public record struct CritterData(CritterEntry _critterDetail)
     
     public int Literate { get; set; }
     public int Trained { get; set; }
-
+    
     public float Workforce => GetWorkforce();
 
     public float GetWorkforce()
@@ -39,9 +40,11 @@ public record struct CritterData(CritterEntry _critterDetail)
 
     public override string ToString()
     {
+        _critterGrowth.CalculateWeeklyBirths(Details);
         return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
-               $"{Literate}.{Trained}";
+               $"{Literate}.{Trained}|" +
+               $"{_critterGrowth}";
     }
 
     public override int GetHashCode() => HashCode.Combine(_critterDetail);
