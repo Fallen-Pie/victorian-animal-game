@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Cultures;
 using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Province.ProvinceData.Growth;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
+namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
 public record struct CritterData(CritterEntry _critterDetail)
 {

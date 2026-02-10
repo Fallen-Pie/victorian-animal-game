@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Frozen;
-using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Extensions;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
+namespace VictorianAnimalGame.Engine.Province.ProvinceData.Growth;
 
 public class CritterGrowth(SpeciesType newSpecies)
 {
