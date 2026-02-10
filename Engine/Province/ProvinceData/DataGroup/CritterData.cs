@@ -10,11 +10,12 @@ namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 public record struct CritterData(CritterEntry _critterDetail)
 {
     private readonly CritterEntry _critterDetail = _critterDetail;
-    private readonly CritterGrowth _critterGrowth = new(_critterDetail.Species);
     private SpeciesType Species => _critterDetail.Species;
     private CultureType Culture => _critterDetail.Culture;
     private CritterClass Class => _critterDetail.Class;
     private Span<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
+    
+    private readonly CritterGrowth _critterGrowth = new(_critterDetail.Species);
     
     public int Dependants { get; set; }
     public int Workers { get; set; }

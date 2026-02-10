@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Frozen;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Extensions;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
 public class CritterGrowth(SpeciesType newSpecies)
 {
     private double _weeklyValue;
+    private int DailyBirths => (int)(_weeklyValue / DateDefines.WeeklyDaysAmount).ProbabilisticRound();
     //public float EconomicData = 1;
     private int _adultIndex;
     private int _elderIndex;
@@ -43,11 +42,12 @@ public class CritterGrowth(SpeciesType newSpecies)
             // {
             //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Occupied));
             // }
+            //_weeklyValue = _weeklyValue.ProbabilisticRound();
         }
     }
     
     public override string ToString()
     {
-        return $"Births: {_weeklyValue}/{_weeklyValue * DateDefines.WeeksPerYear}|Index:{_elderIndex}.{_adultIndex}.{_length}";
+        return $"Births: {DailyBirths}/{_weeklyValue.ProbabilisticRound()}/{(_weeklyValue * DateDefines.WeeksPerYear).ProbabilisticRound()}|Index:{_elderIndex}.{_adultIndex}.{_length}";
     }
 }
