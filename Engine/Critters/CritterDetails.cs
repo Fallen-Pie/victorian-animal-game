@@ -1,44 +1,29 @@
 using System;
+using VictorianAnimalGame.Engine.Critters.Species;
 
 namespace VictorianAnimalGame.Engine.Critters
 {
-    public record struct CritterDetails : IComparable<CritterDetails>
+    public record CritterDetails
     {
-        public short Year { get; }
-        public ushort Dependants;
-        public ushort Workers;
-        public ushort Incapacitated;
-        public ushort Soldiers;
-        public int Occupied => Workers + Soldiers;
-        public int Total => Dependants + Workers + Incapacitated + Soldiers;
+        public readonly ushort[] Dependants;
+        public readonly ushort[] Workers;
+        public readonly ushort[] Soldiers;
+        public readonly ushort[] Incapacitated;
         
-        public ushort Literate;
-        public ushort Trained;
-        public float LiteratePercentage => MathF.Round((float)Literate / Total * 100, 2);
-        public float TrainedPercentage => MathF.Round((float)Trained / Total * 100, 2);
-
-        public CritterDetails(short newYear, ushort dependants, ushort workers, 
-            ushort incapacitated, ushort soldiers, ushort literate, ushort trained)
-        {
-            Year = newYear;
-            Dependants = dependants;
-            Workers = workers;
-            Incapacitated = incapacitated;
-            Soldiers = soldiers;
-            Literate = literate;
-            Trained = trained;
-        }
+        public readonly ushort[] Literate;
+        public readonly ushort[] Trained;
         
-        public int CompareTo(CritterDetails other)
-        {
-            return Year.CompareTo(other.Year);
-        }
+        public int Length => Dependants.Length;
 
-        public override string ToString()
+        public CritterDetails(SpeciesType newSpecies)
         {
-            return $"Year:{Year}|Total:{Total}/Dependants:{Dependants}/" +
-                   $"Workers:{Workers}/Incapacitated:{Incapacitated}/Soldiers:{Soldiers}|" +
-                   $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%";
+            int maxSize = newSpecies.MaxAge + 1;
+            Dependants = new ushort[maxSize];
+            Workers = new ushort[maxSize];
+            Incapacitated = new ushort[maxSize];
+            Soldiers = new ushort[maxSize];
+            Literate = new ushort[maxSize];
+            Trained = new ushort[maxSize];
         }
     }
 
