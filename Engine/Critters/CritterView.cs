@@ -14,11 +14,11 @@ public readonly ref struct CritterView
         _index = newIndex;
     }
 
-    public int Year => DateDefines.Year - _details.Length + _index;
+    public int Year => DateDefines.Year - _index;
     public int Dependants => _details.Dependants[_index];
-    public int Workers => _details.Dependants[_index];
-    public int Incapacitated => _details.Dependants[_index];
-    public int Soldiers => _details.Dependants[_index];
+    public int Workers => _details.Workers[_index];
+    public int Incapacitated => _details.Incapacitated[_index];
+    public int Soldiers => _details.Soldiers[_index];
     //public int Occupied => Workers + Soldiers;
     public int Total => Dependants + Workers + Incapacitated + Soldiers;
         
@@ -31,6 +31,6 @@ public readonly ref struct CritterView
     {
          return $"Year:{Year}|Total:{Total}/Dependants:{Dependants}/" +
                 $"Workers:{Workers}/Incapacitated:{Incapacitated}/Soldiers:{Soldiers}|" +
-                $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%";
+                $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%\r\n";
     }
 }
