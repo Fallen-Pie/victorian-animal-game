@@ -29,8 +29,12 @@ public readonly ref struct CritterView
     
     public override string ToString()
     {
-         return $"Year:{Year}|Total:{Total}/Dependants:{Dependants}/" +
-                $"Workers:{Workers}/Incapacitated:{Incapacitated}/Soldiers:{Soldiers}|" +
-                $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%\r\n";
+        if (Total == 0)
+        {
+            return "";
+        }
+        return $"Year:{Year}|Total:{Total}/Dependants:{Dependants}/" +
+               $"Workers:{Workers}/Incapacitated:{Incapacitated}/Soldiers:{Soldiers}|" +
+               $"Literate:{Literate}, {LiteratePercentage}%/Trained:{Trained}, {TrainedPercentage}%\r\n";
     }
 }
