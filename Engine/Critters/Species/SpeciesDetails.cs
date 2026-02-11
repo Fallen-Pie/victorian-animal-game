@@ -62,7 +62,7 @@ public readonly record struct SpeciesDetails
         int startX = AdultAge;
         int peakX = FertileAge;
         int endX = ElderAge;
-        float averageBirths = 4f;
+        float averageBirths = 1f;
         double steepness = 1.0;
     
         if (startX >= peakX || peakX >= endX)
