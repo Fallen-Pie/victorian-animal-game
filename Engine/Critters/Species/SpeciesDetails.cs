@@ -12,6 +12,7 @@ public readonly record struct SpeciesDetails
     public readonly int AdultAge;
     public readonly int FertileAge;
     public readonly int ElderAge;
+    public readonly int MaxAge = 40;
     
     public readonly SpeciesType SpeciesType;
     public readonly float FoodConsumption;
