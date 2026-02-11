@@ -79,13 +79,9 @@ public class CritterBuilder
 
                 if (count != 0)
                 {
-                    var newDetails = new CritterDetails(
-                        (short)(DateDefines.Year - age),
-                        count, 0, 0, 0, 0, 0);
-                    crit.Details.Add(newDetails);
+                    crit.Details.Dependants[age] = count;
                 }
             }
-            crit.SortDetails();
             h.Add(crit);
         }
         
