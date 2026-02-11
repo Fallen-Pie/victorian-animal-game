@@ -7,7 +7,6 @@ using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.ProvinceData.DataGroup;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceData;
 
@@ -15,26 +14,32 @@ public class ProvinceManager
 {
     private readonly List<CritterData> _critterData = [];
     //private readonly CritterGrowth _critterGrowth;
-    //private readonly CritterDecline _critterDecline;
+    //private readonly CritterDecline _critterMortality;
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
         foreach (CritterEntry critter in provincialCritterData)
         {
             CritterData newCritterData = new CritterData(critter);
-            ReadOnlySpan<CritterDetails> critterSpan = CollectionsMarshal.AsSpan(critter.Details);
-            //GetFertilityData(critter.Species, critterSpan);
-            foreach (CritterDetails currentDetails in critterSpan)
-            {
-                newCritterData.Dependants += currentDetails.Dependants;
-                newCritterData.Workers += currentDetails.Workers;
-                newCritterData.Incapacitated += currentDetails.Incapacitated;
-                newCritterData.Soldiers += currentDetails.Soldiers;
-                newCritterData.Literate += currentDetails.Literate;
-                newCritterData.Trained += currentDetails.Trained;
-            }
+            newCritterData.Dependants += SumArray(critter.Details.Dependants);
+            newCritterData.Workers += SumArray(critter.Details.Workers);
+            newCritterData.Soldiers += SumArray(critter.Details.Soldiers);
+            newCritterData.Incapacitated += SumArray(critter.Details.Incapacitated);
+            newCritterData.Literate += SumArray(critter.Details.Literate);
+            newCritterData.Trained += SumArray(critter.Details.Trained);
             _critterData.Add(newCritterData);
         }
+    }
+
+    private int SumArray(ushort[] critterArray)
+    {
+        int critterCount = 0;
+        ReadOnlySpan<ushort> critterSpan = critterArray;
+        foreach (ushort critterAmount in critterSpan)
+        {
+            critterCount += critterAmount;
+        }
+        return critterCount;
     }
 
     public override string ToString()
