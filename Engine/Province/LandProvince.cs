@@ -53,7 +53,7 @@ public class LandProvince : IProvince
 
         ConsoleExtensions.GetByteSize<SpeciesType>();
         //ConsoleExtensions.GetByteSize<CritterEntry>();
-        ConsoleExtensions.GetByteSize<CritterDetails>();
+        //ConsoleExtensions.GetByteSize<CritterDetails>();
         //_provinceManager.GetWorkforceData();
         return details;
     }
