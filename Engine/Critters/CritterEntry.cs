@@ -12,12 +12,7 @@ namespace VictorianAnimalGame.Engine.Critters
         public SpeciesType Species { get; } = Species;
         public CritterClass Class { get; } = Class;
         public CultureType Culture { get; } = Culture;
-        public List<CritterDetails> Details { get; } = [];
-
-        public void SortDetails()
-        {
-            Details.Sort();
-        }
+        public CritterDetails Details { get; } = new(Species);
         
         public bool Equals(CritterEntry newCritter) =>
             (Culture, Species, Class).Equals(
@@ -30,12 +25,12 @@ namespace VictorianAnimalGame.Engine.Critters
 
         public override string ToString()
         {
-            string s = $"Current {Class} {Species.Name} {Culture}/{GetHashCode()}";
-            foreach (var v in Details)
+            string critterDetails = $"Current {Class} {Species.Name} {Culture}/{GetHashCode()}";
+            for (int i = 0; i < Details.Length; i++)
             {
-                s += $"\n{v}";
+                critterDetails += new CritterView(Details, i).ToString();
             }
-            return s;
+            return critterDetails;
         }
     }
 }
