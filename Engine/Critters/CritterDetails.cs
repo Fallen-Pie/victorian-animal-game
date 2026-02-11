@@ -5,6 +5,8 @@ namespace VictorianAnimalGame.Engine.Critters;
 
 public record CritterDetails
 {
+    private readonly SpeciesType _species;
+    
     public readonly ushort[] Dependants;
     public readonly ushort[] Workers;
     public readonly ushort[] Soldiers;
@@ -13,11 +15,12 @@ public record CritterDetails
     public readonly ushort[] Literate;
     public readonly ushort[] Trained;
         
-    public int Length => Dependants.Length;
+    public int Length => _species.MaxAge + 1;
 
     public CritterDetails(SpeciesType newSpecies)
     {
-        int maxSize = (newSpecies.MaxAge + 16) & ~15;
+        _species = newSpecies;
+        int maxSize = (Length + 15) & ~15;
         Dependants = new ushort[maxSize];
         Workers = new ushort[maxSize];
         Incapacitated = new ushort[maxSize];
@@ -28,7 +31,7 @@ public record CritterDetails
     
     public void AgePopulation(SpeciesType newSpecies)
     {
-        for (int i = Length; i > 0; i--)
+        for (int i = _species.MaxAge; i > 0; i--)
         {
             Dependants[i] = Dependants[i - 1];
             Workers[i] = Workers[i - 1];
@@ -45,13 +48,12 @@ public record CritterDetails
         Literate[0] = 0;
         Trained[0] = 0;
         
-        int maxSize = newSpecies.MaxAge + 1;
-        Dependants[maxSize] = 0;
-        Workers[maxSize] = 0;
-        Incapacitated[maxSize] = 0;
-        Soldiers[maxSize] = 0;
-        Literate[maxSize] = 0;
-        Trained[maxSize] = 0;
+        Dependants[Length] = 0;
+        Workers[Length] = 0;
+        Incapacitated[Length] = 0;
+        Soldiers[Length] = 0;
+        Literate[Length] = 0;
+        Trained[Length] = 0;
     }
 }
 
