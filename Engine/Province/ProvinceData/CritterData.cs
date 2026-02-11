@@ -13,7 +13,7 @@ public record struct CritterData(CritterEntry _critterDetail)
     private SpeciesType Species => _critterDetail.Species;
     private CultureType Culture => _critterDetail.Culture;
     private CritterClass Class => _critterDetail.Class;
-    private Span<CritterDetails> Details => CollectionsMarshal.AsSpan(_critterDetail.Details);
+    private CritterDetails Details => _critterDetail.Details;
     
     private readonly CritterGrowth _critterGrowth = new(_critterDetail.Species);
     
