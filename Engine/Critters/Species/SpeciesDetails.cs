@@ -12,7 +12,12 @@ public readonly record struct SpeciesDetails
     public readonly int AdultAge;
     public readonly int FertileAge;
     public readonly int ElderAge;
-    public readonly int MaxAge = 40;
+    public readonly int MaxAge;
+    
+    public readonly Range YoungRange;
+    public readonly Range AdolescentRange;
+    public readonly Range AdultAgeRange;
+    public readonly Range ElderRange;
     
     public readonly SpeciesType SpeciesType;
     public readonly float FoodConsumption;
@@ -33,6 +38,7 @@ public readonly record struct SpeciesDetails
         this.AdultAge = AdultAge;
         this.FertileAge = FertileAge;
         this.ElderAge = ElderAge;
+        this.MaxAge = (int)(ElderAge * 1.2);
         this.SpeciesType = SpeciesType;
         this.FoodConsumption = FoodConsumption;
         this.WorkforceValue = WorkforceValue;
@@ -40,6 +46,10 @@ public readonly record struct SpeciesDetails
         if (SpeciesName != "None")
         {
             FertilityByAge = GenerateFertilityCurve();
+            YoungRange = ..AdolescentAge;
+            AdolescentRange = AdolescentAge..AdultAge;
+            AdultAgeRange = AdultAge..ElderAge;
+            ElderRange = ElderAge..;
         }
     }
 

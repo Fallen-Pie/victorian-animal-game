@@ -15,6 +15,11 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public int FertileAge => CritterDefines.Species[this].FertileAge;
     public int ElderAge => CritterDefines.Species[this].ElderAge;
     public int MaxAge => CritterDefines.Species[this].MaxAge;
+
+    public Range YoungRange => CritterDefines.Species[this].YoungRange;
+    public Range AdolescentRange => CritterDefines.Species[this].AdolescentRange;
+    public Range AdultAgeRange => CritterDefines.Species[this].AdultAgeRange;
+    public Range ElderRange => CritterDefines.Species[this].ElderRange;
     
     public FrozenDictionary<int, float> BirthDistribution => CritterDefines.Species[this].FertilityByAge;
 
