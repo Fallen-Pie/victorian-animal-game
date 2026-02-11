@@ -21,12 +21,15 @@ public class ProvinceManager
         foreach (CritterEntry critter in provincialCritterData)
         {
             CritterData newCritterData = new CritterData(critter);
-            newCritterData.Dependants += SumArray(critter.Details.Dependants);
-            newCritterData.Workers += SumArray(critter.Details.Workers);
-            newCritterData.Soldiers += SumArray(critter.Details.Soldiers);
-            newCritterData.Incapacitated += SumArray(critter.Details.Incapacitated);
-            newCritterData.Literate += SumArray(critter.Details.Literate);
-            newCritterData.Trained += SumArray(critter.Details.Trained);
+            var Details = critter.Details;
+            
+            newCritterData.Dependants += Details.Dependants.SumArraySimd();
+            newCritterData.Workers += Details.Workers.SumArraySimd();
+            newCritterData.Soldiers += Details.Soldiers.SumArraySimd();
+            newCritterData.Incapacitated += Details.Incapacitated.SumArraySimd();
+            newCritterData.Literate += Details.Literate.SumArraySimd();
+            newCritterData.Trained += Details.Trained.SumArraySimd();
+            
             _critterData.Add(newCritterData);
         }
     }
