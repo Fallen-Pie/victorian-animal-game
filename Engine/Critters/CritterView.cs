@@ -8,9 +8,10 @@ public readonly ref struct CritterView
     private readonly CritterDetails _details;
     private readonly int _index;
 
-    public CritterView(CritterDetails newDetails)
+    public CritterView(CritterDetails newDetails, int newIndex)
     {
         _details = newDetails;
+        _index = newIndex;
     }
 
     public int Year => DateDefines.Year - _details.Length + _index;
