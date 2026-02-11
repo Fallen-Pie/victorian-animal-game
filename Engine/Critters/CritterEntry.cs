@@ -25,7 +25,7 @@ namespace VictorianAnimalGame.Engine.Critters
 
         public override string ToString()
         {
-            string critterDetails = $"Current {Class} {Species.Name} {Culture}/{GetHashCode()}";
+            string critterDetails = $"Current {Class} {Species.Name} {Culture}/{GetHashCode()}\r\n";
             for (int i = 0; i < Details.Length; i++)
             {
                 critterDetails += new CritterView(Details, i).ToString();
