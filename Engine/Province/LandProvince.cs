@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.ProvinceData;
+using VictorianAnimalGame.Engine.Province.ProvinceCritters;
 using VictorianAnimalGame.Scripts.ProvinceData;
 using VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 
@@ -15,7 +15,7 @@ public class LandProvince : IProvince
     public HashSet<CritterEntry> ProvinceCritters = [];
     public string ProvinceName;
     private readonly ProvinceDataFinder _provinceData = new();
-    private readonly ProvinceManager _provinceManager = new();
+    private readonly CritterManager _critterManager = new();
 
     // public void AddCritterEntry(CritterEntry newCritter) {
     //     if (!ProvinceCritters.Add(newCritter))
@@ -60,12 +60,12 @@ public class LandProvince : IProvince
 
     public void SetData()
     {
-        _provinceManager.GetCritterData(ProvinceCritters);
+        _critterManager.GetCritterData(ProvinceCritters);
     }
 
     public string GetData()
     {
-        string s = _provinceManager.ToString();
+        string s = _critterManager.ToString();
         return s;
     }
 

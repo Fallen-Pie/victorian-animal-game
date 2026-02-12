@@ -5,7 +5,7 @@ using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData.Growth;
+namespace VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
 
 public class CritterGrowth(SpeciesType Species)
 {

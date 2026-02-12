@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
-using VictorianAnimalGame.Engine.Critters.Species;
-using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceData;
+namespace VictorianAnimalGame.Engine.Province.ProvinceCritters;
 
-public class ProvinceManager
+public class CritterManager
 {
     private readonly List<CritterData> _critterData = [];
     //private readonly CritterGrowth _critterGrowth;
