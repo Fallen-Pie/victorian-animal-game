@@ -21,7 +21,7 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public Range AdultAgeRange => CritterDefines.Species[this].AdultAgeRange;
     public Range ElderRange => CritterDefines.Species[this].ElderRange;
     
-    public FrozenDictionary<int, float> BirthDistribution => CritterDefines.Species[this].FertilityByAge;
+    public ushort[] BirthDistribution => CritterDefines.Species[this].FertilityByAge;
 
     public override bool Equals(object obj) => obj is SpeciesType other && Equals(other);
     public bool Equals(SpeciesType other) => SpeciesId == other.SpeciesId;
