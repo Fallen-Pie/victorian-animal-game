@@ -12,27 +12,12 @@ public class CritterGrowth(SpeciesType Species)
     private double _weeklyValue;
     private int DailyBirths => (int)(_weeklyValue / DateDefines.WeeklyDaysAmount).ProbabilisticRound();
 
-    public void CalculateWeeklyBirths(CritterDetails critterDetails, float birthRate = 2f)
+    public void CalculateWeeklyBirths(CritterDetails critterDetails, float birthRate = 2.5f)
     {
-        ReadOnlySpan<ushort> dependantsSpan = critterDetails.Dependants;
-        ReadOnlySpan<ushort> workersSpan = critterDetails.Workers;
         _weeklyValue = 0;
-        
-        FrozenDictionary<int, float> fertilityValues = Species.BirthDistribution;
-        foreach (var value in fertilityValues)
-        {
-            float weeklyCurve = value.Value * birthRate / DateDefines.WeeksPerYear;
-            _weeklyValue += weeklyCurve * (dependantsSpan[value.Key] / 2f);
-            // if (critter.Occupied > critter.Dependants)
-            // {
-            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Dependants));
-            // }
-            // else
-            // {
-            //     critterBirthRate.BirthRate += (int)Math.Round(yearlyValue * (critter.Occupied));
-            // }
-            //_weeklyValue = _weeklyValue.ProbabilisticRound();
-        }
+        _weeklyValue += critterDetails.Dependants.CalculateFertilitySimd(Species);
+        _weeklyValue += critterDetails.Workers.CalculateFertilitySimd(Species);
+        _weeklyValue = _weeklyValue * birthRate / DateDefines.WeeksPerYear;
     }
     
     public override string ToString()
