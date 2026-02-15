@@ -20,8 +20,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        ApplyMortalityDeterministic(pop1, curve, sharedSeed);
-        ApplyMortalityDeterministic(pop2, curve, sharedSeed);
+        ApplyMortalityTurbo(pop1, curve, sharedSeed);
+        ApplyMortalityTurbo(pop2, curve, sharedSeed);
 
         // Assert
         // Every single age group must be identical on both runs
@@ -37,8 +37,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        ApplyMortalityDeterministic(pop1, curve, 11111u);
-        ApplyMortalityDeterministic(pop2, curve, 99999u);
+        ApplyMortalityTurbo(pop1, curve, 11111u);
+        ApplyMortalityTurbo(pop2, curve, 99999u);
 
         // Assert
         // With different seeds, the stochastic rounding "coin flips" will differ
@@ -57,7 +57,7 @@ public class MortalitySystemTests
         double expectedTotal = popCount * rate * largeSize;
 
         // Act
-        ApplyMortalityDeterministic(pop, curve, 42u);
+        ApplyMortalityTurbo(pop, curve, 42u);
 
         // Assert
         double actualTotal = pop.Select(x => (int)x).Sum();
@@ -75,59 +75,65 @@ public class MortalitySystemTests
     private ushort[] CreateSurvivalCurve(float rate, int size) 
         => Enumerable.Repeat((ushort)(rate * 65535f), size).ToArray();
 
-    public static void ApplyMortalityDeterministic(Span<ushort> population, ReadOnlySpan<ushort> survivalCurve, uint simulationSeed)
+    
+    public static void ApplyMortalityTurbo(ushort[] population, ushort[] curve, uint newSeed)
     {
-        var rng = new VectorRng(simulationSeed);
+        // 1. Setup Safe References
+        Span<ushort> popRef = population;
+        Span<ushort> curveRef = curve;
+
+        var rng = new VectorRng(newSeed);
+        
+        // Constants for RNG and Comparison
+        // LCG Multiplier (Standard fast random constants)
+        Vector256<ushort> vRngMult = Vector256.Create((ushort)25213);
+        Vector256<ushort> vRngAdd = Vector256.Create((ushort)11);
+
+        // Sign Flip Mask (0x8000) - Required for unsigned comparison in AVX2
+        Vector256<ushort> vSignFlip = Vector256.Create((ushort)0x8000);
+
         int i = 0;
+        int vecLen = Vector256<ushort>.Count; // 16
 
-        if (Avx2.IsSupported && population.Length >= 16)
+        if (Avx2.IsSupported && popRef.Length >= vecLen)
         {
-            unsafe
+            for (; i < popRef.Length; i += vecLen)
             {
-                fixed (ushort* pPop = population, pCurve = survivalCurve)
-                {
-                    for (; i <= population.Length - 16; i += 16)
-                    {
-                        Vector256<ushort> vPop = Avx.LoadVector256(pPop + i);
-                        Vector256<ushort> vRate = Avx.LoadVector256(pCurve + i);
+                Vector256<uint> vRngState = rng.Next();
+                Vector256<ushort> vRng = vRngState.AsUInt16();
+                
+                // 1. Load Data
+                Vector256<ushort> vPop = Vector256.LoadUnsafe(ref popRef[i]);
+                Vector256<ushort> vRate = Vector256.LoadUnsafe(ref curveRef[i]);
 
-                        (Vector256<uint> vPopL, Vector256<uint> vPopH) = Vector256.Widen(vPop);
-                        (Vector256<uint> vRateL, Vector256<uint> vRateH) = Vector256.Widen(vRate);
+                // 2. Calculate Integer Part (Survivors)
+                // (Pop * Rate) >> 16
+                Vector256<ushort> vSurvivors = Avx2.MultiplyHigh(vPop, vRate);
 
-                        Vector256<uint> vFullL = Vector256.Multiply(vPopL, vRateL);
-                        Vector256<uint> vFullH = Vector256.Multiply(vPopH, vRateH);
+                // 3. Calculate Fraction Part (The "Maybe" Survivor)
+                // (Pop * Rate) & 0xFFFF - This is effectively the remainder
+                Vector256<ushort> vFraction = Avx2.MultiplyLow(vPop, vRate);
 
-                        Vector256<uint> vIntL = Vector256.ShiftRightLogical(vFullL, 16);
-                        Vector256<uint> vFracL = Avx2.And(vFullL, Vector256.Create(0xFFFFu));
-                    
-                        Vector256<uint> vIntH = Vector256.ShiftRightLogical(vFullH, 16);
-                        Vector256<uint> vFracH = Avx2.And(vFullH, Vector256.Create(0xFFFFu));
+                // 4. Generate Random Numbers (LCG Algorithm)
+                // NextRng = (OldRng * 25213 + 11)
+                vRng = Avx2.Add(Avx2.MultiplyLow(vRng, vRngMult), vRngAdd);
 
-                        // 16 Deterministic Random Numbers
-                        Vector256<uint> vRandL = Avx2.And(rng.Next(), Vector256.Create(0xFFFFu));
-                        Vector256<uint> vRandH = Avx2.And(rng.Next(), Vector256.Create(0xFFFFu));
+                // 5. Compare: Is Fraction > Random?
+                // AVX2 Compare is SIGNED. 0xFFFF (-1) is less than 0x0000 (0).
+                // Fix: XOR both with 0x8000 to flip the sign bit, making them behave like unsigned numbers.
+                Vector256<short> vFracSigned = Avx2.Xor(vFraction, vSignFlip).AsInt16();
+                Vector256<short> vRngSigned = Avx2.Xor(vRng, vSignFlip).AsInt16();
 
-                        // Add 1 if Rand < Frac
-                        vIntL = Vector256.Subtract(vIntL, Vector256.GreaterThan(vFracL, vRandL));
-                        vIntH = Vector256.Subtract(vIntH, Vector256.GreaterThan(vFracH, vRandH));
+                // Result is 0xFFFF (-1) if True, 0x0000 (0) if False
+                Vector256<short> vExtra = Avx2.CompareGreaterThan(vFracSigned, vRngSigned);
 
-                        Avx.Store(pPop + i, Vector256.Narrow(vIntL, vIntH));
-                    }
-                }
+                // 6. Apply Result
+                // Subtracting -1 (0xFFFF) is mathematically the same as Adding 1
+                vSurvivors = Avx2.Subtract(vSurvivors, vExtra.AsUInt16());
+
+                // 7. Store
+                vSurvivors.StoreUnsafe(ref popRef[i]);
             }
-        }
-
-        // Fallback for remainder (Must use same RNG logic!)
-        for (; i < population.Length; i++)
-        {
-            uint full = (uint)population[i] * survivalCurve[i];
-            uint integerPart = full >> 16;
-            uint fractionPart = full & 0xFFFF;
-            
-            // Consume 1 random number from the same RNG stream
-            uint rand = rng.Next().GetElement(0) & 0xFFFF; 
-            
-            population[i] = (ushort)(integerPart + (fractionPart > rand ? 1u : 0u));
         }
     }
 }
