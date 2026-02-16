@@ -2,7 +2,7 @@
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 using VictorianAnimalGame.Engine.Critters.Species;
-using VictorianAnimalGame.Engine.Determinism;
+using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictorianAnimalGame.Engine.Extensions;
 
@@ -120,63 +120,52 @@ public static class SimdExtensions
         return totalProbabilityUnits / 65535f;
     }
     
-    public static void ApplyMortalityTurbo(this ushort[] population, ushort[] curve, uint newSeed)
+    public static void ApplyMortalityTurbo(this ushort[] population, ushort[] curve, ushort newSeed)
     {
-        // 1. Setup Safe References
         Span<ushort> popRef = population;
         Span<ushort> curveRef = curve;
 
         var rng = new VectorRng(newSeed);
-        
-        // Constants for RNG and Comparison
-        // LCG Multiplier (Standard fast random constants)
-        Vector256<ushort> vRngMult = Vector256.Create((ushort)25213);
-        Vector256<ushort> vRngAdd = Vector256.Create((ushort)11);
-
-        // Sign Flip Mask (0x8000) - Required for unsigned comparison in AVX2
         Vector256<ushort> vSignFlip = Vector256.Create((ushort)0x8000);
-
         int i = 0;
-        int vecLen = Vector256<ushort>.Count; // 16
 
-        if (Avx2.IsSupported && popRef.Length >= vecLen)
+        if (Avx2.IsSupported && popRef.Length >= 16)
         {
-            for (; i < popRef.Length; i += vecLen)
+            for (; i < popRef.Length; i += 16)
             {
-                Vector256<uint> vRngState = rng.Next();
-                Vector256<ushort> vRng = vRngState.AsUInt16();
                 
-                // 1. Load Data
+                Vector256<ushort> vRng = rng.Next();
                 Vector256<ushort> vPop = Vector256.LoadUnsafe(ref popRef[i]);
                 Vector256<ushort> vRate = Vector256.LoadUnsafe(ref curveRef[i]);
-
-                // 2. Calculate Integer Part (Survivors)
-                // (Pop * Rate) >> 16
+                
                 Vector256<ushort> vSurvivors = Avx2.MultiplyHigh(vPop, vRate);
-
-                // 3. Calculate Fraction Part (The "Maybe" Survivor)
-                // (Pop * Rate) & 0xFFFF - This is effectively the remainder
                 Vector256<ushort> vFraction = Avx2.MultiplyLow(vPop, vRate);
-
-                // 4. Generate Random Numbers (LCG Algorithm)
-                // NextRng = (OldRng * 25213 + 11)
-                vRng = Avx2.Add(Avx2.MultiplyLow(vRng, vRngMult), vRngAdd);
-
-                // 5. Compare: Is Fraction > Random?
-                // AVX2 Compare is SIGNED. 0xFFFF (-1) is less than 0x0000 (0).
-                // Fix: XOR both with 0x8000 to flip the sign bit, making them behave like unsigned numbers.
+                
                 Vector256<short> vFracSigned = Avx2.Xor(vFraction, vSignFlip).AsInt16();
                 Vector256<short> vRngSigned = Avx2.Xor(vRng, vSignFlip).AsInt16();
 
-                // Result is 0xFFFF (-1) if True, 0x0000 (0) if False
                 Vector256<short> vExtra = Avx2.CompareGreaterThan(vFracSigned, vRngSigned);
 
-                // 6. Apply Result
-                // Subtracting -1 (0xFFFF) is mathematically the same as Adding 1
                 vSurvivors = Avx2.Subtract(vSurvivors, vExtra.AsUInt16());
 
-                // 7. Store
                 vSurvivors.StoreUnsafe(ref popRef[i]);
+            }
+        }
+
+        else
+        {
+            Console.WriteLine("Critter is not aligned with 16?!?");
+            var smallRng = new ScalarRng(newSeed);
+            for (; i < popRef.Length; i++)
+            {
+                uint full = (uint)popRef[i] * popRef[i];
+                ushort integerPart = (ushort)(full >> 16);
+                ushort fractionPart = (ushort)(full & 0xFFFF);
+
+                uint seed = smallRng.Next();
+                ushort rand = (ushort)(seed >> 16);
+
+                popRef[i] = (ushort)(integerPart + (fractionPart > rand ? 1 : 0));
             }
         }
     }
