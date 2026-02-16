@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-using VictorianAnimalGame.Engine.Determinism;
+using VictorianAnimalGame.Engine.Extensions;
 
 namespace VictoriaAnimalGame.Tests.Determinism;
 
@@ -14,14 +14,14 @@ public class MortalitySystemTests
     public void SameSeed_ProducesIdenticalResults()
     {
         // Arrange
-        uint sharedSeed = 12345u;
+        ushort sharedSeed = 12345;
         var pop1 = CreateSamplePopulation(InitialPop, ArraySize);
         var pop2 = CreateSamplePopulation(InitialPop, ArraySize);
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        ApplyMortalityTurbo(pop1, curve, sharedSeed);
-        ApplyMortalityTurbo(pop2, curve, sharedSeed);
+        pop1.ApplyMortalityTurbo(curve, sharedSeed);
+        pop2.ApplyMortalityTurbo(curve, sharedSeed);
 
         // Assert
         // Every single age group must be identical on both runs
@@ -37,8 +37,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        ApplyMortalityTurbo(pop1, curve, 11111u);
-        ApplyMortalityTurbo(pop2, curve, 99999u);
+        pop1.ApplyMortalityTurbo(curve, 11111);
+        pop2.ApplyMortalityTurbo(curve, 22222);
 
         // Assert
         // With different seeds, the stochastic rounding "coin flips" will differ
@@ -57,7 +57,7 @@ public class MortalitySystemTests
         double expectedTotal = popCount * rate * largeSize;
 
         // Act
-        ApplyMortalityTurbo(pop, curve, 42u);
+        pop.ApplyMortalityTurbo(curve, 42);
 
         // Assert
         double actualTotal = pop.Select(x => (int)x).Sum();
@@ -74,66 +74,4 @@ public class MortalitySystemTests
 
     private ushort[] CreateSurvivalCurve(float rate, int size) 
         => Enumerable.Repeat((ushort)(rate * 65535f), size).ToArray();
-
-    
-    public static void ApplyMortalityTurbo(ushort[] population, ushort[] curve, uint newSeed)
-    {
-        // 1. Setup Safe References
-        Span<ushort> popRef = population;
-        Span<ushort> curveRef = curve;
-
-        var rng = new VectorRng(newSeed);
-        
-        // Constants for RNG and Comparison
-        // LCG Multiplier (Standard fast random constants)
-        Vector256<ushort> vRngMult = Vector256.Create((ushort)25213);
-        Vector256<ushort> vRngAdd = Vector256.Create((ushort)11);
-
-        // Sign Flip Mask (0x8000) - Required for unsigned comparison in AVX2
-        Vector256<ushort> vSignFlip = Vector256.Create((ushort)0x8000);
-
-        int i = 0;
-        int vecLen = Vector256<ushort>.Count; // 16
-
-        if (Avx2.IsSupported && popRef.Length >= vecLen)
-        {
-            for (; i < popRef.Length; i += vecLen)
-            {
-                Vector256<uint> vRngState = rng.Next();
-                Vector256<ushort> vRng = vRngState.AsUInt16();
-                
-                // 1. Load Data
-                Vector256<ushort> vPop = Vector256.LoadUnsafe(ref popRef[i]);
-                Vector256<ushort> vRate = Vector256.LoadUnsafe(ref curveRef[i]);
-
-                // 2. Calculate Integer Part (Survivors)
-                // (Pop * Rate) >> 16
-                Vector256<ushort> vSurvivors = Avx2.MultiplyHigh(vPop, vRate);
-
-                // 3. Calculate Fraction Part (The "Maybe" Survivor)
-                // (Pop * Rate) & 0xFFFF - This is effectively the remainder
-                Vector256<ushort> vFraction = Avx2.MultiplyLow(vPop, vRate);
-
-                // 4. Generate Random Numbers (LCG Algorithm)
-                // NextRng = (OldRng * 25213 + 11)
-                vRng = Avx2.Add(Avx2.MultiplyLow(vRng, vRngMult), vRngAdd);
-
-                // 5. Compare: Is Fraction > Random?
-                // AVX2 Compare is SIGNED. 0xFFFF (-1) is less than 0x0000 (0).
-                // Fix: XOR both with 0x8000 to flip the sign bit, making them behave like unsigned numbers.
-                Vector256<short> vFracSigned = Avx2.Xor(vFraction, vSignFlip).AsInt16();
-                Vector256<short> vRngSigned = Avx2.Xor(vRng, vSignFlip).AsInt16();
-
-                // Result is 0xFFFF (-1) if True, 0x0000 (0) if False
-                Vector256<short> vExtra = Avx2.CompareGreaterThan(vFracSigned, vRngSigned);
-
-                // 6. Apply Result
-                // Subtracting -1 (0xFFFF) is mathematically the same as Adding 1
-                vSurvivors = Avx2.Subtract(vSurvivors, vExtra.AsUInt16());
-
-                // 7. Store
-                vSurvivors.StoreUnsafe(ref popRef[i]);
-            }
-        }
-    }
 }
