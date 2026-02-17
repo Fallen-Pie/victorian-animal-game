@@ -14,8 +14,7 @@ public struct VectorRng
     private static readonly Vector256<ushort> vMultiplier = Vector256.Create(Multiplier);
     private static readonly Vector256<ushort> vIncrement = Vector256.Create(Increment);
     private static readonly Vector256<ushort> vScrambler = Vector256.Create(Scrambler);
-    private static readonly Vector256<ushort> vIndex = Vector256
-        .Create((ushort)0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+    private static readonly Vector256<ushort> vIndex = Vector256<ushort>.Indices;
 
     // Initialize with a single seed (e.g., ProvinceID + CurrentYear)
     public VectorRng(ushort seed)
