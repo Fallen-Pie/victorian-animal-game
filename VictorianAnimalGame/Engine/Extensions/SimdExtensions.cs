@@ -120,7 +120,7 @@ public static class SimdExtensions
         return totalProbabilityUnits / 65535f;
     }
     
-    public static void ApplyMortalityTurbo(this ushort[] population, ushort[] curve, ushort newSeed)
+    public static void CalculateMortalitySimd(this ushort[] population, ushort[] curve, ushort newSeed)
     {
         Span<ushort> popRef = population;
         Span<ushort> curveRef = curve;

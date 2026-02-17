@@ -20,8 +20,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        pop1.ApplyMortalityTurbo(curve, sharedSeed);
-        pop2.ApplyMortalityTurbo(curve, sharedSeed);
+        pop1.CalculateMortalitySimd(curve, sharedSeed);
+        pop2.CalculateMortalitySimd(curve, sharedSeed);
 
         // Assert
         // Every single age group must be identical on both runs
@@ -37,8 +37,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        pop1.ApplyMortalityTurbo(curve, 11111);
-        pop2.ApplyMortalityTurbo(curve, 22222);
+        pop1.CalculateMortalitySimd(curve, 11111);
+        pop2.CalculateMortalitySimd(curve, 22222);
 
         // Assert
         // With different seeds, the stochastic rounding "coin flips" will differ
@@ -57,7 +57,7 @@ public class MortalitySystemTests
         double expectedTotal = popCount * rate * largeSize;
 
         // Act
-        pop.ApplyMortalityTurbo(curve, 42);
+        pop.CalculateMortalitySimd(curve, 42);
 
         // Assert
         double actualTotal = pop.Select(x => (int)x).Sum();
