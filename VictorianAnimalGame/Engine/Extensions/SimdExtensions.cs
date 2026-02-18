@@ -8,46 +8,46 @@ namespace VictorianAnimalGame.Engine.Extensions;
 
 public static class SimdExtensions
 {
-    public static double ApplyMortalitySimd(this Span<ushort> ageSlice, float weeklyDeathProb)
-    {
-        // 1. Create a vector filled with the death probability
-        //float survivalRate = 1.0f - weeklyDeathProb;
-        Vector256<float> vProb = Vector256.Create(weeklyDeathProb);
-        double count = 0f;
-        
-        int i = 0;
-        // Process in chunks of 8 (Size of Vector256<float>)
-        for (; i <= ageSlice.Length; i += 8)
-        {
-            Vector128<ushort> raw = Vector128.Create(ageSlice);
-            // Load 8 age buckets into a vector
-            // We convert to float because our probability math is floating point
-            var (left, right) = Vector128.Widen(raw);
-            Vector256<uint> vInts = Vector256.Create(left, right);
-            
-            Vector256<float> vCounts = Vector256.ConvertToSingle(vInts);
-    
-            // Calculate Expected Deaths: Counts * Probability
-            Vector256<float> vExpectedDeaths = Vector256.Multiply(vCounts, vProb);
-    
-            // Subtract deaths from counts
-            count += Vector256.Sum(vExpectedDeaths);
-    
-            // Convert back to int and store
-            // Note: This effectively 'Floors' the value. 
-            // We handle the fractional 'Probabilistic' part below for precision.
-            // Vector256<int> vFinal = Vector256.ConvertToInt32(vNewCounts);
-            // vFinal.StoreUnsafe(ref ageSlice[i]);
-        }
-    
-        // 2. Clean up remainder (if the slice length isn't a multiple of 8)
-        // for (; i < ageSlice.Length; i++)
-        // {
-        //     float expected = ageSlice[i] * weeklyDeathProb;
-        //     ageSlice[i] -= (int)Math.Floor(expected + (Random.Shared.NextDouble() < (expected % 1) ? 1 : 0));
-        // }
-        return count;
-    }
+    // public static double ApplyMortalitySimd(this Span<ushort> ageSlice, float weeklyDeathProb)
+    // {
+    //     // 1. Create a vector filled with the death probability
+    //     //float survivalRate = 1.0f - weeklyDeathProb;
+    //     Vector256<float> vProb = Vector256.Create(weeklyDeathProb);
+    //     double count = 0f;
+    //     
+    //     int i = 0;
+    //     // Process in chunks of 8 (Size of Vector256<float>)
+    //     for (; i <= ageSlice.Length; i += 8)
+    //     {
+    //         Vector128<ushort> raw = Vector128.Create(ageSlice);
+    //         // Load 8 age buckets into a vector
+    //         // We convert to float because our probability math is floating point
+    //         var (left, right) = Vector128.Widen(raw);
+    //         Vector256<uint> vInts = Vector256.Create(left, right);
+    //         
+    //         Vector256<float> vCounts = Vector256.ConvertToSingle(vInts);
+    //
+    //         // Calculate Expected Deaths: Counts * Probability
+    //         Vector256<float> vExpectedDeaths = Vector256.Multiply(vCounts, vProb);
+    //
+    //         // Subtract deaths from counts
+    //         count += Vector256.Sum(vExpectedDeaths);
+    //
+    //         // Convert back to int and store
+    //         // Note: This effectively 'Floors' the value. 
+    //         // We handle the fractional 'Probabilistic' part below for precision.
+    //         // Vector256<int> vFinal = Vector256.ConvertToInt32(vNewCounts);
+    //         // vFinal.StoreUnsafe(ref ageSlice[i]);
+    //     }
+    //
+    //     // 2. Clean up remainder (if the slice length isn't a multiple of 8)
+    //     // for (; i < ageSlice.Length; i++)
+    //     // {
+    //     //     float expected = ageSlice[i] * weeklyDeathProb;
+    //     //     ageSlice[i] -= (int)Math.Floor(expected + (Random.Shared.NextDouble() < (expected % 1) ? 1 : 0));
+    //     // }
+    //     return count;
+    // }
     
     public static int SumArraySimd(this ushort[] critterArray)
     {
@@ -120,53 +120,52 @@ public static class SimdExtensions
         return totalProbabilityUnits / 65535f;
     }
     
-    public static void CalculateMortalitySimd(this ushort[] population, ushort[] curve, ushort newSeed)
+    public static int CalculateMortalitySimd(this ushort[] population, ushort[] curve, VectorRng currentRng)
     {
         Span<ushort> popRef = population;
         Span<ushort> curveRef = curve;
 
-        var rng = new VectorRng(newSeed);
-        Vector256<ushort> vSignFlip = Vector256.Create((ushort)0x8000);
+        int weeklyDeaths = 0;
         int i = 0;
 
         if (Avx2.IsSupported && popRef.Length >= 16)
         {
             for (; i < popRef.Length; i += 16)
             {
-                
-                Vector256<ushort> vRng = rng.Next();
                 Vector256<ushort> vPop = Vector256.LoadUnsafe(ref popRef[i]);
                 Vector256<ushort> vRate = Vector256.LoadUnsafe(ref curveRef[i]);
                 
                 Vector256<ushort> vSurvivors = Avx2.MultiplyHigh(vPop, vRate);
                 Vector256<ushort> vFraction = Avx2.MultiplyLow(vPop, vRate);
                 
-                Vector256<short> vFracSigned = Avx2.Xor(vFraction, vSignFlip).AsInt16();
-                Vector256<short> vRngSigned = Avx2.Xor(vRng, vSignFlip).AsInt16();
+                Vector256<ushort> vRng = currentRng.Next();
+                Vector256<ushort> vGreater = Vector256.GreaterThan(vFraction, vRng);
+                Vector256<ushort> vExtra = Vector256.BitwiseAnd(vGreater, Vector256<ushort>.One);
 
-                Vector256<short> vExtra = Avx2.CompareGreaterThan(vFracSigned, vRngSigned);
-
-                vSurvivors = Avx2.Subtract(vSurvivors, vExtra.AsUInt16());
+                vSurvivors = Vector256.Add(vSurvivors, vExtra);
 
                 vSurvivors.StoreUnsafe(ref popRef[i]);
+                weeklyDeaths += Vector256.Sum(Vector256.Subtract(vPop, vSurvivors));
             }
         }
 
-        else
-        {
-            Console.WriteLine("Critter is not aligned with 16?!?");
-            var smallRng = new ScalarRng(newSeed);
-            for (; i < popRef.Length; i++)
-            {
-                uint full = (uint)popRef[i] * popRef[i];
-                ushort integerPart = (ushort)(full >> 16);
-                ushort fractionPart = (ushort)(full & 0xFFFF);
+        // else
+        // {
+        //     Console.WriteLine("Critter is not aligned with 16?!?");
+        //     //var smallRng = new ScalarRng(newSeed);
+        //     for (; i < popRef.Length; i++)
+        //     {
+        //         uint full = (uint)popRef[i] * popRef[i];
+        //         ushort integerPart = (ushort)(full >> 16);
+        //         ushort fractionPart = (ushort)(full & 0xFFFF);
+        //
+        //         uint seed = 20;
+        //         ushort rand = (ushort)(seed >> 16);
+        //
+        //         popRef[i] = (ushort)(integerPart + (fractionPart > rand ? 1 : 0));
+        //     }
+        // }
 
-                uint seed = smallRng.Next();
-                ushort rand = (ushort)(seed >> 16);
-
-                popRef[i] = (ushort)(integerPart + (fractionPart > rand ? 1 : 0));
-            }
-        }
+        return weeklyDeaths;
     }
 }
