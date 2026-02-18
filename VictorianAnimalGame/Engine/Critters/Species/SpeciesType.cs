@@ -11,6 +11,7 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public string Name => CritterDefines.Species[this].SpeciesName;
     public float Workforce => CritterDefines.Species[this].WorkforceValue;
     
+    public int AdolescentAge => CritterDefines.Species[this].AdolescentAge;
     public int AdultAge => CritterDefines.Species[this].AdultAge;
     public int FertileAge => CritterDefines.Species[this].FertileAge;
     public int ElderAge => CritterDefines.Species[this].ElderAge;

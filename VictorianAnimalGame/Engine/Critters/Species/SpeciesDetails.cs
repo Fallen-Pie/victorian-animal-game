@@ -38,7 +38,7 @@ public readonly record struct SpeciesDetails
         this.AdultAge = AdultAge;
         this.FertileAge = FertileAge;
         this.ElderAge = ElderAge;
-        this.MaxAge = (int)(ElderAge * 1.2);
+        this.MaxAge = (int)(ElderAge * 1.5);
         this.SpeciesType = SpeciesType;
         this.FoodConsumption = FoodConsumption;
         this.WorkforceValue = WorkforceValue;
