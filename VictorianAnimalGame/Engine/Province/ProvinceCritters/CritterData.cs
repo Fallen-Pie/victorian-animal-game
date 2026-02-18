@@ -43,6 +43,7 @@ public record struct CritterData(CritterEntry _critterDetail)
     public override string ToString()
     {
         _critterGrowth.CalculateWeeklyBirths(Details);
+        _critterMortality.CalculateWeeklyDeaths(Details);
         //_critterMortality.CalculateWeeklyDeaths(Details);
         return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
