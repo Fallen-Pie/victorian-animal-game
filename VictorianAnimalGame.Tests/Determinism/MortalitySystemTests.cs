@@ -1,6 +1,7 @@
 ﻿using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 using VictorianAnimalGame.Engine.Extensions;
+using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictoriaAnimalGame.Tests.Determinism;
 
@@ -14,7 +15,7 @@ public class MortalitySystemTests
     public void SameSeed_ProducesIdenticalResults()
     {
         // Arrange
-        ushort sharedSeed = 12345;
+        VectorRng sharedSeed = new(12345);
         var pop1 = CreateSamplePopulation(InitialPop, ArraySize);
         var pop2 = CreateSamplePopulation(InitialPop, ArraySize);
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
@@ -37,8 +38,8 @@ public class MortalitySystemTests
         var curve = CreateSurvivalCurve(SurvivalRate, ArraySize);
 
         // Act
-        pop1.CalculateMortalitySimd(curve, 11111);
-        pop2.CalculateMortalitySimd(curve, 22222);
+        pop1.CalculateMortalitySimd(curve, new(11111));
+        pop2.CalculateMortalitySimd(curve, new(22222));
 
         // Assert
         // With different seeds, the stochastic rounding "coin flips" will differ
@@ -57,7 +58,7 @@ public class MortalitySystemTests
         double expectedTotal = popCount * rate * largeSize;
 
         // Act
-        pop.CalculateMortalitySimd(curve, 42);
+        pop.CalculateMortalitySimd(curve, new(42));
 
         // Assert
         double actualTotal = pop.Select(x => (int)x).Sum();
