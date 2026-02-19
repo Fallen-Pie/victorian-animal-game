@@ -38,6 +38,8 @@ public class CritterMortality(SpeciesType Species)
     
     public ushort[] SetMortalityCurve(float infantModifier, float diseaseSeverity, float industrialHazard)
     {
+        // TODO Pass in modifiers for the above values
+        // TODO Add Modifiers for Species AgeStage Disease Vulnerability 
         Array.Clear(_mortalityCurve);
         Span<ushort> mortalityCurve = _mortalityCurve;
 
@@ -54,7 +56,7 @@ public class CritterMortality(SpeciesType Species)
         mortalityCurve[..Species.AdolescentAge].Fill(infantWeeklyS);
 
         // Slab 2: Adults (_adolescentAge to _elderAge)
-        float adultSurvival = 1.0f - industrialHazard - (diseaseSeverity * 0.5f);
+        float adultSurvival = 1.0f - industrialHazard - (diseaseSeverity * 0.5f);  
         ushort adultWeeklyS = (ushort)((1f - ((1f - adultSurvival) * invWeeks)) * 65535);
         mortalityCurve[Species.AdolescentAge..Species.ElderAge].Fill(adultWeeklyS);
         
