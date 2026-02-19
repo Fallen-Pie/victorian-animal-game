@@ -4,6 +4,7 @@ using VictorianAnimalGame.Engine.Critters.Cultures;
 using VictorianAnimalGame.Engine.Critters.Species;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;
+using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceCritters;
 
@@ -26,24 +27,35 @@ public record struct CritterData(CritterEntry _critterDetail)
     public int Literate { get; set; }
     public int Trained { get; set; }
     
-    public float Workforce => GetWorkforce();
+    //public float Workforce => GetWorkforce();
 
-    public float GetWorkforce()
+    // public float GetWorkforce()
+    // {
+    //     float workforceModifier = Class switch
+    //     {
+    //         CritterClass.Commoners => Species.Workforce,
+    //         CritterClass.Bourgeoisie => Species.Workforce,
+    //         CritterClass.Elites => Species.Workforce,
+    //         _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Class)}: {Class}")
+    //     };
+    //     return MathF.Round(Workers * workforceModifier, 2);
+    // }
+
+    public void DailyProcessing(ScalarRng sProvinceRng)
     {
-        float workforceModifier = Class switch
-        {
-            CritterClass.Commoners => Species.Workforce,
-            CritterClass.Bourgeoisie => Species.Workforce,
-            CritterClass.Elites => Species.Workforce,
-            _ => throw new ArgumentOutOfRangeException($"Unknown {nameof(Class)}: {Class}")
-        };
-        return MathF.Round(Workers * workforceModifier, 2);
+        _critterGrowth.DailyProcessing(Details, sProvinceRng);
+    }
+    
+    public void WeeklyProcessing(VectorRng vProvinceRng)
+    {
+        _critterGrowth.WeeklyProcessing(Details);
+        _critterMortality.WeeklyProcessing(Details, vProvinceRng);
     }
 
     public override string ToString()
     {
-        _critterGrowth.CalculateWeeklyBirths(Details);
-        _critterMortality.CalculateWeeklyDeaths(Details);
+        _critterGrowth.WeeklyProcessing(Details);
+        _critterMortality.WeeklyProcessing(Details, new VectorRng(420));
         //_critterMortality.CalculateWeeklyDeaths(Details);
         return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
