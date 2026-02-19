@@ -28,8 +28,15 @@ public record CritterDetails
         Literate = new ushort[maxSize];
         Trained = new ushort[maxSize];
     }
+
+    public void AddBirths(ushort births)
+    {
+        Dependants[0] += births;
+    }
     
-    public void AgePopulation(SpeciesType newSpecies)
+    // TODO Promotion Logic inside CritterDetails
+    
+    public void AgePopulation()
     {
         for (int i = _species.MaxAge; i > 0; i--)
         {
