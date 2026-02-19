@@ -17,26 +17,26 @@ public class CritterMortality(SpeciesType Species)
 
     private ushort[] _mortalityCurve = new ushort[Species.MaxAge + 16 & ~15];
     //private int DailyDeaths => (int)(_weeklyValue / DateDefines.WeeklyDaysAmount).ProbabilisticRound();
-    
-    public void CalculateWeeklyDeaths(CritterDetails critterDetails)
-    {
-        VectorRng rng = new(20);
-        GetMortalityCurve(0.9f, 0.15f, 0.05f);
-        
-        _weeklyDependantsValue = critterDetails.Dependants.CalculateMortalitySimd(_mortalityCurve, rng);
-        _weeklyWorkersValue = critterDetails.Workers.CalculateMortalitySimd(_mortalityCurve, rng);
-        _weeklyIncapacitatedValue = critterDetails.Incapacitated.CalculateMortalitySimd(_mortalityCurve, rng);
-        _weeklySoldiersValue = critterDetails.Soldiers.CalculateMortalitySimd(_mortalityCurve, rng);
 
-        string s = "|";
-        foreach (var deathChance in _mortalityCurve)
-        {
-            s += $"{deathChance / 65535f}|";
-        }
-        Console.WriteLine($"{s}");
+    public void WeeklyProcessing(CritterDetails critterDetails, VectorRng weeklyRng)
+    {
+        SetWeeklyDeaths(critterDetails, weeklyRng);
     }
     
-    public ushort[] GetMortalityCurve(float infantModifier, float diseaseSeverity, float industrialHazard)
+    public void MonthlyProcessing() // Will have modifiers passed into the function
+    {
+        SetMortalityCurve(0.9f, 0.15f, 0.05f);
+    }
+    
+    private void SetWeeklyDeaths(CritterDetails critterDetails, VectorRng weeklyRng)
+    {
+        _weeklyDependantsValue = critterDetails.Dependants.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
+        _weeklyWorkersValue = critterDetails.Workers.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
+        _weeklyIncapacitatedValue = critterDetails.Incapacitated.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
+        _weeklySoldiersValue = critterDetails.Soldiers.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
+    }
+    
+    public ushort[] SetMortalityCurve(float infantModifier, float diseaseSeverity, float industrialHazard)
     {
         Array.Clear(_mortalityCurve);
         Span<ushort> mortalityCurve = _mortalityCurve;

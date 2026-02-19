@@ -21,7 +21,7 @@ public class MortalityRealityTests
         Array.Fill(_numbers, StartingPop);
         // 1. Arrange
         var system = new CritterMortality(new SpeciesType(2)); // Your class
-        ushort[] curve = system.GetMortalityCurve(infantMod, disease, hazard);
+        ushort[] curve = system.SetMortalityCurve(infantMod, disease, hazard);
         
         double expectedFinalPop = StartingPop * (1.0 - expectedAnnualDeath);
 
