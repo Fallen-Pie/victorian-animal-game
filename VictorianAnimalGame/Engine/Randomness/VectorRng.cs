@@ -19,6 +19,11 @@ public struct VectorRng
     // Initialize with a single seed (e.g., ProvinceID + CurrentYear)
     public VectorRng(ushort seed)
     {
+        Reset(seed);
+    }
+    
+    public void Reset(ushort seed)
+    {
         Vector256<ushort> vScrambled = Avx2.MultiplyLow(vIndex, vScrambler);
         _state = Avx2.Xor(Vector256.Create(seed), vScrambled);
     }
@@ -31,4 +36,6 @@ public struct VectorRng
         _state = Avx2.Add(Avx2.MultiplyLow(_state, vMultiplier), vIncrement);
         return _state;
     }
+
+
 }

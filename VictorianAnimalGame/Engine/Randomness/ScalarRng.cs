@@ -15,7 +15,12 @@ public struct ScalarRng
     public ScalarRng(uint seed)
     {
         // Mix the seed slightly to avoid "0" lock-ups
-        _state = seed ^ Mixer; 
+        Reset(seed); 
+    }
+    
+    public void Reset(uint seed)
+    {
+        _state = seed ^ Mixer;
     }
 
     /// <summary>
