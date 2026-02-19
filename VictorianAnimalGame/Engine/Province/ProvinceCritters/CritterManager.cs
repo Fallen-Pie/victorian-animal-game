@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Extensions;
+using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictorianAnimalGame.Engine.Province.ProvinceCritters;
 
 public class CritterManager
 {
     private readonly List<CritterData> _critterData = [];
-    //private readonly CritterGrowth _critterGrowth;
-    //private readonly CritterDecline _critterMortality;
+    private VectorRng _vProvinceRng = new(0);
+    private ScalarRng _sProvinceRng = new(0);
  
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
@@ -29,15 +29,27 @@ public class CritterManager
         }
     }
 
-    private int SumArray(ushort[] critterArray)
+    public void DailyProcessing()
     {
-        int critterCount = 0;
-        ReadOnlySpan<ushort> critterSpan = critterArray;
-        foreach (ushort critterAmount in critterSpan)
+        _vProvinceRng.Reset((ushort)GetNewSeed());
+        foreach (CritterData critterData in _critterData)
         {
-            critterCount += critterAmount;
+            critterData.DailyProcessing(_sProvinceRng);
         }
-        return critterCount;
+    }
+    
+    public void WeeklyProcessing()
+    {
+        _sProvinceRng.Reset(GetNewSeed());
+        foreach (CritterData critterData in _critterData)
+        {
+            critterData.WeeklyProcessing(_vProvinceRng);
+        }
+    }
+
+    private uint GetNewSeed()
+    {
+        return 420;
     }
 
     public override string ToString()
