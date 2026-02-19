@@ -8,47 +8,6 @@ namespace VictorianAnimalGame.Engine.Extensions;
 
 public static class SimdExtensions
 {
-    // public static double ApplyMortalitySimd(this Span<ushort> ageSlice, float weeklyDeathProb)
-    // {
-    //     // 1. Create a vector filled with the death probability
-    //     //float survivalRate = 1.0f - weeklyDeathProb;
-    //     Vector256<float> vProb = Vector256.Create(weeklyDeathProb);
-    //     double count = 0f;
-    //     
-    //     int i = 0;
-    //     // Process in chunks of 8 (Size of Vector256<float>)
-    //     for (; i <= ageSlice.Length; i += 8)
-    //     {
-    //         Vector128<ushort> raw = Vector128.Create(ageSlice);
-    //         // Load 8 age buckets into a vector
-    //         // We convert to float because our probability math is floating point
-    //         var (left, right) = Vector128.Widen(raw);
-    //         Vector256<uint> vInts = Vector256.Create(left, right);
-    //         
-    //         Vector256<float> vCounts = Vector256.ConvertToSingle(vInts);
-    //
-    //         // Calculate Expected Deaths: Counts * Probability
-    //         Vector256<float> vExpectedDeaths = Vector256.Multiply(vCounts, vProb);
-    //
-    //         // Subtract deaths from counts
-    //         count += Vector256.Sum(vExpectedDeaths);
-    //
-    //         // Convert back to int and store
-    //         // Note: This effectively 'Floors' the value. 
-    //         // We handle the fractional 'Probabilistic' part below for precision.
-    //         // Vector256<int> vFinal = Vector256.ConvertToInt32(vNewCounts);
-    //         // vFinal.StoreUnsafe(ref ageSlice[i]);
-    //     }
-    //
-    //     // 2. Clean up remainder (if the slice length isn't a multiple of 8)
-    //     // for (; i < ageSlice.Length; i++)
-    //     // {
-    //     //     float expected = ageSlice[i] * weeklyDeathProb;
-    //     //     ageSlice[i] -= (int)Math.Floor(expected + (Random.Shared.NextDouble() < (expected % 1) ? 1 : 0));
-    //     // }
-    //     return count;
-    // }
-    
     public static int SumArraySimd(this ushort[] critterArray)
     {
         if (critterArray == null || critterArray.Length == 0) return 0;
