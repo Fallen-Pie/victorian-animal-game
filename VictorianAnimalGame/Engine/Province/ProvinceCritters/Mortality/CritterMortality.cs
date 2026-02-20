@@ -30,6 +30,7 @@ public class CritterMortality(SpeciesType Species)
     
     private void SetWeeklyDeaths(CritterDetails critterDetails, VectorRng weeklyRng)
     {
+        SetMortalityCurve(0.9f, 0.15f, 0.05f);
         _weeklyDependantsValue = critterDetails.Dependants.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
         _weeklyWorkersValue = critterDetails.Workers.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
         _weeklyIncapacitatedValue = critterDetails.Incapacitated.CalculateMortalitySimd(_mortalityCurve, weeklyRng);
