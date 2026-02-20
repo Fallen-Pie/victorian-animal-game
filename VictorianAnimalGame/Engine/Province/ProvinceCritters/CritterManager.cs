@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;
@@ -11,6 +13,8 @@ public class CritterManager
     private VectorRng _vProvinceRng = new(0);
     private ScalarRng _sProvinceRng = new(0);
  
+    private Span<CritterData> DetailsSpan => CollectionsMarshal.AsSpan(_critterData);
+    
     public void GetCritterData(HashSet<CritterEntry> provincialCritterData)
     {
         foreach (CritterEntry critter in provincialCritterData)
@@ -32,7 +36,7 @@ public class CritterManager
     public void DailyProcessing()
     {
         _vProvinceRng.Reset((ushort)GetNewSeed());
-        foreach (CritterData critterData in _critterData)
+        foreach (ref CritterData critterData in DetailsSpan)
         {
             critterData.DailyProcessing(_sProvinceRng);
         }
@@ -41,7 +45,7 @@ public class CritterManager
     public void WeeklyProcessing()
     {
         _sProvinceRng.Reset(GetNewSeed());
-        foreach (CritterData critterData in _critterData)
+        foreach (ref CritterData critterData in DetailsSpan)
         {
             critterData.WeeklyProcessing(_vProvinceRng);
         }
@@ -57,7 +61,7 @@ public class CritterManager
         string s = $"Province Manager|Length:{_critterData.Count}";
         foreach (CritterData critterData in _critterData)
         {
-            s += $"\n{critterData}";
+            s += $"\n\r{critterData}";
         }
         return s;
     }
