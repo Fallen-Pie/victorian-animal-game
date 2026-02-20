@@ -2,6 +2,7 @@
 using VictorianAnimalGame.Engine.Critters;
 using VictorianAnimalGame.Engine.Critters.Cultures;
 using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;
 using VictorianAnimalGame.Engine.Randomness;
@@ -44,6 +45,7 @@ public record struct CritterData(CritterEntry _critterDetail)
     public void DailyProcessing(ScalarRng sProvinceRng)
     {
         _critterGrowth.DailyProcessing(Details, sProvinceRng);
+        SumCritterTotals();
     }
     
     public void WeeklyProcessing(VectorRng vProvinceRng)
@@ -52,11 +54,20 @@ public record struct CritterData(CritterEntry _critterDetail)
         _critterMortality.WeeklyProcessing(Details, vProvinceRng);
     }
 
+    private void SumCritterTotals()
+    {
+        Dependants = Details.Dependants.SumArraySimd();
+        Workers = Details.Workers.SumArraySimd();
+        Incapacitated = Details.Incapacitated.SumArraySimd();
+        Soldiers = Details.Soldiers.SumArraySimd();
+    }
+
     public override string ToString()
     {
-        _critterGrowth.WeeklyProcessing(Details);
-        _critterMortality.WeeklyProcessing(Details, new VectorRng(420));
+        //_critterGrowth.WeeklyProcessing(Details);
+        //_critterMortality.WeeklyProcessing(Details, new VectorRng(420));
         //_critterMortality.CalculateWeeklyDeaths(Details);
+        //SumCritterTotals();
         return $"Data of {Species.Name}, {Culture}, {Class}: " +
                $"{Dependants}.{Workers}.{Incapacitated}.{Soldiers}|" +
                $"{Literate}.{Trained}|" +
