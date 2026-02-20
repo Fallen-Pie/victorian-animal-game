@@ -15,7 +15,7 @@ public class CritterMortality(SpeciesType Species)
     private int _weeklyIncapacitatedValue;
     private int _weeklySoldiersValue;
 
-    private ushort[] _mortalityCurve = new ushort[Species.MaxAge + 16 & ~15];
+    private ushort[] _mortalityCurve = new ushort[Species.ArraySize];
     //private int DailyDeaths => (int)(_weeklyValue / DateDefines.WeeklyDaysAmount).ProbabilisticRound();
 
     public void WeeklyProcessing(CritterDetails critterDetails, VectorRng weeklyRng)

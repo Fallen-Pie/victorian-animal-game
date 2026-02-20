@@ -20,7 +20,7 @@ public record CritterDetails
     public CritterDetails(SpeciesType newSpecies)
     {
         _species = newSpecies;
-        int maxSize = (Length + 15) & ~15;
+        int maxSize = newSpecies.ArraySize;
         Dependants = new ushort[maxSize];
         Workers = new ushort[maxSize];
         Incapacitated = new ushort[maxSize];

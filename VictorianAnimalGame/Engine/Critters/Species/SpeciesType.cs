@@ -21,6 +21,8 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public Range AdolescentRange => CritterDefines.Species[this].AdolescentRange;
     public Range AdultAgeRange => CritterDefines.Species[this].AdultAgeRange;
     public Range ElderRange => CritterDefines.Species[this].ElderRange;
+
+    public int ArraySize => (CritterDefines.Species[this].MaxAge + 1 + 15) & ~15;
     
     public ushort[] BirthDistribution => CritterDefines.Species[this].FertilityByAge;
 
