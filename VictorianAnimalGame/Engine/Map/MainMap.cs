@@ -40,6 +40,7 @@ public partial class MainMap : Node2D
         GD.Print(provinces[randomProvince].GetData());
         //AddChild(province);
         Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
+        ProcessYear(provinces, randomProvince);
         TestTime();
         base._Ready();
     }
@@ -74,6 +75,28 @@ public partial class MainMap : Node2D
             .Build();
         province.AddCritterToProvince(critterEntries);
         return province;
+    }
+
+    public void ProcessYear(List<LandProvince> provinces, int randomProvince)
+    {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        for (int week = 1; week <= DateDefines.WeeksPerYear; week++)
+        {
+            foreach (var province in provinces)
+            {
+                province.ProcessWeekly();
+            }
+            for (int day = 1; day <= DateDefines.WeeklyDaysAmount; day++)
+            {
+                foreach (var province in provinces)
+                {
+                    province.ProcessDaily();
+                }
+            }
+            Console.WriteLine(provinces[randomProvince].GetData());
+        }
+        watch.Stop();
+        Console.WriteLine($"Time for Province Processing: {watch.ElapsedMilliseconds}ms");
     }
 
     public async void TestTime()
