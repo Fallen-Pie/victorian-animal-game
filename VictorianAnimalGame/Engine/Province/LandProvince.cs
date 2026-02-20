@@ -69,6 +69,16 @@ public class LandProvince : IProvince
         return s;
     }
 
+    public void ProcessDaily()
+    {
+        _critterManager.DailyProcessing();
+    }
+
+    public void ProcessWeekly()
+    {
+        _critterManager.WeeklyProcessing();
+    }
+
     public void SetName()
     {
         ProvinceName = $"LandProvince-{GetHashCode()}";
