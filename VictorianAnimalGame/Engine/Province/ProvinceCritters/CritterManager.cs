@@ -12,6 +12,7 @@ public class CritterManager
     private readonly List<CritterData> _critterData = [];
     private VectorRng _vProvinceRng = new(0);
     private ScalarRng _sProvinceRng = new(0);
+    private Random _random = new();
  
     private Span<CritterData> DetailsSpan => CollectionsMarshal.AsSpan(_critterData);
     
@@ -61,7 +62,8 @@ public class CritterManager
 
     private uint GetNewSeed()
     {
-        return 420;
+        // TODO Make this deterministic, use of Random is just for testing so values arnt just flat
+        return (uint)_random.Next(int.MaxValue);
     }
 
     public override string ToString()
