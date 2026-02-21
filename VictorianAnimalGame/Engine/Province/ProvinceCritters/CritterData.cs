@@ -53,6 +53,11 @@ public record struct CritterData(CritterEntry _critterDetail)
         _critterGrowth.WeeklyProcessing(Details);
         _critterMortality.WeeklyProcessing(Details, vProvinceRng);
     }
+    
+    public void YearlyProcessing()
+    {
+        Details.AgePopulation();
+    }
 
     private void SumCritterTotals()
     {

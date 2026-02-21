@@ -50,6 +50,14 @@ public class CritterManager
             critterData.WeeklyProcessing(_vProvinceRng);
         }
     }
+    
+    public void YearlyProcessing()
+    {
+        foreach (ref CritterData critterData in DetailsSpan)
+        {
+            critterData.YearlyProcessing();
+        }
+    }
 
     private uint GetNewSeed()
     {
@@ -84,9 +92,6 @@ public class CritterManager
     //     }
     // }
 
-    
 
 
-    
-    
 }

@@ -78,6 +78,11 @@ public class LandProvince : IProvince
     {
         _critterManager.WeeklyProcessing();
     }
+    
+    public void ProcessYearly()
+    {
+        _critterManager.YearlyProcessing();
+    }
 
     public void SetName()
     {

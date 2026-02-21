@@ -90,15 +90,22 @@ public partial class MainMap : Node2D
             {
                 province.ProcessWeekly();
             }
+            //provinces[randomProvince].ProcessWeekly();
             for (int day = 1; day <= DateDefines.WeeklyDaysAmount; day++)
             {
                 foreach (var province in provinces)
                 {
                     province.ProcessDaily();
                 }
+                //provinces[randomProvince].ProcessDaily();
             }
             Console.WriteLine(provinces[randomProvince].GetData());
         }
+        foreach (var province in provinces)
+        {
+            province.ProcessYearly();
+        }
+        //provinces[randomProvince].ProcessYearly();
         watch.Stop();
         Console.WriteLine($"Time for Province Processing: {watch.ElapsedMilliseconds}ms");
     }
