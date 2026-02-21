@@ -23,12 +23,12 @@ public class CritterGrowth(SpeciesType Species)
         SetWeeklyBirths(critterDetails);
     }
 
-    private void SetWeeklyBirths(CritterDetails critterDetails, float birthRate = 2.5f)
+    private void SetWeeklyBirths(CritterDetails critterDetails, float birthRate = 5.5f)
     {
         _weeklyValue = 0;
         _weeklyValue += critterDetails.Dependants.CalculateFertilitySimd(Species);
         _weeklyValue += critterDetails.Workers.CalculateFertilitySimd(Species);
-        _weeklyValue = _weeklyValue * birthRate / DateDefines.WeeksPerYear;
+        _weeklyValue = (_weeklyValue * birthRate) / DateDefines.WeeksPerYear;
         _dailyValue = _weeklyValue / DateDefines.WeeklyDaysAmount;
     }
     
