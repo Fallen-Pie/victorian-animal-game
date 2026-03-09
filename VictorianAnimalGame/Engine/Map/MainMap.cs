@@ -40,11 +40,12 @@ public partial class MainMap : Node2D
         GD.Print(provinces[randomProvince].GetData());
         //AddChild(province);
         Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 50; i++)
         {
             ProcessYear(provinces, randomProvince);
             Console.WriteLine($"Year: {i}");
         }
+        GD.Print(provinces[randomProvince].GetDetails());
         TestTime();
         base._Ready();
     }

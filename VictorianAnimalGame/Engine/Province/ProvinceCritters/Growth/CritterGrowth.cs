@@ -23,7 +23,7 @@ public class CritterGrowth(SpeciesType Species)
         SetWeeklyBirths(critterDetails);
     }
 
-    private void SetWeeklyBirths(CritterDetails critterDetails, float birthRate = 5.5f)
+    private void SetWeeklyBirths(CritterDetails critterDetails, float birthRate = 7.5f)
     {
         _weeklyValue = 0;
         _weeklyValue += critterDetails.Dependants.CalculateFertilitySimd(Species);
