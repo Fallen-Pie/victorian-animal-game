@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
-using VictorianAnimalGame.Engine.Critters;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
-using VictorianAnimalGame.Engine.Critters.Cultures;
+using VictorianAnimalGame.Engine.Components.Critters;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
 

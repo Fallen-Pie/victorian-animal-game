@@ -1,7 +1,6 @@
-using System;
-using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 
-namespace VictorianAnimalGame.Engine.Critters;
+namespace VictorianAnimalGame.Engine.Components.Critters;
 
 public record CritterDetails
 {

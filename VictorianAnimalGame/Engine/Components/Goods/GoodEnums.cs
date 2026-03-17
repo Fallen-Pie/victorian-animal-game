@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.Engine.Goods;
+﻿namespace VictorianAnimalGame.Engine.Components.Goods;
 
 // [Flags]
 // public enum GoodType : ushort

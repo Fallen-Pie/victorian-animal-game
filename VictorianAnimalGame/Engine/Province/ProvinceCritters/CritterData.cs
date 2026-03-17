@@ -1,7 +1,7 @@
 ﻿using System;
-using VictorianAnimalGame.Engine.Critters;
-using VictorianAnimalGame.Engine.Critters.Cultures;
-using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Components.Critters;
+using VictorianAnimalGame.Engine.Components.Critters.Cultures;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
 using VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;

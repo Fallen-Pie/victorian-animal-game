@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VictorianAnimalGame.Engine.Critters.Cultures;
+namespace VictorianAnimalGame.Engine.Components.Critters.Cultures;
 
 public readonly struct CultureType(ushort cultureId) : IEquatable<CultureType>
 {

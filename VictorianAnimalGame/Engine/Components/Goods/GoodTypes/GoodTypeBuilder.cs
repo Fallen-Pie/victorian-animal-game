@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.Engine.Goods.GoodTypes;
+﻿namespace VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
 public class GoodTypeBuilder
 {

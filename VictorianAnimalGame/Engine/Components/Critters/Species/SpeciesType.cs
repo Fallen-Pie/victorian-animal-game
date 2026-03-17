@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Frozen;
 using VictorianAnimalGame.Engine.Defines;
 
-namespace VictorianAnimalGame.Engine.Critters.Species;
+namespace VictorianAnimalGame.Engine.Components.Critters.Species;
 
 public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
 {

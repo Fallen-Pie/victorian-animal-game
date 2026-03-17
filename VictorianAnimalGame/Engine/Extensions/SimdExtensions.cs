@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
-using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictorianAnimalGame.Engine.Extensions;

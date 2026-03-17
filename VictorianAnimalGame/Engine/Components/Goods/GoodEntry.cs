@@ -1,6 +1,6 @@
-﻿using VictorianAnimalGame.Engine.Goods.GoodTypes;
+﻿using VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
-namespace VictorianAnimalGame.Engine.Goods;
+namespace VictorianAnimalGame.Engine.Components.Goods;
 
 public struct GoodEntry
 {

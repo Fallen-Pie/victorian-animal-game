@@ -1,5 +1,5 @@
-﻿using VictorianAnimalGame.Engine.Critters;
-using VictorianAnimalGame.Engine.Critters.Species;
+﻿using VictorianAnimalGame.Engine.Components.Critters;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using VictorianAnimalGame.Engine.Critters;
+using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;
 

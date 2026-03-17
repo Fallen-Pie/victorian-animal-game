@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Numerics;
-using VictorianAnimalGame.Engine.Critters;
 
 namespace VictorianAnimalGame.Engine.Extensions;
 

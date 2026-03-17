@@ -1,6 +1,6 @@
-﻿using VictorianAnimalGame.Engine.Critters.Species;
+﻿using VictorianAnimalGame.Engine.Components.Critters.Species;
 
-namespace VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
+namespace VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
 
 public class Stage1Distribution : ICritterDistribution
 {

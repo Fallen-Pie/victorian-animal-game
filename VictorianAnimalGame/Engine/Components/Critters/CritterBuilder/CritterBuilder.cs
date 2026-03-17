@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
-using VictorianAnimalGame.Engine.Critters.Cultures;
-using VictorianAnimalGame.Engine.Critters.Species;
-using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Components.Critters.Cultures;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 
-namespace VictorianAnimalGame.Engine.Critters.CritterBuilder;
+namespace VictorianAnimalGame.Engine.Components.Critters.CritterBuilder;
 
 public class CritterBuilder
 {

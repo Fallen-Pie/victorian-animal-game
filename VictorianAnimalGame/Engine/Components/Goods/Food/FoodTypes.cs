@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VictorianAnimalGame.Engine.Goods.Food;
+namespace VictorianAnimalGame.Engine.Components.Goods.Food;
 
 [Flags]
 public enum FoodTypes

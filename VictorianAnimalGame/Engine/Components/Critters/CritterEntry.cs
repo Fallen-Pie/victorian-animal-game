@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using VictorianAnimalGame.Engine.Critters.Cultures;
-using VictorianAnimalGame.Engine.Critters.Species;
+using VictorianAnimalGame.Engine.Components.Critters.Cultures;
+using VictorianAnimalGame.Engine.Components.Critters.Species;
 
-namespace VictorianAnimalGame.Engine.Critters
+namespace VictorianAnimalGame.Engine.Components.Critters
 {
     [StructLayout(LayoutKind.Sequential)]
     public readonly record struct CritterEntry(SpeciesType Species, CultureType Culture, CritterClass Class)

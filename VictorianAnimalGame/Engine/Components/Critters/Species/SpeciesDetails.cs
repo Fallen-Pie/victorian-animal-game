@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Frozen;
-using System.Collections.Generic;
 
-namespace VictorianAnimalGame.Engine.Critters.Species;
+namespace VictorianAnimalGame.Engine.Components.Critters.Species;
 
 public readonly record struct SpeciesDetails
 {

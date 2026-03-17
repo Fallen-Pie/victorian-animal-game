@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace VictorianAnimalGame.Engine.Goods.GoodTypes;
+namespace VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
 public readonly record struct GoodType
 {

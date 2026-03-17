@@ -1,7 +1,7 @@
 ﻿using System;
 using VictorianAnimalGame.Engine.Defines;
 
-namespace VictorianAnimalGame.Engine.Critters;
+namespace VictorianAnimalGame.Engine.Components.Critters;
 
 public readonly ref struct CritterView
 {
