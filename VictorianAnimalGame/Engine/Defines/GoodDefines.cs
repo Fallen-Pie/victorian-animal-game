@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using VictorianAnimalGame.Engine.Goods.GoodTypes;
 using VictorianAnimalGame.FileReader;
 using VictorianAnimalGame.FileReader.DataConfig;
-using VictorianAnimalGame.Scripts.Goods.GoodTypes;
 
 namespace VictorianAnimalGame.Engine.Defines;
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VictorianAnimalGame.Scripts.Goods;
+﻿namespace VictorianAnimalGame.Engine.Goods;
 
 // [Flags]
 // public enum GoodType : ushort
