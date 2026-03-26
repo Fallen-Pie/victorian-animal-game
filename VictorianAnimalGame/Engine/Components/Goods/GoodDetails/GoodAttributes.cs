@@ -14,7 +14,7 @@ public record struct GoodAttributes
     private const uint TierMask = 0x7;          // 3 bits (0-7)
     private const uint GoodsMask = 0x7F;        // 7 bits (0-127)
     private const uint FactoryMask = 0x3FFFFF;  // 22 bits (0-4,194,303)
-    private const uint GoodsFactoryMask = 0x1FFFFFFF; // 29 bits
+    private const uint GoodsFactoryMask = 0xFFFFFFF8; // 29 bits
     
     public GoodAttributes(byte tier, byte goods, uint factoryId)
     {
@@ -32,8 +32,8 @@ public record struct GoodAttributes
 
     public uint GetFactoryId() => (attributeData >> FactoryShift) & FactoryMask;
     
-    // Shift right by 3 to drop the Tier, then mask the remaining 29 bits
-    public uint GetGoodFactoryId() => (attributeData >> GoodShift) & GoodsFactoryMask;
+    // Zero out the Tier bits to get the GoodFactoryID
+    public uint GetGoodFactoryId() => attributeData & GoodsFactoryMask;
 
     public override string ToString()
     {
