@@ -27,14 +27,12 @@ public readonly record struct PropertyId
     public PropertyId(PropertyCode categoryCode, GoodType goodCode)
     {
         //TODO Change GoodType to return a number like SpeciesType
-        uint categoryBits = (1 << CategoryShift) | (uint)categoryCode;
+        uint categoryBits = (goodCode.RawValue << CategoryShift) | (uint)categoryCode;
         
         uint sequence = PropertyIdRegistry.GetNextSequence(categoryBits);
         
-        // Move 10 bits for 
-        uint sequenceBits = sequence << SubCategoryShift;
-            
-        _value = sequenceBits | categoryBits;
+        // Move 10 bits for the type, shift it, and merge
+        _value = (sequence << SubCategoryShift) | categoryBits;
     }
 
     public uint RawValue => _value;
@@ -48,7 +46,6 @@ public readonly record struct PropertyId
 
     public string GetRawValue() => $"RawValue({RawValue})";
     public string GetIdDetails() => $"Category({Category})|SequenceValue({SequenceValue})";
-
     public string GetIdDetails(GoodType goodCode)
     {
        return $"Category({Category})|Good({Good})|SequenceValue({GoodSequenceValue})"; 
