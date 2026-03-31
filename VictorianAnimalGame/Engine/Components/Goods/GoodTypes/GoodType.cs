@@ -1,38 +1,25 @@
 ﻿using System;
-using System.Text;
+using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
-public readonly record struct GoodType
+public readonly struct GoodType(byte goodId) : IEquatable<GoodType>
 {
-    public GoodType(string name, float price, float bulk)
-    {
-        Name = name;
-        Price = price;
-        Bulk = bulk;
-        
-        var value = (float)Math.Round(Price * 0.1f, 2);
-        MinPrice = value < 0.01 ? 0.01f : value;
-        MaxPrice = (float)Math.Round(Price * 10f, 2);
-        PricePerBulk = (float)Math.Round(Price / Bulk, 2);
-    }
-
-    public string Name { get; }
-    public float Price { get; }
-    public float Bulk { get; }
-    public float MinPrice { get; }
-    public float MaxPrice { get; }
-    public float PricePerBulk { get; }
-
-    public override string ToString()
-    {
-        StringBuilder builder = new();
-        builder.Append($"Name:{Name}|");
-        builder.Append($"Price:{Price}|");
-        builder.Append($"Bulk:{Bulk}|");
-        builder.Append($"MinPrice:{MinPrice}|");
-        builder.Append($"MaxPrice:{MaxPrice}|");
-        builder.Append($"PricePerBulk:{PricePerBulk}");
-        return builder.ToString();
-    }
+    private byte GoodId { get; } = goodId;
+    
+    public string Name => GoodDefines.Goods[this].Name;
+    public float Price => GoodDefines.Goods[this].Price;
+    public float Bulk => GoodDefines.Goods[this].Bulk;
+    public float MinPrice => GoodDefines.Goods[this].MinPrice;
+    public float MaxPrice => GoodDefines.Goods[this].MaxPrice;
+    public float PricePerBulk => GoodDefines.Goods[this].PricePerBulk;
+    
+    public uint RawValue => GoodId;
+    
+    public override bool Equals(object obj) => obj is GoodType other && Equals(other);
+    public bool Equals(GoodType other) => GoodId == other.GoodId;
+    public override int GetHashCode() => GoodId.GetHashCode();
+    public static bool operator ==(GoodType left, GoodType right) => left.Equals(right);
+    public static bool operator !=(GoodType left, GoodType right) => !(left == right);
+    public override string ToString() => GoodId.ToString();
 }
