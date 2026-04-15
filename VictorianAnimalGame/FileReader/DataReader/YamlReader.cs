@@ -3,7 +3,7 @@ using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace VictorianAnimalGame.FileReader;
+namespace VictorianAnimalGame.FileReader.DataReader;
 
 public static class YamlReader
 {

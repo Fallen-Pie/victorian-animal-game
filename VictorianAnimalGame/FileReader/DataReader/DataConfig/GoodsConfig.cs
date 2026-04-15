@@ -1,4 +1,4 @@
-﻿namespace VictorianAnimalGame.FileReader.DataConfig;
+﻿namespace VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
 public class GoodsConfig : IDataConfig
 {
