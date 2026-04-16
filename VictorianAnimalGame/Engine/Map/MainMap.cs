@@ -33,6 +33,7 @@ public partial class MainMap : Node2D
         //     GD.Print(critter);
         // }
         var frozenDictionary = GoodDefines.GoodTypes;
+        var provinceMapData = MapDefines.provinceMapData;
 
         //province.SetName();
         int randomProvince = rnd.Next(0, 1000);
@@ -49,7 +50,7 @@ public partial class MainMap : Node2D
         TestTime();
         base._Ready();
     }
-        
+
     // static Random _r = new Random ();
     // static T RandomEnumValue<T> ()
     // {
