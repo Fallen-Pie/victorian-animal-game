@@ -2,8 +2,8 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
-using VictorianAnimalGame.FileReader;
-using VictorianAnimalGame.FileReader.DataConfig;
+using VictorianAnimalGame.FileReader.DataReader;
+using VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
 namespace VictorianAnimalGame.Engine.Defines;
 
@@ -55,7 +55,6 @@ public static class GoodDefines
         GoodDetails noneSpeciesDetails = new GoodBuilder()
             .SetGoodName(noneName)
             .Build();
-        
         goodTypes.Add(noneName, noneType);
         goods.Add(noneType, noneSpeciesDetails);
     }

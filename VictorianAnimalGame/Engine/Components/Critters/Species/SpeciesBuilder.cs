@@ -1,4 +1,4 @@
-﻿using VictorianAnimalGame.FileReader.DataConfig;
+﻿using VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
 namespace VictorianAnimalGame.Engine.Components.Critters.Species;
 

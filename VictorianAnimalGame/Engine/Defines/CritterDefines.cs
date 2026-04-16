@@ -2,8 +2,8 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Components.Critters.Species;
-using VictorianAnimalGame.FileReader;
-using VictorianAnimalGame.FileReader.DataConfig;
+using VictorianAnimalGame.FileReader.DataReader;
+using VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
 namespace VictorianAnimalGame.Engine.Defines;
 
