@@ -33,7 +33,7 @@ public partial class MainMap : Node2D
         //     GD.Print(critter);
         // }
         var frozenDictionary = GoodDefines.GoodTypes;
-        var provinceMapData = MapDefines.provinceMapData;
+        var provinceMapData = MapDefines.ProvinceMapData;
 
         //province.SetName();
         int randomProvince = rnd.Next(0, 1000);
@@ -41,7 +41,7 @@ public partial class MainMap : Node2D
         GD.Print(provinces[randomProvince].GetData());
         //AddChild(province);
         Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 2; i++)
         {
             ProcessYear(provinces, randomProvince);
             Console.WriteLine($"Year: {i}");
