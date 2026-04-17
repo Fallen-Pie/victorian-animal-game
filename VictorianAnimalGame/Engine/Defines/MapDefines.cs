@@ -8,16 +8,13 @@ namespace VictorianAnimalGame.Engine.Defines;
 
 public static class MapDefines
 {
-    public static readonly int[] provinceMapData = DefineProvinces();
-    
-    private static int[] DefineProvinces()
-    {
-        // 1. Load your maps
-        Image provincesImage = Image.LoadFromFile("Data/Map/provinces.bmp");
-        //Image riverImage = Image.LoadFromFile("res://maps/rivers.png");
+    public static readonly FrozenDictionary<uint, int> ProvinceMapping = DefineProvinces();
+    public static readonly int[] ProvinceMapData = DefineMapData();
 
-        // 2. Define your predetermined provinces (usually loaded from a JSON or CSV)
-        var provinceDefinitions = new Dictionary<uint, int>
+    private static FrozenDictionary<uint, int> DefineProvinces()
+    {
+        //TODO Read these from files
+        return new Dictionary<uint, int>
         {
             // Strip alpha from your definition colors so they match the scanner logic
             { MapScanner.ColorToMapUint(new Color("FF7F27")) & 0x00FFFFFF, 1 }, // Orange
@@ -30,9 +27,16 @@ public static class MapDefines
             { MapScanner.ColorToMapUint(new Color("008000")) & 0x00FFFFFF, 7 }, // Forest Green
             { MapScanner.ColorToMapUint(new Color("006400")) & 0x00FFFFFF, 8 }, // Dark Green
         }.ToFrozenDictionary();
+    }
+    
+    private static int[] DefineMapData()
+    {
+        Image provincesImage = Image.LoadFromFile("Data/Map/provinces.bmp");
+        //Image riverImage = Image.LoadFromFile("res://maps/rivers.png");
+
 
         // 3. Run the Province Strategy
-        var provinceStrategy = new ProvinceAssignmentStrategy(provinceDefinitions);
+        var provinceStrategy = new ProvinceAssignmentStrategy(ProvinceMapping);
         return MapScanner.Scan(provincesImage, provinceStrategy);
 
         // 4. Run the River Strategy, passing in the province data
