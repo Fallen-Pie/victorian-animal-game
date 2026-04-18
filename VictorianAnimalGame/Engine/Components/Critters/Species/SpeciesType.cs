@@ -31,6 +31,4 @@ public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
     public static bool operator ==(SpeciesType left, SpeciesType right) => left.Equals(right);
     public static bool operator !=(SpeciesType left, SpeciesType right) => !(left == right);
     public override string ToString() => SpeciesId.ToString();
-
-
 }
