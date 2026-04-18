@@ -1,5 +1,6 @@
 ﻿using Godot;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Province;
 
 namespace VictorianAnimalGame.Engine.Map;
 
@@ -27,9 +28,9 @@ public partial class MapInteraction : Sprite2D
             if (x >= 0 && x < Texture.GetWidth() && y >= 0 && y < Texture.GetHeight())
             {
                 // 4. Look up the province ID instantly
-                int clickedProvinceId = MapDefines.ProvinceMapData[y * Texture.GetWidth() + x];
+                ProvinceType clickedProvinceId = MapDefines.ProvinceMapData[y * Texture.GetWidth() + x];
 
-                if (clickedProvinceId != -1)
+                if (clickedProvinceId != new ProvinceType(0))
                 {
                     GD.Print($"User clicked Province ID: {clickedProvinceId}");
                     // Fire an event, open a UI menu, select an army, etc.
