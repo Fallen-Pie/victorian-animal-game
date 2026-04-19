@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Province;
-using VictorianAnimalGame.FileReader.MapReader;
+using VictorianAnimalGame.FileReader.DataReader;
 
 namespace VictorianAnimalGame.Engine.Defines;
 
@@ -34,7 +34,7 @@ public static class MapDefines
         Image provincesImage = Image.LoadFromFile("Data/Map/provinces.bmp");
         
         //TODO Make this Reusable
-        return MapScanner.Scan(provincesImage);
+        return MapReader.Scan(provincesImage);
 
         //Image riverImage = Image.LoadFromFile("res://maps/rivers.png");
         // 4. Run the River Strategy, passing in the province data

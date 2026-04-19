@@ -4,9 +4,9 @@ using Godot;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.FileReader.MapReader;
+namespace VictorianAnimalGame.FileReader.DataReader;
 
-public static class MapScanner
+public static class MapReader
 {
     public static ProvinceType[] Scan(Image mapImage)
     {
@@ -25,26 +25,16 @@ public static class MapScanner
         byte[] rawData = mapImage.GetData();
         ReadOnlySpan<uint> pixels = MemoryMarshal.Cast<byte, uint>(rawData);
         
-        int index = 0;
-        for (int y = 0; y < height; y++)
+        for (int index = 0; index < (height * width); index++)
         {
-            for (int x = 0; x < width; x++)
-            {
-                uint rgb = pixels[index++] & 0x00FFFFFF;
-                
-                if (MapDefines.ProvinceMapping.TryGetValue(rgb, out ProvinceType provinceId))
-                {
-                    _provinceArray[y * width + x] = provinceId;
-                }
+            uint rgb = pixels[index];
+
+            if (MapDefines.ProvinceMapping.TryGetValue(rgb, out ProvinceType provinceId)) 
+            { 
+                _provinceArray[index] = provinceId;
             }
         }
 
         return _provinceArray;
-    }
-    
-    // Helper to convert standard Hex/Color to the little-endian uint format Godot's Rgba8 produces
-    public static uint ColorToMapUint(Color color)
-    {
-        return ((uint)color.A8 << 24) | ((uint)color.B8 << 16) | ((uint)color.G8 << 8) | (uint)color.R8;
     }
 }
