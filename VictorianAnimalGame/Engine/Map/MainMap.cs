@@ -17,37 +17,37 @@ public partial class MainMap : Node2D
 {
     public override async void _Ready()
     {
-        List<LandProvince> provinces = [];
-        Random rnd = new Random();
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        for (int i = 0; i < 1000; i++)
-        {
-            LandProvince province = new();
-            province = InitialiseProvince(province, rnd);
-            province.SetData();
-            provinces.Add(province);
-        }
-        watch.Stop();
-        var elapsedMs = watch.ElapsedMilliseconds;
-        // foreach (var critter in province.ProvinceCritters) 
+        // List<LandProvince> provinces = [];
+        // Random rnd = new Random();
+        // var watch = System.Diagnostics.Stopwatch.StartNew();
+        // for (int i = 0; i < 1000; i++)
         // {
-        //     GD.Print(critter);
+        //     LandProvince province = new();
+        //     province = InitialiseProvince(province, rnd);
+        //     province.SetData();
+        //     provinces.Add(province);
         // }
-        var frozenDictionary = GoodDefines.GoodTypes;
-        var provinceMapData = MapDefines.ProvinceMapData;
-
-        //province.SetName();
-        int randomProvince = rnd.Next(0, 1000);
-        GD.Print(provinces[randomProvince].GetDetails());
-        GD.Print(provinces[randomProvince].GetData());
-        //AddChild(province);
-        Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
-        for (int i = 0; i < 2; i++)
-        {
-            ProcessYear(provinces, randomProvince);
-            Console.WriteLine($"Year: {i}");
-        }
-        GD.Print(provinces[randomProvince].GetDetails());
+        // watch.Stop();
+        // var elapsedMs = watch.ElapsedMilliseconds;
+        // // foreach (var critter in province.ProvinceCritters) 
+        // // {
+        // //     GD.Print(critter);
+        // // }
+        // var frozenDictionary = GoodDefines.GoodTypes;
+        // var provinceMapData = MapDefines.ProvinceMapData;
+        //
+        // //province.SetName();
+        // int randomProvince = rnd.Next(0, 1000);
+        // GD.Print(provinces[randomProvince].GetDetails());
+        // GD.Print(provinces[randomProvince].GetData());
+        // //AddChild(province);
+        // Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
+        // for (int i = 0; i < 2; i++)
+        // {
+        //     ProcessYear(provinces, randomProvince);
+        //     Console.WriteLine($"Year: {i}");
+        // }
+        // GD.Print(provinces[randomProvince].GetDetails());
         TestTime();
         base._Ready();
     }
