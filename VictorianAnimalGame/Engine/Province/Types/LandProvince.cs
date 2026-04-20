@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.ProvinceCritters;
+using VictorianAnimalGame.Engine.Province.Critters;
 using VictorianAnimalGame.Scripts.ProvinceData;
-using VictorianAnimalGame.Scripts.ProvinceData.Strategies;
 
-namespace VictorianAnimalGame.Engine.Province;
+namespace VictorianAnimalGame.Engine.Province.Types;
 
 public class LandProvince : IProvince
 {
