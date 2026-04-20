@@ -9,6 +9,7 @@ using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution
 using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
+using VictorianAnimalGame.Engine.Province.Types;
 
 namespace VictorianAnimalGame.Engine.Map;
 

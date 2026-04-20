@@ -3,11 +3,11 @@ using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
-using VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;
+using VictorianAnimalGame.Engine.Province.Critters.Growth;
+using VictorianAnimalGame.Engine.Province.Critters.Mortality;
 using VictorianAnimalGame.Engine.Randomness;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceCritters;
+namespace VictorianAnimalGame.Engine.Province.Critters;
 
 public record struct CritterData(CritterEntry _critterDetail)
 {

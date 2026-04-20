@@ -5,7 +5,7 @@ using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceCritters;
+namespace VictorianAnimalGame.Engine.Province.Critters;
 
 public class CritterManager
 {

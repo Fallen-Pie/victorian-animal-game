@@ -3,9 +3,8 @@ using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;
-using YamlDotNet.Core.Events;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceCritters.Growth;
+namespace VictorianAnimalGame.Engine.Province.Critters.Growth;
 
 public class CritterGrowth(SpeciesType Species)
 {

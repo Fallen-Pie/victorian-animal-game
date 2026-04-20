@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Frozen;
 using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Randomness;
 
-namespace VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;
+namespace VictorianAnimalGame.Engine.Province.Critters.Mortality;
 
 public class CritterMortality(SpeciesType Species)
 {
