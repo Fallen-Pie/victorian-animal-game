@@ -7,11 +7,9 @@ using VictorianAnimalGame.Scripts.ProvinceData;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class LandProvince : IProvince
+public class LandProvince(ProvinceId newId, uint newMapColour, string newName) : IProvince(newId, newMapColour, newName)
 {
     public HashSet<CritterEntry> ProvinceCritters = [];
-    public string ProvinceName;
-    private readonly ProvinceDataFinder _provinceData = new();
     private readonly CritterManager _critterManager = new();
         
     public string GetDetails()
@@ -54,7 +52,7 @@ public class LandProvince : IProvince
 
     public void SetName()
     {
-        ProvinceName = $"LandProvince-{GetHashCode()}";
+        Name = $"LandProvince-{GetHashCode()}";
     }
 
     public void AddCritterToProvince(HashSet<CritterEntry> critterEntries)
