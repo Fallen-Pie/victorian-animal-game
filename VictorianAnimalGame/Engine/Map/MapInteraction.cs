@@ -28,9 +28,9 @@ public partial class MapInteraction : Sprite2D
             if (x >= 0 && x < Texture.GetWidth() && y >= 0 && y < Texture.GetHeight())
             {
                 // 4. Look up the province ID instantly
-                ProvinceType clickedProvinceId = MapDefines.ProvinceMapData[y * Texture.GetWidth() + x];
+                ProvinceId clickedProvinceId = MapDefines.ProvinceMapData[y * Texture.GetWidth() + x];
 
-                if (clickedProvinceId != new ProvinceType(0))
+                if (clickedProvinceId != new ProvinceId(0))
                 {
                     GD.Print($"User clicked Province ID: {clickedProvinceId}");
                     // Fire an event, open a UI menu, select an army, etc.

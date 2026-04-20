@@ -8,12 +8,12 @@ namespace VictorianAnimalGame.FileReader.DataReader;
 
 public static class MapReader
 {
-    public static ProvinceType[] Scan(Image mapImage)
+    public static ProvinceId[] Scan(Image mapImage)
     {
         int width = mapImage.GetWidth();
         int height = mapImage.GetHeight();
         
-        ProvinceType[] _provinceArray = new ProvinceType[width * height];
+        ProvinceId[] _provinceArray = new ProvinceId[width * height];
 
         // Ensure a consistent 32-bit format (RGBA8)
         if (mapImage.GetFormat() != Image.Format.Rgba8)
@@ -29,7 +29,7 @@ public static class MapReader
         {
             uint rgb = pixels[index];
 
-            if (MapDefines.ProvinceMapping.TryGetValue(rgb, out ProvinceType provinceId)) 
+            if (MapDefines.ProvinceMapping.TryGetValue(rgb, out ProvinceId provinceId)) 
             { 
                 _provinceArray[index] = provinceId;
             }
