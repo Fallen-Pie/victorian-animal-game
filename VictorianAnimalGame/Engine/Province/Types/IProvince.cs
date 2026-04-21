@@ -20,6 +20,6 @@ public abstract class IProvince
 
     public override string ToString()
     {
-        return $"{GetType()}: {Name}|{Id}|{MapColour}|Size {Size}|Neighbours {Neighbours}";
+        return $"{GetType().Name}: {Name}|{Id}|{MapColour:X}|Size {Size}|Neighbours {Neighbours}";
     }
 }
