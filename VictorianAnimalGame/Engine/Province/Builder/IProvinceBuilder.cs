@@ -7,6 +7,7 @@ public abstract class IProvinceBuilder
     protected ProvinceId provinceId;
     protected uint mapColour;
     protected string name;
+    protected ProvinceBuilderDetails details;
 
     public IProvinceBuilder SetProvinceId(ProvinceId newProvinceId)
     {
@@ -25,6 +26,12 @@ public abstract class IProvinceBuilder
         name = newMame;
         return this;
     }
+
+    public IProvinceBuilder SetProvinceDetails(ProvinceBuilderDetails newDetails)
+    {
+        details = newDetails;
+        return this;
+    }
     
     public abstract IProvince Build();
 }
@@ -33,7 +40,7 @@ public class LandProvinceBuilder : IProvinceBuilder
 {
     public override LandProvince Build()
     {
-        return new LandProvince(provinceId, mapColour, name);
+        return new LandProvince(provinceId, mapColour, name, details);
     }
 }
 
@@ -41,7 +48,7 @@ public class SeaProvinceBuilder : IProvinceBuilder
 {
     public override SeaProvince Build()
     {
-        return new SeaProvince(provinceId, mapColour, name);
+        return new SeaProvince(provinceId, mapColour, name, details);
     }
 }
 
@@ -49,6 +56,6 @@ public class WastelandProvinceBuilder : IProvinceBuilder
 {
     public override WastelandProvince Build()
     {
-        return new WastelandProvince(provinceId, mapColour, name);
+        return new WastelandProvince(provinceId, mapColour, name, details);
     }
 }
