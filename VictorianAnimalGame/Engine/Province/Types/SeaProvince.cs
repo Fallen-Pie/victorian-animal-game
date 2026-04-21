@@ -1,10 +1,11 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Province.Builder;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
 public class SeaProvince : IProvince
 {
-    public SeaProvince(ProvinceId newId, uint newMapColour, string newName) : base(newId, newMapColour, newName)
+    public SeaProvince(ProvinceId newId, uint newMapColour, string newName, ProvinceBuilderDetails newDetails) : base(newId, newMapColour, newName, newDetails)
     {
         
     }

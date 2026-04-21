@@ -2,12 +2,14 @@
 using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Extensions;
+using VictorianAnimalGame.Engine.Province.Builder;
 using VictorianAnimalGame.Engine.Province.Critters;
 using VictorianAnimalGame.Scripts.ProvinceData;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class LandProvince(ProvinceId newId, uint newMapColour, string newName) : IProvince(newId, newMapColour, newName)
+public class LandProvince(ProvinceId newId, uint newMapColour, string newName, ProvinceBuilderDetails details) : 
+    IProvince(newId, newMapColour, newName, details)
 {
     public HashSet<CritterEntry> ProvinceCritters = [];
     private readonly CritterManager _critterManager = new();
