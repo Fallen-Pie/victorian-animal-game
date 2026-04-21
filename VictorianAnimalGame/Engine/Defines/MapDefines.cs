@@ -15,13 +15,14 @@ public static class MapDefines
 {
     public static readonly FrozenDictionary<uint, ProvinceId> ColourMapping;
     public static readonly FrozenDictionary<ProvinceId, IProvince> ProvinceMapping;
-    public static readonly ProvinceId[] ProvinceMapData = DefineMapData();
+    public static readonly ProvinceId[] ProvinceMapData;
 
     static MapDefines()
     {
         var (colourMapping, idMapping) = DefineProvinces();
         ColourMapping = colourMapping;
         ProvinceMapping = idMapping;
+        ProvinceMapData = DefineMapData();
     }
 
     private static (FrozenDictionary<uint, ProvinceId>, FrozenDictionary<ProvinceId, IProvince>) DefineProvinces()
@@ -57,6 +58,7 @@ public static class MapDefines
             
             colourMapping.Add(new Color(provinceData.Colour).ToUint(), new ProvinceId(provinceData.Id));
             idMapping.Add(new ProvinceId(provinceData.Id), newProvince);
+            GD.Print(newProvince);
         }
 
         return (colourMapping.ToFrozenDictionary(), idMapping.ToFrozenDictionary());
@@ -64,7 +66,7 @@ public static class MapDefines
     
     private static ProvinceId[] DefineMapData()
     {
-        Image provincesImage = Image.LoadFromFile("Data/Map/provinces.bmp");
+        Image provincesImage = Image.LoadFromFile("Data/Map/Views/provinces.bmp");
         
         //TODO Make this Reusable
         return MapReader.Scan(provincesImage);
