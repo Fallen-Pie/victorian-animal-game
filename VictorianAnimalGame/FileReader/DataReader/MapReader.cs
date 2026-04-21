@@ -29,7 +29,7 @@ public static class MapReader
         {
             uint rgb = pixels[index];
 
-            if (MapDefines.ProvinceMapping.TryGetValue(rgb, out ProvinceId provinceId)) 
+            if (MapDefines.ColourMapping.TryGetValue(rgb, out ProvinceId provinceId)) 
             { 
                 _provinceArray[index] = provinceId;
             }

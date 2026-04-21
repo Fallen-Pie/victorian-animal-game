@@ -13,13 +13,22 @@ namespace VictorianAnimalGame.Engine.Defines;
 
 public static class MapDefines
 {
-    public static readonly FrozenDictionary<uint, ProvinceId> ProvinceMapping = DefineProvinces();
+    public static readonly FrozenDictionary<uint, ProvinceId> ColourMapping;
+    public static readonly FrozenDictionary<ProvinceId, IProvince> ProvinceMapping;
     public static readonly ProvinceId[] ProvinceMapData = DefineMapData();
 
-    private static FrozenDictionary<uint, ProvinceId> DefineProvinces()
+    static MapDefines()
+    {
+        var (colourMapping, idMapping) = DefineProvinces();
+        ColourMapping = colourMapping;
+        ProvinceMapping = idMapping;
+    }
+
+    private static (FrozenDictionary<uint, ProvinceId>, FrozenDictionary<ProvinceId, IProvince>) DefineProvinces()
     {
         List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
-        Dictionary<uint, ProvinceId> h = [];
+        Dictionary<uint, ProvinceId> colourMapping = [];
+        Dictionary<ProvinceId, IProvince> idMapping = [];
         
         foreach (var province in data)
         {
@@ -46,39 +55,11 @@ public static class MapDefines
                 .SetProvinceId(new ProvinceId(provinceData.Id))
                 .Build();
             
-            h.Add(new Color(provinceData.Colour).ToUint(), new ProvinceId(provinceData.Id));
-            
-            // SpeciesType newSpeciesType = new SpeciesType(i);
-            // speciesTypes.Add(speciesData.Name, newSpeciesType);
-            //
-            // SpeciesDetails newSpeciesDetails = new SpeciesBuilder()
-            //     .SetSpeciesName(speciesData.Name)
-            //     .SetSpeciesType(newSpeciesType)
-            //     .SetAges(speciesData.Ages)
-            //     .SetPeakFertility(speciesData.PeakFertility)
-            //     .SetFoodConsumption(speciesData.FoodConsumption)
-            //     .SetWorkforceValue(speciesData.WorkforceValue)
-            //     .Build();
-            // species.Add(newSpeciesType, newSpeciesDetails);
-            //
-            // Console.WriteLine(newSpeciesDetails);
+            colourMapping.Add(new Color(provinceData.Colour).ToUint(), new ProvinceId(provinceData.Id));
+            idMapping.Add(new ProvinceId(provinceData.Id), newProvince);
         }
-        
-        //TODO Read these from files
-        // return new Dictionary<uint, ProvinceId>
-        // {
-        //     { new Color("FF7F27").ToUint(), new ProvinceId(1) }, // Orange
-        //     { new Color("ED1C24").ToUint(), new ProvinceId(2) }, // Red
-        //     { new Color("880015").ToUint(), new ProvinceId(3) }, // Dark Red
-        //     
-        //     { new Color("22B14C").ToUint(), new ProvinceId(4) }, // Light Green
-        //     { new Color("1FA046").ToUint(), new ProvinceId(5) }, // Green
-        //     { new Color("B5E61D").ToUint(), new ProvinceId(6) }, // Yellow Green
-        //     { new Color("008000").ToUint(), new ProvinceId(7) }, // Forest Green
-        //     { new Color("006400").ToUint(), new ProvinceId(8) }, // Dark Green
-        // }.ToFrozenDictionary();
 
-        return h.ToFrozenDictionary();
+        return (colourMapping.ToFrozenDictionary(), idMapping.ToFrozenDictionary());
     }
     
     private static ProvinceId[] DefineMapData()
