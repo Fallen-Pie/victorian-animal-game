@@ -33,7 +33,7 @@ public partial class MapInteraction : Sprite2D
                 if (clickedProvinceId != new ProvinceId(0))
                 {
                     GD.Print($"User clicked Province ID: {clickedProvinceId}\n" +
-                             $"{MapDefines.ProvinceMapping[clickedProvinceId]}");
+                             $"{MapDefines.ProvinceData[clickedProvinceId]}");
                     // Fire an event, open a UI menu, select an army, etc.
                 }
             }
