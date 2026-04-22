@@ -1,35 +1,52 @@
-﻿using VictorianAnimalGame.Engine.Province.Types;
+﻿using System.Collections.Generic;
+using Godot;
+using VictorianAnimalGame.Engine.Province.Types;
 
 namespace VictorianAnimalGame.Engine.Province.Builder;
 
 public abstract class IProvinceBuilder
 {
-    protected ProvinceId provinceId;
-    protected uint mapColour;
-    protected string name;
-    protected ProvinceBuilderDetails details;
+    protected ProvinceId ProvinceId;
+    protected uint MapColour;
+    protected string Name;
+    
+    protected uint Size;
+    protected Dictionary<ProvinceId, uint> Neighbours;
+    protected Vector2I Centre;
 
     public IProvinceBuilder SetProvinceId(ProvinceId newProvinceId)
     {
-        provinceId = newProvinceId;
+        ProvinceId = newProvinceId;
         return this;
     }
     
     public IProvinceBuilder SetColour(uint newMapColour)
     {
-        mapColour = newMapColour;
+        MapColour = newMapColour;
         return this;
     }
     
     public IProvinceBuilder SetName(string newMame)
     {
-        name = newMame;
+        Name = newMame;
         return this;
     }
 
-    public IProvinceBuilder SetProvinceDetails(ProvinceBuilderDetails newDetails)
+    public IProvinceBuilder SetSize(uint newSize)
     {
-        details = newDetails;
+        Size = newSize;
+        return this;
+    }
+    
+    public IProvinceBuilder SetNeighbours(Dictionary<ProvinceId, uint> newNeighbours)
+    {
+        Neighbours = newNeighbours;
+        return this;
+    }
+    
+    public IProvinceBuilder SetCentre(Vector2I newCentre)
+    {
+        Centre = newCentre;
         return this;
     }
     
@@ -40,7 +57,7 @@ public class LandProvinceBuilder : IProvinceBuilder
 {
     public override LandProvince Build()
     {
-        return new LandProvince(provinceId, mapColour, name, details);
+        return new LandProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
 
@@ -48,7 +65,7 @@ public class SeaProvinceBuilder : IProvinceBuilder
 {
     public override SeaProvince Build()
     {
-        return new SeaProvince(provinceId, mapColour, name, details);
+        return new SeaProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
 
@@ -56,6 +73,6 @@ public class WastelandProvinceBuilder : IProvinceBuilder
 {
     public override WastelandProvince Build()
     {
-        return new WastelandProvince(provinceId, mapColour, name, details);
+        return new WastelandProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
