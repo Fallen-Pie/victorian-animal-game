@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Collections.Generic;
 using Godot;
 using VictorianAnimalGame.Engine.Province.Builder;
 
@@ -15,13 +16,12 @@ public abstract class IProvince
     
     public string Name;
 
-    protected IProvince(ProvinceId newId, uint newMapColour, string newName, ProvinceBuilderDetails details)
+    protected IProvince(ProvinceId newId, uint newMapColour, string newName, uint pixelSize, 
+        Dictionary<ProvinceId, uint> provinceNeighbours, Vector2I provinceCentre)
     {
         Id = newId;
         MapColour = newMapColour;
         Name = newName;
-
-        var (pixelSize, provinceNeighbours, provinceCentre) = details;
         Size = pixelSize;
         Neighbours = provinceNeighbours.ToFrozenDictionary();
         Centre = provinceCentre;
