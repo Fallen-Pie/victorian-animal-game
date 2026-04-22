@@ -116,11 +116,14 @@ public static class MapDefines
             
             ProvinceId newId = new ProvinceId(provinceData.Id);
             ProvinceBuilderDetails newDetails = provinceDetails[newId];
+            var (pixelSize, provinceNeighbours, provinceCentre) = newDetails;
             
             IProvince newProvince = builder.SetColour(new Color(provinceData.Colour).ToUint())
                 .SetName(provinceData.Name)
                 .SetProvinceId(newId)
-                .SetProvinceDetails(newDetails)
+                .SetSize(pixelSize)
+                .SetNeighbours(provinceNeighbours)
+                .SetCentre(provinceCentre)
                 .Build();
             
             idMapping.Add(new ProvinceId(provinceData.Id), newProvince);
