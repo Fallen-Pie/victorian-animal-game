@@ -48,7 +48,7 @@ public partial class MainMap : Node2D
         //     Console.WriteLine($"Year: {i}");
         // }
         // GD.Print(provinces[randomProvince].GetDetails());
-        TestTime();
+        //TestTime();
         base._Ready();
     }
 

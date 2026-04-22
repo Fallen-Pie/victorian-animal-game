@@ -34,10 +34,9 @@ public abstract class IProvince
 
     public override string ToString()
     {
-        string s = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Neighbours:";
+        string s = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Centre {Centre}|Neighbours:";
         foreach (var neighbour in Neighbours)
-               s += neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + "|";
-        s += $"Centre {Centre}";
+               s += "(" + neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + ")";
         return s;
     }
 }
