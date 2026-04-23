@@ -36,7 +36,7 @@ public abstract class IProvince
     {
         string s = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Centre {Centre}|Neighbours:";
         foreach (var neighbour in Neighbours)
-               s += "(" + neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + ")";
+               s += "\n(" + neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + ")";
         return s;
     }
 }
