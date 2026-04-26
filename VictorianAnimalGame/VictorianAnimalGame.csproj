@@ -15,11 +15,22 @@
     <Content Include="Data\Goods\Fish.yaml" />
     <Content Include="Data\Goods\Radio.yaml" />
     <Content Include="Data\Goods\Wood.yaml" />
+    <Content Include="Data\Map\Provinces\1-Otterland.yaml" />
+    <Content Include="Data\Map\Provinces\2-OtterCity.yaml" />
+    <Content Include="Data\Map\Provinces\200-Big Blue Ocean.yaml" />
+    <Content Include="Data\Map\Provinces\3-Otter Marches.yaml" />
+    <Content Include="Data\Map\Provinces\4-BeaverFarms.yaml" />
+    <Content Include="Data\Map\Provinces\5-Sacred Groves.yaml" />
+    <Content Include="Data\Map\Provinces\6-New Beaverton.yaml" />
+    <Content Include="Data\Map\Provinces\7-Southern Forests.yaml" />
+    <Content Include="Data\Map\Provinces\8-Beavertopia.yaml" />
+    <Content Include="Data\Map\Views\provinces.bmp" />
     <Content Include="Data\Species\Beaver.yaml" />
     <Content Include="Data\Species\Otter.yaml" />
     <Content Include="Data\Species\Raccoon.yaml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Province\ProvinceBuilder\" />
+    <Folder Include="Engine\Components\Markets\Canton\" />
+    <Folder Include="Engine\Time\Processing\" />
   </ItemGroup>
 </Project>
