@@ -5,27 +5,26 @@ using VictorianAnimalGame.Engine.Province.Builder;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public abstract class IProvince
+public abstract class IProvince(
+    ProvinceId newId,
+    uint newMapColour,
+    string newName,
+    uint pixelSize,
+    Dictionary<ProvinceId, uint> provinceNeighbours,
+    Vector2I provinceCentre)
 {
-    public readonly ProvinceId Id;
-    public readonly uint MapColour;
+    public readonly ProvinceId Id = newId;
+    public readonly uint MapColour = newMapColour;
 
-    public readonly uint Size;
-    public readonly FrozenDictionary<ProvinceId, uint> Neighbours;
-    public readonly Vector2I Centre;
+    public readonly uint Size = pixelSize;
+    public readonly FrozenDictionary<ProvinceId, uint> Neighbours = provinceNeighbours.ToFrozenDictionary();
+    public readonly Vector2I Centre = provinceCentre;
     
-    public string Name;
+    public string Name = newName;
 
-    protected IProvince(ProvinceId newId, uint newMapColour, string newName, uint pixelSize, 
-        Dictionary<ProvinceId, uint> provinceNeighbours, Vector2I provinceCentre)
-    {
-        Id = newId;
-        MapColour = newMapColour;
-        Name = newName;
-        Size = pixelSize;
-        Neighbours = provinceNeighbours.ToFrozenDictionary();
-        Centre = provinceCentre;
-    }
+    protected abstract bool Traversable { get; }
+    protected abstract bool Communications { get; }
+
 
     public string GetSimpleProvince()
     {
