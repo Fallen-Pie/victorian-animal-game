@@ -59,7 +59,7 @@ public partial class MainMap : Node2D
     //     return (T) v.GetValue (_r.Next(v.Length));
     // }
         
-    public LandProvince InitialiseProvince(LandProvince province, Random rnd)
+    public HabitableProvince InitialiseProvince(HabitableProvince province, Random rnd)
     {
         CritterDefines.SpeciesTypes.TryGetValue("Otter", out var otter);
         CritterDefines.SpeciesTypes.TryGetValue("Beaver", out var beaver);
@@ -84,7 +84,7 @@ public partial class MainMap : Node2D
         return province;
     }
 
-    public void ProcessYear(List<LandProvince> provinces, int randomProvince)
+    public void ProcessYear(List<HabitableProvince> provinces, int randomProvince)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         for (int week = 1; week <= DateDefines.WeeksPerYear; week++)

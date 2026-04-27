@@ -55,24 +55,24 @@ public abstract class IProvinceBuilder
 
 public class LandProvinceBuilder : IProvinceBuilder
 {
-    public override LandProvince Build()
+    public override HabitableProvince Build()
     {
-        return new LandProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new HabitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
 
 public class SeaProvinceBuilder : IProvinceBuilder
 {
-    public override SeaProvince Build()
+    public override OceanProvince Build()
     {
-        return new SeaProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new OceanProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
 
 public class WastelandProvinceBuilder : IProvinceBuilder
 {
-    public override WastelandProvince Build()
+    public override InhospitableProvince Build()
     {
-        return new WastelandProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new InhospitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
