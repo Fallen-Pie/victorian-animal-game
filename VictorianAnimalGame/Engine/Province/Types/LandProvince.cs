@@ -9,10 +9,18 @@ using VictorianAnimalGame.Scripts.ProvinceData;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class LandProvince(ProvinceId newId, uint newMapColour, string newName, uint pixelSize, 
-    Dictionary<ProvinceId, uint> provinceNeighbours, Vector2I provinceCentre) : 
-    IProvince(newId, newMapColour, newName, pixelSize, provinceNeighbours, provinceCentre)
+public class LandProvince(
+    ProvinceId newId, 
+    uint newMapColour, 
+    string newName, 
+    uint pixelSize, 
+    Dictionary<ProvinceId, uint> provinceNeighbours, 
+    Vector2I provinceCentre) 
+    : IProvince(newId, newMapColour, newName, pixelSize, provinceNeighbours, provinceCentre)
 {
+    protected override bool Traversable => true;
+    protected override bool Communications => true;
+    
     public HashSet<CritterEntry> ProvinceCritters = [];
     private readonly CritterManager _critterManager = new();
         
