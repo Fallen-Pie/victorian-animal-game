@@ -9,14 +9,14 @@ using VictorianAnimalGame.Scripts.ProvinceData;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class LandProvince(
+public class HabitableProvince(
     ProvinceId newId, 
     uint newMapColour, 
     string newName, 
     uint pixelSize, 
     Dictionary<ProvinceId, uint> provinceNeighbours, 
     Vector2I provinceCentre) 
-    : IProvince(newId, newMapColour, newName, pixelSize, provinceNeighbours, provinceCentre)
+    : Land(newId, newMapColour, newName, pixelSize, provinceNeighbours, provinceCentre)
 {
     protected override bool Traversable => true;
     protected override bool Communications => true;
