@@ -4,7 +4,7 @@ using Godot;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class OceanProvince(
+public class CoastalProvince(
     ProvinceId newId,
     uint newMapColour,
     string newName,

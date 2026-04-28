@@ -4,7 +4,7 @@ using Godot;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
 
-public class OceanProvince(
+public class DeepOceanProvince(
     ProvinceId newId,
     uint newMapColour,
     string newName,
@@ -13,6 +13,6 @@ public class OceanProvince(
     Vector2I provinceCentre)
     : Sea(newId, newMapColour, newName, pixelSize, provinceNeighbours, provinceCentre)
 {
-    protected override bool Traversable => true;
-    protected override bool Communications => true;
+    protected override bool Traversable => false;
+    protected override bool Communications => false;
 }
