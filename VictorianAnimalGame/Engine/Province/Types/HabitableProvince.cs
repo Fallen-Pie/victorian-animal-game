@@ -61,12 +61,7 @@ public class HabitableProvince(
     {
         _critterManager.YearlyProcessing();
     }
-
-    public void SetName()
-    {
-        Name = $"LandProvince-{GetHashCode()}";
-    }
-
+    
     public void AddCritterToProvince(HashSet<CritterEntry> critterEntries)
     {
         ProvinceCritters.UnionWith(critterEntries);
