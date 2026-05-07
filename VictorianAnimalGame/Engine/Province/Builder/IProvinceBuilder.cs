@@ -76,3 +76,11 @@ public class WastelandProvinceBuilder : IProvinceBuilder
         return new InhospitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
     }
 }
+
+public class LakeProvinceBuilder : IProvinceBuilder
+{
+    public override LakeProvince Build()
+    {
+        return new LakeProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+    }
+}

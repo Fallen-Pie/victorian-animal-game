@@ -110,6 +110,9 @@ public static class MapDefines
                 case "Wasteland":
                     builder = new WastelandProvinceBuilder();
                     break;
+                case "Lake":
+                    builder = new LakeProvinceBuilder();
+                    break;
                 default:
                     throw new ArgumentException("Unknown province type: " + provinceData.Type);
             }
