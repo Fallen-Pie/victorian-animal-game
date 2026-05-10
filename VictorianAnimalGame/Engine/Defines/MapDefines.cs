@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Godot;
 using VictorianAnimalGame.Engine.Extensions;
+using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Builder;
 using VictorianAnimalGame.Engine.Province.Types;
@@ -17,26 +18,64 @@ public static class MapDefines
     public static readonly FrozenDictionary<uint, ProvinceId> ColourMapping;
     public static readonly FrozenDictionary<ProvinceId, IProvince> ProvinceData;
     public static readonly ProvinceId[] ProvinceMapData;
+    
+    public static readonly FrozenDictionary<TypographyType, TypographyDetails> TerrainTypography;
+    //public static readonly FrozenDictionary<ProvinceId, Vector2I> TerrainVegetation;
+    public static readonly TerrainType[] TerrainMapData;
 
     private static int MapWidth;
     private static int MapHeight;
 
     static MapDefines()
     {
-        List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
+        TerrainTypography = DefineTypography();
+        //TerrainVegetation = DefineVegetation();
+        //TerrainMapData = DefineTerrain();
         
+        List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
         ColourMapping = MapColours(data);
         ProvinceMapData = DefinePixelData();
         ProvinceData = DefineProvinces(data);
-        foreach (IProvince newProvince in ProvinceData.Values)
+        // foreach (IProvince newProvince in ProvinceData.Values)
+        // {
+        //     GD.Print(newProvince);
+        // }
+    }
+    
+    private static FrozenDictionary<TypographyType, TypographyDetails> DefineTypography()
+    {
+        List<TypographyConfig> data = YamlReader.ReadFiles<TypographyConfig>("Data/Map/Typography/");
+        Dictionary<TypographyType, TypographyDetails> terrainTypography = [];
+
+        TypographyType emptyType = new TypographyType(0);
+        terrainTypography.Add(emptyType, 
+            new TypographyBuilder()
+                .SetTypographyName("Empty")
+                .SetTypographyColour("000000")
+                .SetTypographyType(emptyType)
+                .Build()
+            );
+        
+        for (byte i = 1; i <= data.Count; i++)
         {
-            GD.Print(newProvince);
+            var typographyData = data[i - 1].Typography;
+            
+            TypographyType newType = new TypographyType(i);
+            TypographyDetails newDetails = new TypographyBuilder()
+                .SetTypographyName(typographyData.Name)
+                .SetTypographyColour(typographyData.Colour)
+                .SetTypographyType(newType)
+                .Build();
+
+            Console.WriteLine(newDetails.ToString());
+            terrainTypography.Add(newType, newDetails);
         }
+        
+        return terrainTypography.ToFrozenDictionary();
     }
 
     private static FrozenDictionary<uint, ProvinceId> MapColours(List<ProvinceConfig> data)
     {
-        
         Dictionary<uint, ProvinceId> colourMapping = [];
 
         foreach (var province in data)
