@@ -18,12 +18,19 @@ public readonly struct TypographyType(byte typographyId) : IEquatable<Typography
     public override string ToString() => TypographyId.ToString();
 }
 
-public readonly record struct TypographyDetails(string newName, string newMapColour, TypographyType newType)
+public readonly record struct TypographyDetails() : ITerrain
 {
-    public readonly string Name = newName;
-    public readonly string Colour = newMapColour;
+    public string Name { get; }
+    public string Colour { get; }
     
-    private readonly TypographyType Type = newType;
+    private TypographyType Type { get; }
+
+    public TypographyDetails(string newName, string newMapColour, TypographyType newType) : this()
+    {
+        Name = newName;
+        Colour = newMapColour;
+        Type = newType;
+    }
 
     public override string ToString() => $"Typography(Name:{Name}|Colour:#{Colour}|Type:{Type})";
 }

@@ -18,12 +18,19 @@ public readonly struct VegetationType(byte vegetationId) : IEquatable<Vegetation
     public override string ToString() => VegetationId.ToString();
 }
 
-public readonly record struct VegetationDetails(string newName, string newMapColour, VegetationType newType)
+public readonly record struct VegetationDetails() : ITerrain
 {
-    public readonly string Name = newName;
-    public readonly string Colour = newMapColour;
+    public string Name { get; }
+    public string Colour { get; }
     
-    private readonly VegetationType Type = newType;
+    private VegetationType Type { get; }
+
+    public VegetationDetails(string newName, string newMapColour, VegetationType newType) : this()
+    {
+        Name = newName;
+        Colour = newMapColour;
+        Type = newType;
+    }
 
     public override string ToString() => $"Vegetation(Name:{Name}|Colour:#{Colour}|Type:{Type})";
 }
