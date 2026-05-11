@@ -34,3 +34,33 @@ public class TypographyBuilder
         return new TypographyDetails(_name, _colour, _type);
     }
 }
+
+public class VegetationBuilder
+{
+    private string _name;
+    private string _colour;
+    private VegetationType _type;
+    
+    public VegetationBuilder SetVegetationName(string name)
+    {
+        _name = name;
+        return this;
+    }
+    
+    public VegetationBuilder SetVegetationColour(string colour)
+    {
+        _colour = colour;
+        return this;
+    }
+    
+    public VegetationBuilder SetVegetationType(VegetationType type)
+    {
+        _type = type;
+        return this;
+    }
+    
+    public VegetationDetails Build()
+    {
+        return new VegetationDetails(_name, _colour, _type);
+    }
+}
