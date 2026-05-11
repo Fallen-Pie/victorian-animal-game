@@ -28,13 +28,14 @@ public static class MapDefines
 
     static MapDefines()
     {
-        TerrainTypography = DefineTypography();
-        TerrainVegetation = DefineVegetation();
-        //TerrainMapData = DefineTerrain();
-        
         List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
         ColourMapping = MapColours(data);
         ProvinceMapData = DefinePixelData();
+        
+        TerrainTypography = DefineTypography();
+        TerrainVegetation = DefineVegetation();
+        TerrainMapData = DefineTerrain();
+        
         ProvinceData = DefineProvinces(data);
         // foreach (IProvince newProvince in ProvinceData.Values)
         // {
