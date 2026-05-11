@@ -2,11 +2,17 @@
 
 namespace VictorianAnimalGame.Engine.Map.Terrain;
 
-public readonly record struct TerrainType(TypographyType newTypography, VegetationType newVegetation)
+public readonly record struct TerrainType()
 {
-    private readonly TypographyType _typographyData = newTypography;
-    private readonly VegetationType _vegetationData = newVegetation;
+    private readonly TypographyType _typographyData;
+    private readonly VegetationType _vegetationData;
 
+    public TerrainType(TypographyType newTypography, VegetationType newVegetation) : this()
+    {
+        _typographyData = newTypography;
+        _vegetationData = newVegetation;
+    }
+    
     public override int GetHashCode()
     {
         return HashCode.Combine(_typographyData, _vegetationData);
