@@ -213,14 +213,26 @@ public static class MapDefines
         MapHeight = provincesImage.GetHeight();
         
         //TODO Make this Reusable
-        return MapReader.Scan(provincesImage);
+        ProvinceId[] _provinceArray = new ProvinceId[MapWidth * MapHeight];
 
-        //Image riverImage = Image.LoadFromFile("res://maps/rivers.png");
-        // 4. Run the River Strategy, passing in the province data
-        //var riverStrategy = new RiverDetectionStrategy(new Color("0000FF"), provinceMapData); // Blue rivers
-        //HashSet<int> riverProvinces = MapScanner.Scan(riverImage, riverStrategy);
-    
-        //GD.Print($"Province 1 has river: {riverProvinces.Contains(1)}");
+        ReadOnlySpan<uint> pixels = GetImageData(provincesImage);
         
+        for (int index = 0; index < (MapWidth * MapHeight); index++)
+        {
+            uint rgb = pixels[index];
+
+            if (ColourMapping.TryGetValue(rgb, out ProvinceId provinceId)) 
+            { 
+                _provinceArray[index] = provinceId;
+            }
+        }
+
+        return _provinceArray;
+    }
+    
+    private static ReadOnlySpan<uint> GetImageData(Image image)
+    {
+        byte[] rawData = image.GetData();
+        return MemoryMarshal.Cast<byte, uint>(rawData);
     }
 }
