@@ -105,6 +105,43 @@ public static class MapDefines
         
         return terrainVegetation.ToFrozenDictionary();
     }
+    
+    private static TerrainType[] DefineTerrain()
+    {
+        ReadOnlySpan<uint> typographyData = GetImageData(Image.LoadFromFile("Data/Map/Views/typography.bmp"));
+        ReadOnlySpan<uint> vegetationData = GetImageData(Image.LoadFromFile("Data/Map/Views/vegetation.bmp"));
+        TerrainType[] terrainArray = new TerrainType[MapWidth * MapHeight];
+        
+        Dictionary<uint, TypographyType> typographyColours = ColourMappingTerrain(TerrainTypography);
+        Dictionary<uint, VegetationType> vegetationColours = ColourMappingTerrain(TerrainVegetation);
+
+        Dictionary<uint, TType> ColourMappingTerrain<TType, TDetails>(FrozenDictionary<TType, TDetails> terrainData) where TDetails : ITerrain
+        {
+            Dictionary<uint, TType> colourMapping = new Dictionary<uint, TType>();
+            foreach ((TType terrainKey, TDetails terrainDetails) in terrainData)
+            {
+                colourMapping.Add(new Color(terrainDetails.Colour).ToUint(), terrainKey);
+            }
+            return colourMapping;
+        }
+
+        for (int i = 0; i < MapWidth * MapHeight; i++)
+        {
+            if (!typographyColours.TryGetValue(typographyData[i], out TypographyType typographyId)) 
+            { 
+                throw new ArgumentException("Unknown Typography type: " + typographyData[i] + "Index:" + i);
+            }
+            if (!vegetationColours.TryGetValue(vegetationData[i], out VegetationType vegetationId))
+            {
+                throw new ArgumentException("Unknown Vegetation type: " + vegetationData[i] + "Index:" + i);
+            }
+            terrainArray[i] = new TerrainType(typographyId, vegetationId);
+        }
+        
+        return terrainArray;
+    }
+
+
 
     private static FrozenDictionary<uint, ProvinceId> MapColours(List<ProvinceConfig> data)
     {
