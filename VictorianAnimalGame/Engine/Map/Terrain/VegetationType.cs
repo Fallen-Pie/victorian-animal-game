@@ -1,12 +1,14 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Map.Terrain;
 
-public struct VegetationType(byte vegetationId) : IEquatable<VegetationType>
+public readonly struct VegetationType(byte vegetationId) : IEquatable<VegetationType>
 {
-    private ushort VegetationId { get; } = vegetationId;
+    private byte VegetationId { get; } = vegetationId;
     
-    
+    public string Name => MapDefines.TerrainVegetation[this].Name;
+    public string Colour => MapDefines.TerrainVegetation[this].Colour;
     
     public override bool Equals(object obj) => obj is VegetationType other && Equals(other);
     public bool Equals(VegetationType other) => VegetationId == other.VegetationId;
@@ -18,8 +20,9 @@ public struct VegetationType(byte vegetationId) : IEquatable<VegetationType>
 
 public readonly record struct VegetationDetails(string newName, string newMapColour, VegetationType newType)
 {
-    private readonly string Name = newName;
-    private readonly string Colour = newMapColour;
+    public readonly string Name = newName;
+    public readonly string Colour = newMapColour;
+    
     private readonly VegetationType Type = newType;
 
     public override string ToString() => $"Vegetation(Name:{Name}|Colour:#{Colour}|Type:{Type})";
