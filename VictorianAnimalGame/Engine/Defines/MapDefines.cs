@@ -20,7 +20,7 @@ public static class MapDefines
     public static readonly ProvinceId[] ProvinceMapData;
     
     public static readonly FrozenDictionary<TypographyType, TypographyDetails> TerrainTypography;
-    //public static readonly FrozenDictionary<ProvinceId, Vector2I> TerrainVegetation;
+    public static readonly FrozenDictionary<VegetationType, VegetationDetails> TerrainVegetation;
     public static readonly TerrainType[] TerrainMapData;
 
     private static int MapWidth;
@@ -29,7 +29,7 @@ public static class MapDefines
     static MapDefines()
     {
         TerrainTypography = DefineTypography();
-        //TerrainVegetation = DefineVegetation();
+        TerrainVegetation = DefineVegetation();
         //TerrainMapData = DefineTerrain();
         
         List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
@@ -41,7 +41,7 @@ public static class MapDefines
         //     GD.Print(newProvince);
         // }
     }
-    
+
     private static FrozenDictionary<TypographyType, TypographyDetails> DefineTypography()
     {
         List<TypographyConfig> data = YamlReader.ReadFiles<TypographyConfig>("Data/Map/Typography/");
@@ -72,6 +72,38 @@ public static class MapDefines
         }
         
         return terrainTypography.ToFrozenDictionary();
+    }
+    
+    private static FrozenDictionary<VegetationType, VegetationDetails> DefineVegetation()
+    {
+        List<VegetationConfig> data = YamlReader.ReadFiles<VegetationConfig>("Data/Map/Vegetation/");
+        Dictionary<VegetationType, VegetationDetails> terrainVegetation = [];
+
+        VegetationType emptyType = new VegetationType(0);
+        terrainVegetation.Add(emptyType, 
+            new VegetationBuilder()
+                .SetVegetationName("Empty")
+                .SetVegetationColour("000000")
+                .SetVegetationType(emptyType)
+                .Build()
+        );
+        
+        for (byte i = 1; i <= data.Count; i++)
+        {
+            var typographyData = data[i - 1].Vegetation;
+            
+            VegetationType newType = new VegetationType(i);
+            VegetationDetails newDetails = new VegetationBuilder()
+                .SetVegetationName(typographyData.Name)
+                .SetVegetationColour(typographyData.Colour)
+                .SetVegetationType(newType)
+                .Build();
+
+            Console.WriteLine(newDetails.ToString());
+            terrainVegetation.Add(newType, newDetails);
+        }
+        
+        return terrainVegetation.ToFrozenDictionary();
     }
 
     private static FrozenDictionary<uint, ProvinceId> MapColours(List<ProvinceConfig> data)
