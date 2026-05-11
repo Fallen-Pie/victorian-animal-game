@@ -18,9 +18,9 @@ public readonly struct TypographyType(byte typographyId) : IEquatable<Typography
 
 public readonly record struct TypographyDetails(string newName, string newMapColour, TypographyType newType)
 {
-    public readonly string Name = newName;
-    public readonly string Colour = newMapColour;
-    public readonly TypographyType Type = newType;
+    private readonly string Name = newName;
+    private readonly string Colour = newMapColour;
+    private readonly TypographyType Type = newType;
 
-    public override string ToString() => $"Name:{Name}|Colour:#{Colour}|Type:{Type}";
+    public override string ToString() => $"Typography(Name:{Name}|Colour:#{Colour}|Type:{Type})";
 }
