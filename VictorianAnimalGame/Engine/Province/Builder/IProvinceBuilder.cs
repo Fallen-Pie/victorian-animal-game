@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Godot;
+using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Province.Types;
 
 namespace VictorianAnimalGame.Engine.Province.Builder;
@@ -12,6 +13,7 @@ public abstract class IProvinceBuilder
     
     protected uint Size;
     protected Dictionary<ProvinceId, uint> Neighbours;
+    protected Dictionary<TerrainType, uint> Terrain;
     protected Vector2I Centre;
 
     public IProvinceBuilder SetProvinceId(ProvinceId newProvinceId)
@@ -44,6 +46,12 @@ public abstract class IProvinceBuilder
         return this;
     }
     
+    public IProvinceBuilder SetTerrain(Dictionary<TerrainType, uint> newTerrain)
+    {
+        Terrain = newTerrain;
+        return this;
+    }
+    
     public IProvinceBuilder SetCentre(Vector2I newCentre)
     {
         Centre = newCentre;
@@ -57,7 +65,7 @@ public class LandProvinceBuilder : IProvinceBuilder
 {
     public override HabitableProvince Build()
     {
-        return new HabitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new HabitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Terrain, Centre);
     }
 }
 
@@ -65,7 +73,7 @@ public class SeaProvinceBuilder : IProvinceBuilder
 {
     public override OceanProvince Build()
     {
-        return new OceanProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new OceanProvince(ProvinceId, MapColour, Name, Size, Neighbours, Terrain, Centre);
     }
 }
 
@@ -73,7 +81,7 @@ public class WastelandProvinceBuilder : IProvinceBuilder
 {
     public override InhospitableProvince Build()
     {
-        return new InhospitableProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new InhospitableProvince(ProvinceId, MapColour, Name, Size, Neighbours,Terrain, Centre);
     }
 }
 
@@ -81,6 +89,6 @@ public class LakeProvinceBuilder : IProvinceBuilder
 {
     public override LakeProvince Build()
     {
-        return new LakeProvince(ProvinceId, MapColour, Name, Size, Neighbours, Centre);
+        return new LakeProvince(ProvinceId, MapColour, Name, Size, Neighbours, Terrain, Centre);
     }
 }

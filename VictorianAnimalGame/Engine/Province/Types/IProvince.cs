@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using Godot;
+using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Province.Builder;
 
 namespace VictorianAnimalGame.Engine.Province.Types;
@@ -11,6 +12,7 @@ public abstract class IProvince(
     string newName,
     uint pixelSize,
     Dictionary<ProvinceId, uint> provinceNeighbours,
+    Dictionary<TerrainType, uint> provinceTerrain,
     Vector2I provinceCentre)
 {
     public readonly ProvinceId Id = newId;
@@ -21,6 +23,7 @@ public abstract class IProvince(
     public readonly Vector2I Centre = provinceCentre;
     
     public string Name = newName;
+    public Dictionary<TerrainType, uint> Terrain = provinceTerrain;
 
     protected abstract bool Traversable { get; }
     protected abstract bool Communications { get; }
