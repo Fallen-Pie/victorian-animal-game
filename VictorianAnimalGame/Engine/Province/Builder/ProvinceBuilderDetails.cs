@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Godot;
+using VictorianAnimalGame.Engine.Map.Terrain;
 
 namespace VictorianAnimalGame.Engine.Province.Builder;
 
@@ -8,6 +9,7 @@ public class ProvinceBuilderDetails
     public uint PixelSize;
     public Vector2I Centre;
     public Dictionary<ProvinceId, uint> ProvinceNeighbours = [];
+    public Dictionary<TerrainType, uint> TerrainCount = [];
     
     long sumXPixels;
     long sumYPixels;
@@ -17,6 +19,12 @@ public class ProvinceBuilderDetails
         PixelSize++;
         sumXPixels += x;
         sumYPixels += y;
+    }
+
+    public void AddTerrain(TerrainType newTerrain)
+    {
+        TerrainCount.TryAdd(newTerrain, 0);
+        TerrainCount[newTerrain]++;
     }
     
     public void GetCentre()
@@ -40,12 +48,15 @@ public class ProvinceBuilderDetails
         }
     }
 
-    public void Deconstruct(out uint size, out Dictionary<ProvinceId, uint> neighbours, out Vector2I centre)
+    public void Deconstruct(
+        out uint size, 
+        out Dictionary<ProvinceId, uint> neighbours, 
+        out Dictionary<TerrainType, uint> terrainCount,
+        out Vector2I centre)
     {
         size = PixelSize;
         neighbours = ProvinceNeighbours;
+        terrainCount = TerrainCount;
         centre = Centre;
     }
-    
-
 }
