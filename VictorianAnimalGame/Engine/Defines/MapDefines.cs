@@ -142,8 +142,6 @@ public static class MapDefines
         return terrainArray;
     }
 
-
-
     private static FrozenDictionary<uint, ProvinceId> MapColours(List<ProvinceConfig> data)
     {
         Dictionary<uint, ProvinceId> colourMapping = [];
@@ -166,14 +164,16 @@ public static class MapDefines
         {
             provinceDetails.Add(provinceId, new ProvinceBuilderDetails());
         }
-        
-        int index = 0;
-        foreach (ProvinceId pixelId in ProvinceMapData)
+
+        for (int index = 0; index < MapWidth * MapHeight; index++)
         {
+            ProvinceId pixelId = ProvinceMapData[index];
             ProvinceBuilderDetails details = provinceDetails[pixelId];
             
             int x = index % MapWidth;
             int y = index / MapHeight;
+            
+            details.AddTerrain(TerrainMapData[index]);
             details.AddPixel(x, y);
             
             if (x < MapWidth - 1) CheckNeighbor(ProvinceMapData[index + 1]);
@@ -187,8 +187,6 @@ public static class MapDefines
                     provinceDetails[neighborProvId].AddNeighbours(pixelId);
                 }
             }
-
-            index++;
         }
 
         Dictionary<ProvinceId, Vector2I> provinceCentres = [];
@@ -198,7 +196,7 @@ public static class MapDefines
             provinceCentres.Add(provinceId, details.Centre);
         }
 
-        foreach (var details in provinceDetails.Values)
+        foreach (ProvinceBuilderDetails details in provinceDetails.Values)
         {
             details.GetNeighboursDistance(ref provinceCentres);
         }
@@ -228,13 +226,14 @@ public static class MapDefines
             
             ProvinceId newId = new ProvinceId(provinceData.Id);
             ProvinceBuilderDetails newDetails = provinceDetails[newId];
-            var (pixelSize, provinceNeighbours, provinceCentre) = newDetails;
+            var (pixelSize, provinceNeighbours, provinceTerrain, provinceCentre) = newDetails;
             
             IProvince newProvince = builder.SetColour(new Color(provinceData.Colour).ToUint())
                 .SetName(provinceData.Name)
                 .SetProvinceId(newId)
                 .SetSize(pixelSize)
                 .SetNeighbours(provinceNeighbours)
+                .SetTerrain(provinceTerrain)
                 .SetCentre(provinceCentre)
                 .Build();
             
