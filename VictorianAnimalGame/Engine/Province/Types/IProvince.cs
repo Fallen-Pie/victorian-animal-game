@@ -36,9 +36,16 @@ public abstract class IProvince(
 
     public override string ToString()
     {
-        string s = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Centre {Centre}|Neighbours:";
+        string provinceString = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Centre {Centre}\nTerrain:(";
+        uint total = 0;
+        foreach (var terrain in Terrain)
+        {
+            provinceString += $"{terrain.Key}:{terrain.Value}/";
+            total += terrain.Value;
+        }
+        provinceString += $"Terrain Count:{total})\nNeighbours:(";
         foreach (var neighbour in Neighbours)
-               s += "\n(" + neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + ")";
-        return s;
+               provinceString += neighbour.Key.Province.GetSimpleProvince() + "/Dist:" + neighbour.Value + "|";
+        return provinceString.Remove(provinceString.Length - 1, 1) + ")";
     }
 }
