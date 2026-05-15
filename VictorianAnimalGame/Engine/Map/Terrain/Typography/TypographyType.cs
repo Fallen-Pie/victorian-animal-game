@@ -1,7 +1,7 @@
 ﻿using System;
 using VictorianAnimalGame.Engine.Defines;
 
-namespace VictorianAnimalGame.Engine.Map.Terrain;
+namespace VictorianAnimalGame.Engine.Map.Terrain.Typography;
 
 public readonly struct TypographyType(byte typographyId) : IEquatable<TypographyType>
 {
@@ -16,21 +16,4 @@ public readonly struct TypographyType(byte typographyId) : IEquatable<Typography
     public static bool operator ==(TypographyType left, TypographyType right) => left.Equals(right);
     public static bool operator !=(TypographyType left, TypographyType right) => !(left == right);
     public override string ToString() => TypographyId.ToString();
-}
-
-public readonly record struct TypographyDetails() : ITerrain
-{
-    public string Name { get; }
-    public string Colour { get; }
-    
-    private TypographyType Type { get; }
-
-    public TypographyDetails(string newName, string newMapColour, TypographyType newType) : this()
-    {
-        Name = newName;
-        Colour = newMapColour;
-        Type = newType;
-    }
-
-    public override string ToString() => $"Typography(Name:{Name}|Colour:#{Colour}|Type:{Type})";
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using VictorianAnimalGame.Engine.Defines;
 
-namespace VictorianAnimalGame.Engine.Map.Terrain;
+namespace VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
 
 public readonly struct VegetationType(byte vegetationId) : IEquatable<VegetationType>
 {
@@ -16,21 +16,4 @@ public readonly struct VegetationType(byte vegetationId) : IEquatable<Vegetation
     public static bool operator ==(VegetationType left, VegetationType right) => left.Equals(right);
     public static bool operator !=(VegetationType left, VegetationType right) => !(left == right);
     public override string ToString() => VegetationId.ToString();
-}
-
-public readonly record struct VegetationDetails() : ITerrain
-{
-    public string Name { get; }
-    public string Colour { get; }
-    
-    private VegetationType Type { get; }
-
-    public VegetationDetails(string newName, string newMapColour, VegetationType newType) : this()
-    {
-        Name = newName;
-        Colour = newMapColour;
-        Type = newType;
-    }
-
-    public override string ToString() => $"Vegetation(Name:{Name}|Colour:#{Colour}|Type:{Type})";
 }

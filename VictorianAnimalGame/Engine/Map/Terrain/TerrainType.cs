@@ -1,4 +1,6 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Map.Terrain.Typography;
+using VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
 
 namespace VictorianAnimalGame.Engine.Map.Terrain;
 

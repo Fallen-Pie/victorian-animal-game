@@ -1,4 +1,7 @@
-﻿namespace VictorianAnimalGame.Engine.Map.Terrain;
+﻿using VictorianAnimalGame.Engine.Map.Terrain.Typography;
+using VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
+
+namespace VictorianAnimalGame.Engine.Map.Terrain;
 
 public class TerrainBuilder
 {
