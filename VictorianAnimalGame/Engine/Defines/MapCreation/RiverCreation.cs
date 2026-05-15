@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Godot;
 using Microsoft.VisualBasic.FileIO;
+using VictorianAnimalGame.Engine.Extensions;
 
 namespace VictorianAnimalGame.Engine.Defines.MapCreation;
 
 public class RiverCreation
 {
+    private uint baseRiver = new Color("09477f").ToUint();
+    
+    private uint startRiver = new Color("f52738").ToUint();
+    private uint mergeRiver = new Color("54d43b").ToUint();
+    private uint splitRiver = new Color("f59e27").ToUint();
+    private uint deltaRiver = new Color("10be9d").ToUint();
+    private uint endRiver = new Color("9f27ce").ToUint();
+    
     public RiverCreation()
     {
+        
         GetRiverData();
     }
 

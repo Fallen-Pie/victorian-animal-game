@@ -267,7 +267,7 @@ public static class MapDefines
         return _provinceArray;
     }
     
-    private static ReadOnlySpan<uint> GetImageData(Image image)
+    public static ReadOnlySpan<uint> GetImageData(Image image)
     {
         byte[] rawData = image.GetData();
         return MemoryMarshal.Cast<byte, uint>(rawData);
