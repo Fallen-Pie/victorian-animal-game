@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using Godot;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Map.Terrain;
+using VictorianAnimalGame.Engine.Map.Terrain.Typography;
+using VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Builder;
 using VictorianAnimalGame.Engine.Province.Types;
@@ -271,5 +273,17 @@ public static class MapDefines
     {
         byte[] rawData = image.GetData();
         return MemoryMarshal.Cast<byte, uint>(rawData);
+    }
+
+    public static void GetCoordinates(uint xCoord, uint yCoord, out ProvinceId provinceId)
+    {
+        uint index = (uint)(yCoord * MapWidth + xCoord);
+        provinceId = ProvinceMapData[index];
+    }
+
+    public static void GetCoordinates(uint xCoord, uint yCoord, out TerrainType terrainType)
+    {
+        uint index = (uint)(yCoord * MapWidth + xCoord);
+        terrainType = TerrainMapData[index];
     }
 }
