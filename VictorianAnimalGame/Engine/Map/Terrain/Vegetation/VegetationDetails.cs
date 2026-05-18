@@ -5,7 +5,7 @@ public readonly record struct VegetationDetails() : ITerrain
     public string Name { get; }
     public string Colour { get; }
     
-    private VegetationType Type { get; }
+    public VegetationType Type { get; }
 
     public VegetationDetails(string newName, string newMapColour, VegetationType newType) : this()
     {
