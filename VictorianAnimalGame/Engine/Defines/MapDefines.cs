@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Godot;
+using VictorianAnimalGame.Engine.Defines.MapDetails;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Map.Terrain.Typography;
@@ -21,34 +23,38 @@ public static class MapDefines
     public static readonly FrozenDictionary<ProvinceId, IProvince> ProvinceData;
     public static readonly ProvinceId[] ProvinceMapData;
     
-    public static readonly FrozenDictionary<TypographyType, TypographyDetails> TerrainTypography;
+    public static readonly FrozenDictionary<TypographyType, ITerrain> TerrainTypography;
     public static readonly FrozenDictionary<VegetationType, VegetationDetails> TerrainVegetation;
     public static readonly TerrainType[] TerrainMapData;
 
-    private static int MapWidth;
-    private static int MapHeight;
+    public static readonly int MapWidth;
+    public static readonly int MapHeight;
 
     static MapDefines()
     {
+        Image provincesImage = Image.LoadFromFile("Data/Map/Views/provinces.bmp");
+        MapWidth = provincesImage.GetWidth();
+        MapHeight = provincesImage.GetHeight();
+        
         List<ProvinceConfig> data = YamlReader.ReadFiles<ProvinceConfig>("Data/Map/Provinces/");
         ColourMapping = MapColours(data);
-        ProvinceMapData = DefinePixelData();
+        ProvinceMapData = DefinePixelData(provincesImage);
         
-        TerrainTypography = DefineTypography();
         TerrainVegetation = DefineVegetation();
-        TerrainMapData = DefineTerrain();
+        (TerrainMapData, TerrainTypography) = DefineTypography();
         
         ProvinceData = DefineProvinces(data);
-        // foreach (IProvince newProvince in ProvinceData.Values)
-        // {
-        //     GD.Print(newProvince);
-        // }
+        
+        foreach (ITerrain terrain in TerrainTypography.Values)
+        {
+            Console.WriteLine(terrain.ToString());
+        }
     }
 
-    private static FrozenDictionary<TypographyType, TypographyDetails> DefineTypography()
+    private static (TerrainType[], FrozenDictionary<TypographyType, ITerrain>) DefineTypography()
     {
         List<TypographyConfig> data = YamlReader.ReadFiles<TypographyConfig>("Data/Map/Typography/");
-        Dictionary<TypographyType, TypographyDetails> terrainTypography = [];
+        Dictionary<TypographyType, ITerrain> terrainTypography = [];
 
         TypographyType emptyType = new TypographyType(0);
         terrainTypography.Add(emptyType, 
@@ -70,11 +76,17 @@ public static class MapDefines
                 .SetTypographyType(newType)
                 .Build();
 
-            Console.WriteLine(newDetails.ToString());
+            
             terrainTypography.Add(newType, newDetails);
         }
         
-        return terrainTypography.ToFrozenDictionary();
+        TerrainType[] terrainMap = DefineTerrain(terrainTypography);
+
+        RiverCreation riverCreation = new RiverCreation(terrainMap);
+        Dictionary<TypographyType, ITerrain> riverTypography = riverCreation.GetRiverData(terrainTypography.Count);
+        Dictionary<TypographyType, ITerrain> combinedTypography = new([..terrainTypography, ..riverTypography]);
+        
+        return (terrainMap, combinedTypography.ToFrozenDictionary());
     }
     
     private static FrozenDictionary<VegetationType, VegetationDetails> DefineVegetation()
@@ -90,8 +102,8 @@ public static class MapDefines
                 .SetVegetationType(emptyType)
                 .Build()
         );
-        
-        for (byte i = 1; i <= data.Count; i++)
+        byte i;
+        for (i = 1; i <= data.Count; i++)
         {
             var typographyData = data[i - 1].Vegetation;
             
@@ -106,16 +118,25 @@ public static class MapDefines
             terrainVegetation.Add(newType, newDetails);
         }
         
+        //TODO Make dummy River Vegetation
+        VegetationType riverType = new VegetationType(++i);
+        VegetationDetails riverDetails = new VegetationBuilder()
+            .SetVegetationName("River")
+            .SetVegetationColour("FFFFFF")
+            .SetVegetationType(riverType)
+            .Build();
+        terrainVegetation.Add(riverType, riverDetails);
+        
         return terrainVegetation.ToFrozenDictionary();
     }
     
-    private static TerrainType[] DefineTerrain()
+    private static TerrainType[] DefineTerrain(Dictionary<TypographyType, ITerrain> terrainTypes)
     {
         ReadOnlySpan<uint> typographyData = GetImageData(Image.LoadFromFile("Data/Map/Views/typography.bmp"));
         ReadOnlySpan<uint> vegetationData = GetImageData(Image.LoadFromFile("Data/Map/Views/vegetation.bmp"));
         TerrainType[] terrainArray = new TerrainType[MapWidth * MapHeight];
         
-        Dictionary<uint, TypographyType> typographyColours = ColourMappingTerrain(TerrainTypography);
+        Dictionary<uint, TypographyType> typographyColours = ColourMappingTerrain(terrainTypes.ToFrozenDictionary());
         Dictionary<uint, VegetationType> vegetationColours = ColourMappingTerrain(TerrainVegetation);
 
         Dictionary<uint, TType> ColourMappingTerrain<TType, TDetails>(FrozenDictionary<TType, TDetails> terrainData) where TDetails : ITerrain
@@ -245,12 +266,8 @@ public static class MapDefines
         return idMapping.ToFrozenDictionary();
     }
     
-    private static ProvinceId[] DefinePixelData()
+    private static ProvinceId[] DefinePixelData(Image provincesImage)
     {
-        Image provincesImage = Image.LoadFromFile("Data/Map/Views/provinces.bmp");
-        MapWidth = provincesImage.GetWidth();
-        MapHeight = provincesImage.GetHeight();
-        
         //TODO Make this Reusable
         ProvinceId[] _provinceArray = new ProvinceId[MapWidth * MapHeight];
 
@@ -274,16 +291,33 @@ public static class MapDefines
         byte[] rawData = image.GetData();
         return MemoryMarshal.Cast<byte, uint>(rawData);
     }
-
-    public static void GetCoordinates(uint xCoord, uint yCoord, out ProvinceId provinceId)
+    
+    public static int GetCoordinatesIndex(int xCoord, int yCoord)
     {
-        uint index = (uint)(yCoord * MapWidth + xCoord);
-        provinceId = ProvinceMapData[index];
+        return yCoord * MapWidth + xCoord;
+    }
+    
+    public static int GetCoordinatesIndex(Vector2I coords)
+    {
+        return (coords.Y * MapWidth) + coords.X;
+    }
+    
+    public static Vector2I GetIndexCoordinates(int index)
+    {
+        int x = index % MapWidth;
+        int y = index / MapWidth;
+        return new Vector2I(x, y);
     }
 
-    public static void GetCoordinates(uint xCoord, uint yCoord, out TerrainType terrainType)
+    public static ProvinceId GetProvinceId(Vector2I coords)
     {
-        uint index = (uint)(yCoord * MapWidth + xCoord);
-        terrainType = TerrainMapData[index];
+        uint index = (uint)(coords.Y * MapWidth + coords.X);
+        return ProvinceMapData[index];
+    }
+    
+    public static TerrainType GetTerrainType(Vector2I coords)
+    {
+        uint index = (uint)(coords.Y * MapWidth + coords.X);
+        return TerrainMapData[index];
     }
 }
