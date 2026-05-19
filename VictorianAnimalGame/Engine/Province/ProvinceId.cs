@@ -7,7 +7,8 @@ namespace VictorianAnimalGame.Engine.Province;
 public readonly struct ProvinceId(ushort id) : IEquatable<ProvinceId>
 {
     private ushort Id { get; } = id;
-
+    
+    public string Name => MapDefines.ProvinceData[this].Name;
     public IProvince Province => MapDefines.ProvinceData[this];
     
     public override bool Equals(object obj) => obj is ProvinceId other && Equals(other);
