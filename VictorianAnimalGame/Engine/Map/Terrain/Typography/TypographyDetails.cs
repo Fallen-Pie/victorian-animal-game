@@ -1,6 +1,6 @@
 ﻿namespace VictorianAnimalGame.Engine.Map.Terrain.Typography;
 
-public readonly record struct TypographyDetails() : ITerrain
+public record TypographyDetails() : ITerrain
 {
     public string Name { get; }
     public string Colour { get; }
