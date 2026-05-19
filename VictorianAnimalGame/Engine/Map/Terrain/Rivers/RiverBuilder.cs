@@ -23,6 +23,8 @@ public class RiverBuilder(string name, Vector2I startPoint, ProvinceId startProv
 
     public List<Vector2I> deltaEndpoints = [];
     public bool riverEndpoint = false;
+    public bool riverStartpoint = false;
+    public RiverDirection riverStartDirection;
     
     public void Step(RiverDirection newDirection)
     {
@@ -45,6 +47,11 @@ public class RiverBuilder(string name, Vector2I startPoint, ProvinceId startProv
     public void AddDeltaEndpoint(Vector2I newEndpoint)
     {
         deltaEndpoints.Add(newEndpoint);
+    }
+    
+    public void SetStartRiver(TypographyType newStartRiver)
+    {
+        startRiver = newStartRiver;
     }
     
     public void SetEndRiver(TypographyType newEndRiver)
