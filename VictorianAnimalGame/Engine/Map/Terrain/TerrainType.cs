@@ -14,6 +14,16 @@ public readonly record struct TerrainType()
         _typographyData = newTypography;
         _vegetationData = newVegetation;
     }
+
+    public VegetationType GetVegetation()
+    {
+        return _vegetationData;
+    }
+    
+    public TypographyType GetTypography()
+    {
+        return _typographyData;
+    }
     
     public override int GetHashCode()
     {
