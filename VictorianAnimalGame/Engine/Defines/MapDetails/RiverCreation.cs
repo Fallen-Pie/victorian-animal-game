@@ -39,7 +39,7 @@ public class RiverCreation
         foreach (RiverConfig river in riverDetails)
         {
             uint position = GetRiverPixel(river.StartPosition, ref riverData);
-            if (position == startRiver ||  position == splitRiver)
+            if (position == startRiver || position == splitRiver)
             {
                 riverConfigs.Add(river);
             }
@@ -52,58 +52,83 @@ public class RiverCreation
 
         VegetationType riverType = GetRiverVegetationType();
         Dictionary<TypographyType, RiverBuilder> processedRivers = [];
-        
-        foreach (RiverConfig river in riverConfigs)
+
+        while (riverConfigs.Count != 0)
         {
-            ProvinceId startProvince = MapDefines.GetProvinceId(river.StartPosition);
-            RiverBuilder riverBuilder = new(river.Name, river.StartPosition, startProvince);
-            
-            int currentIndex = MapDefines.GetCoordinatesIndex(river.StartPosition);
-            bool endpoint = false;
-            
-            //TODO Replace these two below
-            TypographyType newType = new((byte)typographyCount++);
-            Dictionary<int, (TypographyType, RiverDirection)> deltas = [];
-            while (!endpoint)
+            HashSet<RiverConfig> currentRivers = new HashSet<RiverConfig>(riverConfigs);
+            foreach (RiverConfig river in currentRivers)
             {
-                uint[] directions = GetRiverDirections(riverBuilder.CurrentBehind, currentIndex, riverData);
-                _terrainMaps[currentIndex] = new TerrainType(newType, riverType);
+                ProvinceId startProvince = MapDefines.GetProvinceId(river.StartPosition);
+                RiverBuilder riverBuilder = new(river.Name, river.StartPosition, startProvince);
+                int currentIndex = MapDefines.GetCoordinatesIndex(river.StartPosition);
+                bool endpoint = false;
                 
-                if (directions.Contains(deltaRiver))
+                if (riverData[currentIndex] == splitRiver)
                 {
-                    RiverDirection newDirection = (RiverDirection)Array.IndexOf(directions, deltaRiver);
-                    deltas.Add(GetIndexDirection(currentIndex, newDirection), (newType, (RiverDirection)(((int)newDirection + 2) % 4)));
+                    riverBuilder.riverStartpoint = true;
+                    endpoint = true;
+                    for (int direction = 0; direction < 4; direction++)
+                    {
+                        int directionIndex = GetIndexDirection(currentIndex, (RiverDirection)direction);
+                        TerrainType terrain = _terrainMaps[directionIndex];
+                        if (terrain.GetVegetation() == GetRiverVegetationType())
+                        {
+                            RiverDirection startingDirection = (RiverDirection)(((int)(RiverDirection)direction + 2) % 4);
+                            riverBuilder.riverStartDirection = startingDirection;
+                            riverBuilder.CurrentBehind = (RiverDirection)direction;
+                            endpoint = false;
+                            break;
+                        }
+                    }
                 }
-                if (directions.Contains(endRiver) || (directions.Contains(mergeRiver) && !directions.Contains(baseRiver)))
+                
+                //TODO Replace these two below
+                TypographyType newType = new((byte)(typographyCount + processedRivers.Count));
+                Dictionary<int, (TypographyType, RiverDirection)> deltas = [];
+                while (!endpoint)
                 {
-                    uint endType = endRiver;
-                    if (directions.Contains(mergeRiver) && !directions.Contains(baseRiver))
-                    {
-                        riverBuilder.riverEndpoint = true;
-                        endType = mergeRiver;
-                    }
-                    if (deltas.Count != 0)
-                    {
-                        ProcessDeltas(riverBuilder, deltas, ref riverData);
-                    }
-                    RiverDirection endDirection = (RiverDirection)Array.IndexOf(directions, endType);
-                    riverBuilder.Step(endDirection);
-                    
-                    currentIndex = GetIndexDirection(currentIndex, endDirection);
+                    uint[] directions = GetRiverDirections(riverBuilder.CurrentBehind, currentIndex, riverData);
                     _terrainMaps[currentIndex] = new TerrainType(newType, riverType);
                     
-                    Vector2I endPoint = MapDefines.GetIndexCoordinates(currentIndex);
-                    riverBuilder.SetEndPoint(endPoint)
-                        .SetEndProvince(MapDefines.GetProvinceId(endPoint));
-                    processedRivers.Add(newType, riverBuilder);
-                    endpoint = true;
-                }
-                else if (directions.Contains(baseRiver))
-                {
-                    currentIndex = ProcessStep(directions, riverBuilder, currentIndex, baseRiver);
+                    if (directions.Contains(deltaRiver))
+                    {
+                        RiverDirection newDirection = (RiverDirection)Array.IndexOf(directions, deltaRiver);
+                        deltas.Add(GetIndexDirection(currentIndex, newDirection), (newType, (RiverDirection)(((int)newDirection + 2) % 4)));
+                    }
+                    if (directions.Contains(endRiver) || (directions.Contains(mergeRiver) && !directions.Contains(baseRiver)))
+                    {
+                        uint endType = endRiver;
+                        if (directions.Contains(mergeRiver) && !directions.Contains(baseRiver))
+                        {
+                            riverBuilder.riverEndpoint = true;
+                            endType = mergeRiver;
+                        }
+                        if (deltas.Count != 0)
+                        {
+                            ProcessDeltas(riverBuilder, deltas, ref riverData);
+                        }
+                        RiverDirection endDirection = (RiverDirection)Array.IndexOf(directions, endType);
+                        riverBuilder.Step(endDirection);
+                        
+                        currentIndex = GetIndexDirection(currentIndex, endDirection);
+                        _terrainMaps[currentIndex] = new TerrainType(newType, riverType);
+                        
+                        Vector2I endPoint = MapDefines.GetIndexCoordinates(currentIndex);
+                        riverBuilder.SetEndPoint(endPoint)
+                            .SetEndProvince(MapDefines.GetProvinceId(endPoint));
+                        processedRivers.Add(newType, riverBuilder);
+                        riverConfigs.Remove(river);
+                        
+                        endpoint = true;
+                    }
+                    else if (directions.Contains(baseRiver))
+                    {
+                        currentIndex = ProcessStep(directions, riverBuilder, currentIndex, baseRiver);
+                    }
                 }
             }
         }
+        
 
         foreach (var (type, riverBuilder) in processedRivers)
         {
@@ -121,6 +146,22 @@ public class RiverCreation
                 else
                 {
                     throw new ArgumentException($"River end is invalid for {riverBuilder.name}");
+                }
+            }
+            if (riverBuilder.riverStartpoint)
+            {
+                int startpoint = MapDefines.GetCoordinatesIndex(riverBuilder.startPoint);
+                uint[] directions = GetRiverDirections(riverBuilder.riverStartDirection, startpoint, riverData);
+                RiverDirection newDirection = (RiverDirection)Array.IndexOf(directions, baseRiver);
+                int mergedRiver = GetIndexDirection(startpoint, newDirection);
+                TerrainType startTerrain = _terrainMaps[mergedRiver];
+                if (startTerrain.GetVegetation() == riverType)
+                {
+                    riverBuilder.SetStartRiver(startTerrain.GetTypography());
+                }
+                else
+                {
+                    throw new ArgumentException($"River start is invalid for {riverBuilder.name}");
                 }
             }
             RiverDetails finalRiver = riverBuilder.AddType(type).Build();
