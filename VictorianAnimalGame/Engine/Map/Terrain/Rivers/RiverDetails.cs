@@ -34,7 +34,7 @@ public record RiverDetails() : ITerrain
         TypographyType? endRiver) : this()
     {
         Name = newName;
-        Colour = "FFFFFF";
+        Colour = "09477F";
         Length = newLength;
         Type = newType;
         
@@ -51,21 +51,26 @@ public record RiverDetails() : ITerrain
 
     public override string ToString()
     {
-        string riverString = $"River(Name:{Name}|Colour:{Colour}|Type:{Type}|Length:{Length}|" +
+        string riverString = $"River(Name:{Name}|Colour:#{Colour}|Type:{Type}|Length:{Length}|" +
                              $"StartPoint:{StartPoint}|StartProvince:{StartProvince.Name}|";
         if (StartRiver != null)
         {
-            riverString += $"StartRiver:{StartRiver}|";
+            riverString += $"StartRiver:{StartRiver?.Name}|"; 
         }
         riverString += $"EndPoint:{EndPoint}|EndProvince:{EndProvince.Name}";
         if (EndRiver != null)
         {
-            riverString += $"|EndRiver:{EndRiver}";
+            riverString += $"|EndRiver:{EndRiver?.Name}";
         }
-        for (int i = 1; i <= DeltaEndpoints.Count; i++)
+        if (DeltaEndpoints.Count > 0)
         {
-            riverString += $"|DeltaEndpoints:{DeltaEndpoints[i - 1]}";
+            riverString += "|DeltaEndpoints:";
+            for (int i = 1; i <= DeltaEndpoints.Count; i++)
+            {
+                riverString += $"{DeltaEndpoints[i - 1]}";
+            }
         }
+
         riverString += $")";
         return riverString;
     }
