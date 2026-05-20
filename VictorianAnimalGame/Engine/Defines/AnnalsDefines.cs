@@ -9,12 +9,14 @@ namespace VictorianAnimalGame.Engine.Defines;
 
 public static class AnnalsDefines
 {
-    public static readonly FrozenDictionary<ProvinceId, RegionId> ProvinceRegions;
     public static readonly FrozenDictionary<RegionId, RegionDetails> RegionData;
+    public static readonly FrozenDictionary<ProvinceId, RegionId> ProvinceRegions;
 
     static AnnalsDefines()
     {
         RegionData = DefineRegions();
+        ProvinceRegions = MapProvinceRegions();
+
     }
 
     private static FrozenDictionary<RegionId, RegionDetails> DefineRegions()
@@ -37,5 +39,23 @@ public static class AnnalsDefines
         }
         
         return mapRegions.ToFrozenDictionary();
+    }
+    
+    private static FrozenDictionary<ProvinceId, RegionId> MapProvinceRegions()
+    {
+        Dictionary<ProvinceId, RegionId> mapProvinces = [];
+        foreach (var (regionId, details) in RegionData)
+        {
+            foreach (ProvinceId provinceId in details.ProvinceIds)
+            {
+                mapProvinces.Add(provinceId, regionId);
+            }
+        }
+        return mapProvinces.ToFrozenDictionary();
+    }
+
+    public static ProvinceId[] GetProvinces(RegionId regionId)
+    {
+        return RegionData[regionId].ProvinceIds;
     }
 }
