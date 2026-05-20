@@ -16,7 +16,6 @@ public static class AnnalsDefines
     {
         RegionData = DefineRegions();
         ProvinceRegions = MapProvinceRegions();
-
     }
 
     private static FrozenDictionary<RegionId, RegionDetails> DefineRegions()

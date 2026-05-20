@@ -23,6 +23,7 @@ public class RegionBuilder
     
     public RegionBuilder SetRegionProvinces(List<int> provinces)
     {
+        _provinces = [];
         foreach (ushort provinceId in provinces)
         {
             _provinces.Add(new ProvinceId(provinceId));
