@@ -1,8 +1,16 @@
 [gd_scene format=3 uid="uid://c3xcrufcww4k8"]
 
 [ext_resource type="Script" uid="uid://cbhhk5htgybue" path="res://Engine/Map/MainMap.cs" id="1_e7g1p"]
+[ext_resource type="Texture2D" uid="uid://chfav6hc7a6v" path="res://Data/Map/Views/provinces.bmp" id="2_nofk3"]
+[ext_resource type="Script" uid="uid://h1yoyapsabow" path="res://Engine/Map/MapInteraction.cs" id="3_nofk3"]
 
 [node name="MainMap" type="Node" unique_id=1989444280]
 
 [node name="Map" type="Node2D" parent="." unique_id=847898500]
 script = ExtResource("1_e7g1p")
+
+[node name="Sprite2D" type="Sprite2D" parent="Map" unique_id=406264374]
+position = Vector2(500, 250)
+scale = Vector2(2, 2)
+texture = ExtResource("2_nofk3")
+script = ExtResource("3_nofk3")

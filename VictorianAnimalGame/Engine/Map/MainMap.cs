@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
-using VictorianAnimalGame.Engine.Critters;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.ClassRatio;
-using VictorianAnimalGame.Engine.Critters.CritterBuilder.Distribution;
-using VictorianAnimalGame.Engine.Critters.Cultures;
+using VictorianAnimalGame.Engine.Components.Critters;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.ClassRatio;
+using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
+using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
+using VictorianAnimalGame.Engine.Province.Types;
 
 namespace VictorianAnimalGame.Engine.Map;
 
@@ -16,35 +17,41 @@ public partial class MainMap : Node2D
 {
     public override async void _Ready()
     {
-        List<LandProvince> provinces = [];
-        Random rnd = new Random();
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        for (int i = 0; i < 1000; i++)
-        {
-            LandProvince province = new();
-            province = InitialiseProvince(province, rnd);
-            province.SetData();
-            provinces.Add(province);
-        }
-        watch.Stop();
-        var elapsedMs = watch.ElapsedMilliseconds;
-        // foreach (var critter in province.ProvinceCritters) 
+        // List<LandProvince> provinces = [];
+        // Random rnd = new Random();
+        // var watch = System.Diagnostics.Stopwatch.StartNew();
+        // for (int i = 0; i < 1000; i++)
         // {
-        //     GD.Print(critter);
+        //     LandProvince province = new();
+        //     province = InitialiseProvince(province, rnd);
+        //     province.SetData();
+        //     provinces.Add(province);
         // }
+        // watch.Stop();
+        // var elapsedMs = watch.ElapsedMilliseconds;
+        // // foreach (var critter in province.ProvinceCritters) 
+        // // {
+        // //     GD.Print(critter);
+        // // }
         var frozenDictionary = GoodDefines.GoodTypes;
-
-        //province.SetName();
-        int randomProvince = rnd.Next(0, 1000);
-        GD.Print(provinces[randomProvince].GetDetails());
-        GD.Print(provinces[randomProvince].GetData());
-        //AddChild(province);
-        Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
-        ProcessYear(provinces, randomProvince);
-        TestTime();
+        var provinceMapData = MapDefines.ProvinceMapData;
+        //
+        // //province.SetName();
+        // int randomProvince = rnd.Next(0, 1000);
+        // GD.Print(provinces[randomProvince].GetDetails());
+        // GD.Print(provinces[randomProvince].GetData());
+        // //AddChild(province);
+        // Console.WriteLine($"Time for Provinces: {elapsedMs}ms");
+        // for (int i = 0; i < 2; i++)
+        // {
+        //     ProcessYear(provinces, randomProvince);
+        //     Console.WriteLine($"Year: {i}");
+        // }
+        // GD.Print(provinces[randomProvince].GetDetails());
+        //TestTime();
         base._Ready();
     }
-        
+
     // static Random _r = new Random ();
     // static T RandomEnumValue<T> ()
     // {
@@ -52,7 +59,7 @@ public partial class MainMap : Node2D
     //     return (T) v.GetValue (_r.Next(v.Length));
     // }
         
-    public LandProvince InitialiseProvince(LandProvince province, Random rnd)
+    public HabitableProvince InitialiseProvince(HabitableProvince province, Random rnd)
     {
         CritterDefines.SpeciesTypes.TryGetValue("Otter", out var otter);
         CritterDefines.SpeciesTypes.TryGetValue("Beaver", out var beaver);
@@ -77,7 +84,7 @@ public partial class MainMap : Node2D
         return province;
     }
 
-    public void ProcessYear(List<LandProvince> provinces, int randomProvince)
+    public void ProcessYear(List<HabitableProvince> provinces, int randomProvince)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         for (int week = 1; week <= DateDefines.WeeksPerYear; week++)
@@ -86,15 +93,22 @@ public partial class MainMap : Node2D
             {
                 province.ProcessWeekly();
             }
+            //provinces[randomProvince].ProcessWeekly();
             for (int day = 1; day <= DateDefines.WeeklyDaysAmount; day++)
             {
                 foreach (var province in provinces)
                 {
                     province.ProcessDaily();
                 }
+                //provinces[randomProvince].ProcessDaily();
             }
             Console.WriteLine(provinces[randomProvince].GetData());
         }
+        foreach (var province in provinces)
+        {
+            province.ProcessYearly();
+        }
+        //provinces[randomProvince].ProcessYearly();
         watch.Stop();
         Console.WriteLine($"Time for Province Processing: {watch.ElapsedMilliseconds}ms");
     }

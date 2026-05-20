@@ -17,3 +17,7 @@ mono_crash.*.json
 
 .vs/
 .idea/
+.run/
+
+#Personal Data
+.localNotes/

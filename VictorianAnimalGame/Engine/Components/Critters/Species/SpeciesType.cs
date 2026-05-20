@@ -1,0 +1,34 @@
+﻿using System;
+using VictorianAnimalGame.Engine.Defines;
+
+namespace VictorianAnimalGame.Engine.Components.Critters.Species;
+
+public readonly struct SpeciesType(ushort speciesId) : IEquatable<SpeciesType>
+{
+    private ushort SpeciesId { get; } = speciesId;
+    
+    public string Name => CritterDefines.Species[this].SpeciesName;
+    public float Workforce => CritterDefines.Species[this].WorkforceValue;
+    
+    public int AdolescentAge => CritterDefines.Species[this].AdolescentAge;
+    public int AdultAge => CritterDefines.Species[this].AdultAge;
+    public int FertileAge => CritterDefines.Species[this].FertileAge;
+    public int ElderAge => CritterDefines.Species[this].ElderAge;
+    public int MaxAge => CritterDefines.Species[this].MaxAge;
+
+    public Range YoungRange => CritterDefines.Species[this].YoungRange;
+    public Range AdolescentRange => CritterDefines.Species[this].AdolescentRange;
+    public Range AdultAgeRange => CritterDefines.Species[this].AdultAgeRange;
+    public Range ElderRange => CritterDefines.Species[this].ElderRange;
+
+    public int ArraySize => (CritterDefines.Species[this].MaxAge + 1 + 15) & ~15;
+    
+    public ushort[] BirthDistribution => CritterDefines.Species[this].FertilityByAge;
+
+    public override bool Equals(object obj) => obj is SpeciesType other && Equals(other);
+    public bool Equals(SpeciesType other) => SpeciesId == other.SpeciesId;
+    public override int GetHashCode() => SpeciesId.GetHashCode();
+    public static bool operator ==(SpeciesType left, SpeciesType right) => left.Equals(right);
+    public static bool operator !=(SpeciesType left, SpeciesType right) => !(left == right);
+    public override string ToString() => SpeciesId.ToString();
+}

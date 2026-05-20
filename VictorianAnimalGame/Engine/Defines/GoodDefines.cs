@@ -1,41 +1,61 @@
 ﻿using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using VictorianAnimalGame.FileReader;
-using VictorianAnimalGame.FileReader.DataConfig;
-using VictorianAnimalGame.Scripts.Goods.GoodTypes;
+using VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
+using VictorianAnimalGame.FileReader.DataReader;
+using VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
 namespace VictorianAnimalGame.Engine.Defines;
 
 public static class GoodDefines
 {
+    public static readonly FrozenDictionary<GoodType, GoodDetails> Goods;
     public static readonly FrozenDictionary<string, GoodType> GoodTypes;
 
     static GoodDefines()
     {
-        var goodTypes = CreateFrozenGoods();
-        GoodTypes = goodTypes;
+        var (newGoodTypes, newGoods) = CreateFrozenGoods();
+        GoodTypes = newGoodTypes;
+        Goods = newGoods;
     }
 
-    private static FrozenDictionary<string, GoodType> CreateFrozenGoods()
+    private static (FrozenDictionary<string, GoodType>, FrozenDictionary<GoodType, GoodDetails>) CreateFrozenGoods()
     {
         List<GoodsConfig> data = YamlReader.ReadFiles<GoodsConfig>("Data/Goods/");
         Dictionary<string, GoodType> goodTypes = [];
+        Dictionary<GoodType, GoodDetails> goods = [];
         
-        foreach (GoodsConfig good in data)
+        SetEmptyGoods(ref goodTypes, ref goods);
+
+        for (byte i = 1; i <= data.Count; i++)
         {
-            var goodData = good.Goods;
+            var goodData = data[i - 1].Goods;
             
-            GoodType newGood = new GoodTypeBuilder()
+            GoodType newGoodsType = new GoodType(i);
+            goodTypes.Add(goodData.Name, newGoodsType);
+            
+            GoodDetails newGood = new GoodBuilder()
                 .SetGoodName(goodData.Name)
                 .SetGoodPrice(goodData.Price)
                 .SetGoodBulk(goodData.Bulk)
                 .Build();
-            goodTypes.Add(goodData.Name, newGood);
+            goods.Add(newGoodsType, newGood);
             
             Console.WriteLine(newGood.ToString());
         }
         
-        return goodTypes.ToFrozenDictionary();
+        return (goodTypes.ToFrozenDictionary(), goods.ToFrozenDictionary());
+    }
+    
+    private static void SetEmptyGoods(ref Dictionary<string, GoodType> goodTypes, 
+        ref Dictionary<GoodType, GoodDetails> goods)
+    {
+        const string noneName = "None";
+        GoodType noneType = new(0);
+        GoodDetails noneSpeciesDetails = new GoodBuilder()
+            .SetGoodName(noneName)
+            .Build();
+        goodTypes.Add(noneName, noneType);
+        goods.Add(noneType, noneSpeciesDetails);
     }
 }

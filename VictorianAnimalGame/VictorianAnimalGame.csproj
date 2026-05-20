@@ -12,14 +12,11 @@
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\Goods\Fish.yaml" />
-    <Content Include="Data\Goods\Radio.yaml" />
-    <Content Include="Data\Goods\Wood.yaml" />
-    <Content Include="Data\Species\Beaver.yaml" />
-    <Content Include="Data\Species\Otter.yaml" />
-    <Content Include="Data\Species\Raccoon.yaml" />
+    <Content Include="Data\**" />
+    <Content Include="Engine\Province\Zone\Zone.cs.uid" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Province\ProvinceBuilder\" />
+    <Folder Include="Engine\Components\Markets\Canton\" />
+    <Folder Include="Engine\Time\Processing\" />
   </ItemGroup>
 </Project>

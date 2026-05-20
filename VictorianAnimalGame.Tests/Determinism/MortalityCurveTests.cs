@@ -1,7 +1,7 @@
-﻿using VictorianAnimalGame.Engine.Critters.Species;
+﻿using VictorianAnimalGame.Engine.Components.Critters.Species;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Extensions;
-using VictorianAnimalGame.Engine.Province.ProvinceCritters.Mortality;
+using VictorianAnimalGame.Engine.Province.Critters.Mortality;
 using VictorianAnimalGame.Engine.Randomness;
 
 namespace VictoriaAnimalGame.Tests.Determinism;
