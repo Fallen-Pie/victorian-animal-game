@@ -58,4 +58,6 @@ public static class AnnalsDefines
     {
         return RegionData[regionId].ProvinceIds;
     }
+    
+    public static void Initialize() { }
 }

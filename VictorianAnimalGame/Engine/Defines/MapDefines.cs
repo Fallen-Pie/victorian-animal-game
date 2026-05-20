@@ -320,4 +320,6 @@ public static class MapDefines
         uint index = (uint)(coords.Y * MapWidth + coords.X);
         return TerrainMapData[index];
     }
+    
+    public static void Initialize() { }
 }

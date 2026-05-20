@@ -58,4 +58,6 @@ public static class GoodDefines
         goodTypes.Add(noneName, noneType);
         goods.Add(noneType, noneSpeciesDetails);
     }
+    
+    public static void Initialize() { }
 }

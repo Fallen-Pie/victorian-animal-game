@@ -62,4 +62,6 @@ public static class CritterDefines
         speciesTypes.Add(noneName, noneType);
         species.Add(noneType, noneSpeciesDetails);
     }
+    
+    public static void Initialize() { }
 }

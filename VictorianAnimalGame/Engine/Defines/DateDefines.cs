@@ -29,4 +29,6 @@ public static class DateDefines
     {
         return DateManager.ToString();
     }
+    
+    public static void Initialize() { }
 }
