@@ -83,7 +83,7 @@ public class RiverCreation
                 }
                 
                 //TODO Replace these two below
-                TypographyType newType = new((byte)(typographyCount + processedRivers.Count));
+                TypographyType newType = new((ushort)(typographyCount + processedRivers.Count));
                 Dictionary<int, (TypographyType, RiverDirection)> deltas = [];
                 while (!endpoint)
                 {

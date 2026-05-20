@@ -3,9 +3,9 @@ using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Map.Terrain.Typography;
 
-public readonly struct TypographyType(byte typographyId) : IEquatable<TypographyType>
+public readonly struct TypographyType(ushort typographyId) : IEquatable<TypographyType>
 {
-    private byte TypographyId { get; } = typographyId;
+    private ushort TypographyId { get; } = typographyId;
     
     public string Name => MapDefines.TerrainTypography[this].Name;
     public string Colour => MapDefines.TerrainTypography[this].Colour;

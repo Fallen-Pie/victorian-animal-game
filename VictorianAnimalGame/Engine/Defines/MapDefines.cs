@@ -65,7 +65,7 @@ public static class MapDefines
                 .Build()
             );
         
-        for (byte i = 1; i <= data.Count; i++)
+        for (ushort i = 1; i <= data.Count; i++)
         {
             var typographyData = data[i - 1].Typography;
             
