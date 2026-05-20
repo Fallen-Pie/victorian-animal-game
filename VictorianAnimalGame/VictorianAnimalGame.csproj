@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\**" />
+    <Content Include="Engine\Province\Zone\Zone.cs.uid" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Components\Markets\Canton\" />

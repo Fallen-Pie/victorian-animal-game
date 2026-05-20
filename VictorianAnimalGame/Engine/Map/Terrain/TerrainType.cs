@@ -1,4 +1,5 @@
 ﻿using System;
+using VictorianAnimalGame.Engine.Map.Terrain.Climate;
 using VictorianAnimalGame.Engine.Map.Terrain.Typography;
 using VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
 
@@ -8,11 +9,13 @@ public readonly record struct TerrainType()
 {
     private readonly TypographyType _typographyData;
     private readonly VegetationType _vegetationData;
+    private readonly ClimateType _climateType;
 
     public TerrainType(TypographyType newTypography, VegetationType newVegetation) : this()
     {
         _typographyData = newTypography;
         _vegetationData = newVegetation;
+        //_climateType = newClimate;
     }
 
     public VegetationType GetVegetation()
@@ -24,6 +27,11 @@ public readonly record struct TerrainType()
     {
         return _typographyData;
     }
+    
+    // public ClimateType GetClimate()
+    // {
+    //     return _climateType;
+    // }
     
     public override int GetHashCode()
     {
