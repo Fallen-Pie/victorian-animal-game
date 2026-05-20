@@ -9,22 +9,21 @@ public class RiverBuilder(string name, Vector2I startPoint, ProvinceId startProv
 {
     public string name = name;
     public TypographyType type;
+    public uint length = 1;
+    
     public Vector2I startPoint = startPoint;
     public ProvinceId startProvince = startProvince;
+    public TypographyType? startRiver;
     
     public ProvinceId endProvince;
     public Vector2I endPoint;
-    public uint length = 1;
-
-    public RiverDirection CurrentBehind = RiverDirection.None;
-
-    public TypographyType? startRiver;
     public TypographyType? endRiver;
-
+    
+    public RiverDirection riverStartDirection;
+    public RiverDirection CurrentBehind = RiverDirection.None;
     public List<Vector2I> deltaEndpoints = [];
     public bool riverEndpoint = false;
     public bool riverStartpoint = false;
-    public RiverDirection riverStartDirection;
     
     public void Step(RiverDirection newDirection)
     {
