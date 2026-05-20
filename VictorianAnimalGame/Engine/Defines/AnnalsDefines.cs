@@ -1,7 +1,10 @@
-﻿using System.Collections.Frozen;
+﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Linq;
 using VictorianAnimalGame.Engine.Map.Regions;
 using VictorianAnimalGame.Engine.Province;
+using VictorianAnimalGame.Engine.Province.Types;
 using VictorianAnimalGame.FileReader.DataReader;
 using VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
@@ -22,7 +25,10 @@ public static class AnnalsDefines
     {
         List<RegionConfig> data = YamlReader.ReadFiles<RegionConfig>("Data/Annals/Regions/");
         Dictionary<RegionId, RegionDetails> mapRegions = [];
-        
+
+        List<ProvinceId> allProvinces = [];
+        allProvinces.AddRange(MapDefines.ProvinceData.Keys.Where(id => id.Province is HabitableProvince));
+
         for (ushort i = 0; i < data.Count; i++)
         {
             var regionData = data[i].Region;
@@ -35,9 +41,21 @@ public static class AnnalsDefines
                 .Build();
             
             mapRegions.Add(newRegionId, newDetails);
+
+            foreach (ProvinceId provinceId in newDetails.ProvinceIds)
+            {
+                if (!allProvinces.Remove(provinceId))
+                {
+                    throw new ArgumentException($"Province {provinceId} is an invalid Province ID");
+                }
+            }
         }
-        
-        return mapRegions.ToFrozenDictionary();
+
+        if (allProvinces.Count == 0)
+        {
+            return mapRegions.ToFrozenDictionary();
+        }
+        throw new ArgumentException($"Unmapped Province IDs: {string.Join(", ", allProvinces)}");
     }
     
     private static FrozenDictionary<ProvinceId, RegionId> MapProvinceRegions()
