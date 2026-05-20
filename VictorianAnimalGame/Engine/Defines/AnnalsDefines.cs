@@ -51,6 +51,11 @@ public static class AnnalsDefines
             }
         }
 
+        foreach (RegionDetails region in mapRegions.Values)
+        {
+            Console.WriteLine(region);
+        }
+
         if (allProvinces.Count == 0)
         {
             return mapRegions.ToFrozenDictionary();

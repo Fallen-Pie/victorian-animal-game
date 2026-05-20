@@ -15,4 +15,14 @@ public class RegionDetails
         Colour = newColour;
         ProvinceIds = newProvinces.ToArray();
     }
+
+    public override string ToString()
+    {
+        string regionString = $"Region(Name:{Name}|Colour:#{Colour}|Region Provinces:";
+        foreach (ProvinceId id in ProvinceIds)
+        {
+            regionString += $"{id.Name}, ";
+        }
+        return regionString[..^2] + ")";
+    }
 }
