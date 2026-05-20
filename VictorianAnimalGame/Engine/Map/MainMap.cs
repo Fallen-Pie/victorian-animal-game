@@ -33,9 +33,12 @@ public partial class MainMap : Node2D
         // // {
         // //     GD.Print(critter);
         // // }
-        var frozenDictionary = GoodDefines.GoodTypes;
-        var provinceMapData = MapDefines.ProvinceMapData;
-        //
+        DateDefines.Initialize();
+        MapDefines.Initialize();
+        AnnalsDefines.Initialize();
+        CritterDefines.Initialize();
+        GoodDefines.Initialize();
+
         // //province.SetName();
         // int randomProvince = rnd.Next(0, 1000);
         // GD.Print(provinces[randomProvince].GetDetails());
