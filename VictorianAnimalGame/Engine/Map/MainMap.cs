@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
+using VictorianAnimalGame.Engine.Algorithms;
 using VictorianAnimalGame.Engine.Components.Critters;
 using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder;
 using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
 using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
+using VictorianAnimalGame.Engine.Map.Regions;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Types;
 
@@ -38,6 +40,15 @@ public partial class MainMap : Node2D
         AnnalsDefines.Initialize();
         CritterDefines.Initialize();
         GoodDefines.Initialize();
+        
+        ProvinceId provinceId = new ProvinceId(13);
+        RegionId regionId = AnnalsDefines.ProvinceRegions[provinceId];
+        var distances = Pathfinding.RegionGetShortestPath(regionId, provinceId);
+
+        foreach (var (province, distance) in distances)
+        {
+            Console.WriteLine($"{province.Name}: {distance}");
+        }
 
         // //province.SetName();
         // int randomProvince = rnd.Next(0, 1000);
