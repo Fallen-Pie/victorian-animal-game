@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province.Types;
 
@@ -10,6 +11,7 @@ public readonly struct ProvinceId(ushort id) : IEquatable<ProvinceId>
     
     public string Name => MapDefines.ProvinceData[this].Name;
     public IProvince Province => MapDefines.ProvinceData[this];
+    public FrozenDictionary<ProvinceId, uint> Neighbours => MapDefines.ProvinceData[this].Neighbours;
     
     public override bool Equals(object obj) => obj is ProvinceId other && Equals(other);
     public bool Equals(ProvinceId other) => Id == other.Id;
