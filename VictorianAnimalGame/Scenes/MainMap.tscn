@@ -1,8 +1,15 @@
 [gd_scene format=3 uid="uid://c3xcrufcww4k8"]
 
 [ext_resource type="Script" uid="uid://cbhhk5htgybue" path="res://Engine/Map/MainMap.cs" id="1_e7g1p"]
-[ext_resource type="Texture2D" uid="uid://chfav6hc7a6v" path="res://Data/Map/Views/provinces.bmp" id="2_nofk3"]
-[ext_resource type="Script" uid="uid://h1yoyapsabow" path="res://Engine/Map/MapInteraction.cs" id="3_nofk3"]
+[ext_resource type="Shader" uid="uid://cjba8edjvej0l" path="res://View/Shaders/Province/ProvinceHighlighting.gdshader" id="2_nofk3"]
+[ext_resource type="Script" uid="uid://cq132f4ddutqh" path="res://Engine/Map/MapRenderer.cs" id="3_nofk3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkfea"]
+shader = ExtResource("2_nofk3")
+shader_parameter/border_color = Color(0, 0, 0, 1)
+shader_parameter/border_thickness = 1.0
+shader_parameter/hovered_province_color = Color(0, 0, 0, 0)
+shader_parameter/highlight_color = Color(1, 1, 1, 0.3)
 
 [node name="MainMap" type="Node" unique_id=1989444280]
 
@@ -10,7 +17,7 @@
 script = ExtResource("1_e7g1p")
 
 [node name="Sprite2D" type="Sprite2D" parent="Map" unique_id=406264374]
+material = SubResource("ShaderMaterial_jkfea")
 position = Vector2(500, 250)
 scale = Vector2(2, 2)
-texture = ExtResource("2_nofk3")
 script = ExtResource("3_nofk3")
