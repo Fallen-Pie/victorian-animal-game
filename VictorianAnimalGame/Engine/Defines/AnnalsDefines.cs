@@ -16,12 +16,15 @@ public static class AnnalsDefines
     public static readonly FrozenDictionary<CantonId, CantonDetails> CantonData;
     public static readonly FrozenDictionary<ProvinceId, CantonId> ProvinceCantons;
     public static readonly FrozenDictionary<RegionId, RegionDetails> RegionData;
+    public static readonly FrozenDictionary<CantonId, RegionId> CantonRegions;
+
 
     static AnnalsDefines()
     {
         CantonData = DefineCantons();
         ProvinceCantons = MapProvinceCantons();
         RegionData = DefineRegions();
+        CantonRegions = MapCantonRegions();
     }
 
     private static FrozenDictionary<CantonId, CantonDetails> DefineCantons()
@@ -108,7 +111,7 @@ public static class AnnalsDefines
             {
                 if (!allCantons.Remove(cantonId))
                 {
-                    throw new ArgumentException($"Province {cantonId} is an invalid Province ID");
+                    throw new ArgumentException($"Canton {cantonId} is an invalid Canton ID");
                 }
             }
         }
@@ -122,13 +125,26 @@ public static class AnnalsDefines
         {
             return mapRegions.ToFrozenDictionary();
         }
-        throw new ArgumentException($"Unmapped Province IDs: {string.Join(", ", allCantons)}");
+        throw new ArgumentException($"Unmapped Canton IDs: {string.Join(", ", allCantons)}");
+    }
+    
+    private static FrozenDictionary<CantonId, RegionId> MapCantonRegions()
+    {
+        Dictionary<CantonId, RegionId> mapCantons = [];
+        foreach (var (regionId, details) in RegionData)
+        {
+            foreach (CantonId cantonId in details.CantonIds)
+            {
+                mapCantons.Add(cantonId, regionId);
+            }
+        }
+        return mapCantons.ToFrozenDictionary();
     }
 
-    // public static FrozenSet<ProvinceId> GetProvinces(CantonId cantonId)
-    // {
-    //     return CantonData[cantonId].ProvinceIds;
-    // }
+    public static RegionId GetProvinceRegion(ProvinceId province)
+    {
+        return CantonRegions[ProvinceCantons[province]];
+    }
     
     public static void Initialize() { }
 }
