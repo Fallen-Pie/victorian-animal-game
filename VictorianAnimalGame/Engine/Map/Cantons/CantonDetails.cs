@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.Engine.Map.Regions;
+namespace VictorianAnimalGame.Engine.Map.Cantons;
 
-public class RegionDetails
+public class CantonDetails
 {
     public string Name { get; }
     public string Colour { get; }
     public FrozenSet<ProvinceId> ProvinceIds { get; }
     
-    public RegionDetails(string newName, string newColour, HashSet<ProvinceId> newProvinces)
+    public CantonDetails(string newName, string newColour, HashSet<ProvinceId> newProvinces)
     {
         Name = newName;
         Colour = newColour;
@@ -19,11 +19,11 @@ public class RegionDetails
 
     public override string ToString()
     {
-        string regionString = $"Region(Name:{Name}|Colour:#{Colour}|Region Provinces:";
+        string cantonString = $"Canton(Name:{Name}|Colour:#{Colour}|Provinces:";
         foreach (ProvinceId id in ProvinceIds)
         {
-            regionString += $"{id.Name}, ";
+            cantonString += $"{id.Name}, ";
         }
-        return regionString[..^2] + ")";
+        return cantonString[..^2] + ")";
     }
 }

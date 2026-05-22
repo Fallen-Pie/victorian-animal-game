@@ -9,7 +9,7 @@ using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.ClassRatio;
 using VictorianAnimalGame.Engine.Components.Critters.CritterBuilder.Distribution;
 using VictorianAnimalGame.Engine.Components.Critters.Cultures;
 using VictorianAnimalGame.Engine.Defines;
-using VictorianAnimalGame.Engine.Map.Regions;
+using VictorianAnimalGame.Engine.Map.Cantons;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Types;
 
@@ -42,8 +42,8 @@ public partial class MainMap : Node2D
         GoodDefines.Initialize();
         
         ProvinceId provinceId = new ProvinceId(17);
-        RegionId regionId = AnnalsDefines.ProvinceRegions[provinceId];
-        var distances = Pathfinding.RegionGetShortestPath(regionId, provinceId);
+        CantonId cantonId = AnnalsDefines.ProvinceCantons[provinceId];
+        var distances = Pathfinding.RegionGetShortestPath(cantonId, provinceId);
 
         foreach (var (province, distance) in distances)
         {

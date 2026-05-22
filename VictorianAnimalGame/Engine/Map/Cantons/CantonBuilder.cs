@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.Engine.Map.Regions;
+namespace VictorianAnimalGame.Engine.Map.Cantons;
 
-public class RegionBuilder
+public class CantonBuilder
 {
     private string _name;
     private string _colour;
     private HashSet<ProvinceId> _provinces;
     
-    public RegionBuilder SetRegionName(string name)
+    public CantonBuilder SetRegionName(string name)
     {
         _name = name;
         return this;
     }
     
-    public RegionBuilder SetRegionColour(string colour)
+    public CantonBuilder SetRegionColour(string colour)
     {
         _colour = colour;
         return this;
     }
     
-    public RegionBuilder SetRegionProvinces(List<int> provinces)
+    public CantonBuilder SetRegionProvinces(List<int> provinces)
     {
         _provinces = [];
         foreach (ushort provinceId in provinces)
@@ -31,8 +31,8 @@ public class RegionBuilder
         return this;
     }
     
-    public RegionDetails Build()
+    public CantonDetails Build()
     {
-        return new RegionDetails(_name, _colour, _provinces);
+        return new CantonDetails(_name, _colour, _provinces);
     }
 }

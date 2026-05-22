@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using VictorianAnimalGame.Engine.Map.Regions;
+using VictorianAnimalGame.Engine.Map.Cantons;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Types;
 
@@ -9,12 +9,12 @@ namespace VictorianAnimalGame.Engine.Algorithms;
 public static class Pathfinding
 {
     public static Dictionary<ProvinceId, uint> RegionGetShortestPath(
-        RegionId region, ProvinceId startProvince)
+        CantonId canton, ProvinceId startProvince)
     {
         Dictionary<ProvinceId, uint> distances = [];
         PriorityQueue<ProvinceId, uint> priorityQueue = new PriorityQueue<ProvinceId, uint>();
 
-        foreach (ProvinceId province in region.ProvinceIds)
+        foreach (ProvinceId province in canton.ProvinceIds)
         {
             distances[province] = uint.MaxValue;
         }
@@ -26,7 +26,7 @@ public static class Pathfinding
             priorityQueue.TryDequeue(out ProvinceId current, out uint currentDist);
 
             if (currentDist > distances[current]) continue;
-            if (!region.ProvinceIds.Contains(current)) continue;
+            if (!canton.ProvinceIds.Contains(current)) continue;
             
             foreach ((ProvinceId edgeId, uint edgeDistance) in current.Neighbours)
             {

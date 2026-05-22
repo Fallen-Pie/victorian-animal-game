@@ -2,7 +2,7 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
-using VictorianAnimalGame.Engine.Map.Regions;
+using VictorianAnimalGame.Engine.Map.Cantons;
 using VictorianAnimalGame.Engine.Province;
 using VictorianAnimalGame.Engine.Province.Types;
 using VictorianAnimalGame.FileReader.DataReader;
@@ -12,35 +12,35 @@ namespace VictorianAnimalGame.Engine.Defines;
 
 public static class AnnalsDefines
 {
-    public static readonly FrozenDictionary<RegionId, RegionDetails> RegionData;
-    public static readonly FrozenDictionary<ProvinceId, RegionId> ProvinceRegions;
+    public static readonly FrozenDictionary<CantonId, CantonDetails> CantonData;
+    public static readonly FrozenDictionary<ProvinceId, CantonId> ProvinceCantons;
 
     static AnnalsDefines()
     {
-        RegionData = DefineRegions();
-        ProvinceRegions = MapProvinceRegions();
+        CantonData = DefineCantons();
+        ProvinceCantons = MapProvinceCantons();
     }
 
-    private static FrozenDictionary<RegionId, RegionDetails> DefineRegions()
+    private static FrozenDictionary<CantonId, CantonDetails> DefineCantons()
     {
-        List<RegionConfig> data = YamlReader.ReadFiles<RegionConfig>("Data/Annals/Regions/");
-        Dictionary<RegionId, RegionDetails> mapRegions = [];
+        List<CantonConfig> data = YamlReader.ReadFiles<CantonConfig>("Data/Annals/Cantons/");
+        Dictionary<CantonId, CantonDetails> mapCantons = [];
 
         List<ProvinceId> allProvinces = [];
         allProvinces.AddRange(MapDefines.ProvinceData.Keys.Where(id => id.Province is HabitableProvince));
 
         for (ushort i = 0; i < data.Count; i++)
         {
-            var regionData = data[i].Region;
+            var regionData = data[i].Canton;
             
-            RegionId newRegionId = new RegionId(i);
-            RegionDetails newDetails = new RegionBuilder()
+            CantonId newCantonId = new CantonId(i);
+            CantonDetails newDetails = new CantonBuilder()
                 .SetRegionName(regionData.Name)
                 .SetRegionColour(regionData.Colour)
                 .SetRegionProvinces(regionData.Provinces)
                 .Build();
             
-            mapRegions.Add(newRegionId, newDetails);
+            mapCantons.Add(newCantonId, newDetails);
 
             foreach (ProvinceId provinceId in newDetails.ProvinceIds)
             {
@@ -51,35 +51,35 @@ public static class AnnalsDefines
             }
         }
 
-        foreach (RegionDetails region in mapRegions.Values)
+        foreach (CantonDetails canton in mapCantons.Values)
         {
-            Console.WriteLine(region);
+            Console.WriteLine(canton);
         }
 
         if (allProvinces.Count == 0)
         {
-            return mapRegions.ToFrozenDictionary();
+            return mapCantons.ToFrozenDictionary();
         }
         throw new ArgumentException($"Unmapped Province IDs: {string.Join(", ", allProvinces)}");
     }
     
-    private static FrozenDictionary<ProvinceId, RegionId> MapProvinceRegions()
+    private static FrozenDictionary<ProvinceId, CantonId> MapProvinceCantons()
     {
-        Dictionary<ProvinceId, RegionId> mapProvinces = [];
-        foreach (var (regionId, details) in RegionData)
+        Dictionary<ProvinceId, CantonId> mapProvinces = [];
+        foreach (var (cantonId, details) in CantonData)
         {
             foreach (ProvinceId provinceId in details.ProvinceIds)
             {
-                mapProvinces.Add(provinceId, regionId);
+                mapProvinces.Add(provinceId, cantonId);
             }
         }
         return mapProvinces.ToFrozenDictionary();
     }
 
-    public static FrozenSet<ProvinceId> GetProvinces(RegionId regionId)
-    {
-        return RegionData[regionId].ProvinceIds;
-    }
+    // public static FrozenSet<ProvinceId> GetProvinces(CantonId cantonId)
+    // {
+    //     return CantonData[cantonId].ProvinceIds;
+    // }
     
     public static void Initialize() { }
 }

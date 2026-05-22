@@ -2,12 +2,12 @@
 
 namespace VictorianAnimalGame.FileReader.DataReader.DataConfig;
 
-public class RegionConfig : IDataConfig
+public class CantonConfig : IDataConfig
 {
-    public RegionData Region { get; set; } 
+    public CantonData Canton { get; set; } 
 }
 
-public class RegionData
+public class CantonData
 {
     public string Name { get; set; }
     
