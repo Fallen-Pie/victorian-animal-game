@@ -4,7 +4,7 @@ using VictorianAnimalGame.Engine.Algorithms;
 using VictorianAnimalGame.Engine.Map.Cantons;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.Engine.Components.Markets.Canton;
+namespace VictorianAnimalGame.Engine.Components.Markets.Types;
 
 public class MarketCanton
 {
@@ -12,10 +12,10 @@ public class MarketCanton
     public ProvinceId CentreProvince { get; set; }
     public Dictionary<ProvinceId, uint> DistanceToCentre { get; set; }
 
-    public MarketCanton(CantonId newMarketCanton, ProvinceId newCentreProvince)
+    public MarketCanton(CantonId newCanton, ProvinceId newCentre)
     {
-        Canton = newMarketCanton;
-        CentreProvince = newCentreProvince;
+        Canton = newCanton;
+        CentreProvince = newCentre;
         GetDistances();
     }
 
@@ -30,6 +30,8 @@ public class MarketCanton
 
     private void GetDistances()
     {
-        DistanceToCentre = Pathfinding.RegionGetShortestPath(Canton, CentreProvince);
+        Dictionary<ProvinceId, uint> provinceDistances = Pathfinding.RegionGetShortestPath(Canton, CentreProvince);
+        provinceDistances.Remove(CentreProvince);
+        DistanceToCentre = provinceDistances;
     }
 }
