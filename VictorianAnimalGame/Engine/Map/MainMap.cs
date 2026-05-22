@@ -41,7 +41,7 @@ public partial class MainMap : Node2D
         CritterDefines.Initialize();
         GoodDefines.Initialize();
         
-        ProvinceId provinceId = new ProvinceId(13);
+        ProvinceId provinceId = new ProvinceId(17);
         RegionId regionId = AnnalsDefines.ProvinceRegions[provinceId];
         var distances = Pathfinding.RegionGetShortestPath(regionId, provinceId);
 
@@ -49,7 +49,16 @@ public partial class MainMap : Node2D
         {
             Console.WriteLine($"{province.Name}: {distance}");
         }
+        
+        ProvinceId startId = new ProvinceId(7);
+        ProvinceId endId = new ProvinceId(47);
 
+        
+        foreach (ProvinceId province in Pathfinding.GetPathLand(startId, endId))
+        {
+            Console.WriteLine($"{province.Name}");
+        }
+        
         // //province.SetName();
         // int randomProvince = rnd.Next(0, 1000);
         // GD.Print(provinces[randomProvince].GetDetails());
