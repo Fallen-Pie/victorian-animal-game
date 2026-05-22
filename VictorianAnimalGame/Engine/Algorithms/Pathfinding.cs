@@ -43,6 +43,15 @@ public static class Pathfinding
         return distances;
     }
 
+    public static uint GetLandDistance(ProvinceId startProvince, ProvinceId endProvince)
+    {
+        uint totalDistance = 0;
+        List<(ProvinceId, uint)> landPath = GetPathLand(startProvince, endProvince);
+        foreach ((_, uint distance) in landPath)
+            totalDistance += distance;
+        return totalDistance;
+    }
+
     public static List<(ProvinceId, uint)> GetPathLand(
         ProvinceId startProvince, ProvinceId endProvince)
     {
