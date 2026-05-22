@@ -7,7 +7,7 @@ public class RegionBuilder
 {
     private string _name;
     private string _colour;
-    private List<ProvinceId> _provinces;
+    private HashSet<ProvinceId> _provinces;
     
     public RegionBuilder SetRegionName(string name)
     {

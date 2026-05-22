@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
 
@@ -9,7 +10,7 @@ public readonly record struct RegionId(ushort regionId)
     private ushort Id { get; } = regionId;
     public string Name => AnnalsDefines.RegionData[this].Name;
     public string Colour => AnnalsDefines.RegionData[this].Colour;
-    public ProvinceId[] ProvinceIds => AnnalsDefines.RegionData[this].ProvinceIds;
+    public FrozenSet<ProvinceId> ProvinceIds => AnnalsDefines.RegionData[this].ProvinceIds;
 
     public bool Equals(RegionId other) => Id == other.Id;
     public override int GetHashCode() => Id.GetHashCode();

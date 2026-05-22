@@ -76,7 +76,7 @@ public static class AnnalsDefines
         return mapProvinces.ToFrozenDictionary();
     }
 
-    public static ProvinceId[] GetProvinces(RegionId regionId)
+    public static FrozenSet<ProvinceId> GetProvinces(RegionId regionId)
     {
         return RegionData[regionId].ProvinceIds;
     }

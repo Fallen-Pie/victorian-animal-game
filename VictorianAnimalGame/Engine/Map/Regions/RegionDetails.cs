@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Frozen;
+using System.Collections.Generic;
 using VictorianAnimalGame.Engine.Province;
 
 namespace VictorianAnimalGame.Engine.Map.Regions;
@@ -7,13 +8,13 @@ public class RegionDetails
 {
     public string Name { get; }
     public string Colour { get; }
-    public ProvinceId[] ProvinceIds { get; }
+    public FrozenSet<ProvinceId> ProvinceIds { get; }
     
-    public RegionDetails(string newName, string newColour, List<ProvinceId> newProvinces)
+    public RegionDetails(string newName, string newColour, HashSet<ProvinceId> newProvinces)
     {
         Name = newName;
         Colour = newColour;
-        ProvinceIds = newProvinces.ToArray();
+        ProvinceIds = newProvinces.ToFrozenSet();
     }
 
     public override string ToString()
