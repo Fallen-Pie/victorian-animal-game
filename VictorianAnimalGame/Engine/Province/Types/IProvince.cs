@@ -1,6 +1,7 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using Godot;
+using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Province.Builder;
 
@@ -16,7 +17,7 @@ public abstract class IProvince(
     Vector2I provinceCentre)
 {
     public readonly ProvinceId Id = newId;
-    public readonly uint MapColour = newMapColour;
+    public readonly Color MapColour = newMapColour.ToColour();
 
     public readonly uint Size = pixelSize;
     public readonly FrozenDictionary<ProvinceId, uint> Neighbours = provinceNeighbours.ToFrozenDictionary();

@@ -11,6 +11,7 @@ public readonly struct ProvinceId(ushort id) : IEquatable<ProvinceId>
     private ushort Id { get; } = id;
     
     public string Name => MapDefines.ProvinceData[this].Name;
+    public Color Colour => MapDefines.ProvinceData[this].MapColour;
     public IProvince Province => MapDefines.ProvinceData[this];
     public FrozenDictionary<ProvinceId, uint> Neighbours => MapDefines.ProvinceData[this].Neighbours;
     public Vector2I Centre => MapDefines.ProvinceData[this].Centre;
