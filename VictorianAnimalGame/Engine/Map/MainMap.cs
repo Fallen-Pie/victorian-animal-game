@@ -52,12 +52,15 @@ public partial class MainMap : Node2D
         
         ProvinceId startId = new ProvinceId(7);
         ProvinceId endId = new ProvinceId(47);
-
         
-        foreach (ProvinceId province in Pathfinding.GetPathLand(startId, endId))
+        string s = "Path(";
+        uint total = 0;
+        foreach ((ProvinceId province, uint distance) in Pathfinding.GetPathLand(startId, endId))
         {
-            Console.WriteLine($"{province.Name}");
+            s += $"{province.Name}: {distance}, ";
+            total += distance;
         }
+        Console.WriteLine(s + $"Total: {total})");
         
         // //province.SetName();
         // int randomProvince = rnd.Next(0, 1000);

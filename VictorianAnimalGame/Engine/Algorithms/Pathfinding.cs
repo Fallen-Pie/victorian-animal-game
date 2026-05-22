@@ -43,7 +43,7 @@ public static class Pathfinding
         return distances;
     }
 
-    public static List<ProvinceId> GetPathLand(
+    public static List<(ProvinceId, uint)> GetPathLand(
         ProvinceId startProvince, ProvinceId endProvince)
     {
         PriorityQueue<ProvinceId, uint> openSet = new PriorityQueue<ProvinceId, uint>();
@@ -60,11 +60,13 @@ public static class Pathfinding
 
             if (currentProvince == endProvince)
             {
-                var path = new List<ProvinceId> { currentProvince };
+                
+                var path = new List<(ProvinceId, uint)> { (currentProvince, 0) };
                 while (cameFrom.ContainsKey(currentProvince))
                 {
+                    uint distance = cameFrom[currentProvince].Neighbours[currentProvince];
                     currentProvince = cameFrom[currentProvince];
-                    path.Insert(0, currentProvince);
+                    path.Insert(0, (currentProvince, distance));
                 }
                 return path;
             }
