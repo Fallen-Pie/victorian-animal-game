@@ -1,7 +1,9 @@
-﻿namespace VictorianAnimalGame.Engine.Map.Terrain;
+﻿using Godot;
+
+namespace VictorianAnimalGame.Engine.Map.Terrain;
 
 public interface ITerrain
 { 
     string Name { get; }
-    string Colour { get; }
+    Color Colour { get; }
 }

@@ -37,7 +37,7 @@ public abstract class IProvince(
 
     public override string ToString()
     {
-        string provinceString = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour:X}|Size {Size}|Centre {Centre}\nTerrain:(";
+        string provinceString = $"{GetType().Name[..^8]}:{Name}|{Id}|{MapColour.ToHtml(false)}|Size {Size}|Centre {Centre}\nTerrain:(";
         uint total = 0;
         foreach (var terrain in Terrain)
         {

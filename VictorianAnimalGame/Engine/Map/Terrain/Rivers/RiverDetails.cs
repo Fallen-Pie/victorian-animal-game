@@ -8,7 +8,7 @@ namespace VictorianAnimalGame.Engine.Map.Terrain.Rivers;
 public record RiverDetails() : ITerrain
 {
     public string Name { get; }
-    public string Colour { get; }
+    public Color Colour { get; }
     public uint Length { get; }
     public TypographyType Type { get; }
     
@@ -34,7 +34,7 @@ public record RiverDetails() : ITerrain
         TypographyType? endRiver) : this()
     {
         Name = newName;
-        Colour = "09477F";
+        Colour = Color.FromHtml("09477F");
         Length = newLength;
         Type = newType;
         
@@ -51,7 +51,7 @@ public record RiverDetails() : ITerrain
 
     public override string ToString()
     {
-        string riverString = $"River(Name:{Name}|Colour:#{Colour}|Type:{Type}|Length:{Length}|" +
+        string riverString = $"River(Name:{Name}|Colour:#{Colour.ToHtml(false)}|Type:{Type}|Length:{Length}|" +
                              $"StartPoint:{StartPoint}|StartProvince:{StartProvince.Name}|";
         if (StartRiver != null)
         {

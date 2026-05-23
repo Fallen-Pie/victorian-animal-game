@@ -1,18 +1,20 @@
-﻿namespace VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
+﻿using Godot;
+
+namespace VictorianAnimalGame.Engine.Map.Terrain.Vegetation;
 
 public readonly record struct VegetationDetails() : ITerrain
 {
     public string Name { get; }
-    public string Colour { get; }
+    public Color Colour { get; }
     
     public VegetationType Type { get; }
 
     public VegetationDetails(string newName, string newMapColour, VegetationType newType) : this()
     {
         Name = newName;
-        Colour = newMapColour;
+        Colour = Color.FromHtml(newMapColour);
         Type = newType;
     }
 
-    public override string ToString() => $"Vegetation(Name:{Name}|Colour:#{Colour}|Type:{Type})";
+    public override string ToString() => $"Vegetation(Name:{Name}|Colour:#{Colour.ToHtml(false)}|Type:{Type})";
 }
