@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cbhhk5htgybue" path="res://Engine/Map/MainMap.cs" id="1_e7g1p"]
 [ext_resource type="Shader" uid="uid://cjba8edjvej0l" path="res://View/Shaders/Province/ProvinceHighlighting.gdshader" id="2_nofk3"]
-[ext_resource type="Script" uid="uid://cq132f4ddutqh" path="res://Engine/Map/MapRenderer.cs" id="3_nofk3"]
+[ext_resource type="Script" uid="uid://cq132f4ddutqh" path="res://Engine/Map/Interaction/MapRenderer.cs" id="3_jkfea"]
+[ext_resource type="Script" uid="uid://dba137artoqv" path="res://Engine/Map/Interaction/DebugProvincePath.cs" id="4_jkfea"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkfea"]
 shader = ExtResource("2_nofk3")
@@ -18,6 +19,9 @@ script = ExtResource("1_e7g1p")
 
 [node name="Sprite2D" type="Sprite2D" parent="Map" unique_id=406264374]
 material = SubResource("ShaderMaterial_jkfea")
-position = Vector2(500, 250)
 scale = Vector2(2, 2)
-script = ExtResource("3_nofk3")
+centered = false
+script = ExtResource("3_jkfea")
+
+[node name="Node2D" type="Node2D" parent="Map/Sprite2D" unique_id=488151033]
+script = ExtResource("4_jkfea")
