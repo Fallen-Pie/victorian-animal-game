@@ -14,9 +14,9 @@
   <ItemGroup>
     <Content Include="Data\**" />
     <Content Include="Engine\Province\Zone\Zone.cs.uid" />
+    <Content Include="View\**\*.gdshader" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Components\Markets\Canton\" />
     <Folder Include="Engine\Time\Processing\" />
   </ItemGroup>
 </Project>
