@@ -122,7 +122,7 @@ public static class MapDefines
         VegetationType riverType = new VegetationType(++i);
         VegetationDetails riverDetails = new VegetationBuilder()
             .SetVegetationName("River")
-            .SetVegetationColour("FFFFFF")
+            .SetVegetationColour("09477f")
             .SetVegetationType(riverType)
             .Build();
         terrainVegetation.Add(riverType, riverDetails);
