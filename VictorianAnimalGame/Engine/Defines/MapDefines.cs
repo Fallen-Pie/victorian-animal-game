@@ -194,7 +194,7 @@ public static class MapDefines
             ProvinceBuilderDetails details = provinceDetails[pixelId];
             
             int x = index % MapWidth;
-            int y = index / MapHeight;
+            int y = index / MapWidth;
             
             details.AddTerrain(TerrainMapData[index]);
             details.AddPixel(x, y);
