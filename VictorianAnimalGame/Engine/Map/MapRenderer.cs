@@ -17,7 +17,8 @@ public partial class MapRenderer : Sprite2D
         Texture = provinceDataTex;
         currentHoveredProvinceId = new ProvinceId(0);
         mapMaterial = (ShaderMaterial)Material;
-        mapMaterial.SetShaderParameter("province_data_map", provinceDataTex);
+        mapMaterial.SetShaderParameter("border_data_map", provinceDataTex);
+        mapMaterial.SetShaderParameter("visual_data_map", provinceDataTex);
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -31,6 +32,74 @@ public partial class MapRenderer : Sprite2D
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
         {
             MouseLeftClickEvent();
+        }
+
+        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        {
+            if (keyEvent.Keycode == Key.Q)
+            {
+                Image mapImage = Image.CreateEmpty(MapDefines.MapWidth, MapDefines.MapHeight, false, Image.Format.Rgba8);
+
+                for (int y = 0; y < MapDefines.MapHeight; y++)
+                {
+                    for (int x = 0; x < MapDefines.MapWidth; x++)
+                    {
+                        int index = (y * MapDefines.MapWidth) + x;
+
+                        // Get your data
+                        ProvinceId provId = MapDefines.ProvinceMapData[index];
+                        TerrainType terrain = MapDefines.TerrainMapData[index];
+
+                        // Determine color based on terrain or province owner
+                        Color pixelColor = provId.Colour;
+
+                        mapImage.SetPixel(x, y, pixelColor);
+                    }
+                }
+                mapMaterial.SetShaderParameter("visual_data_map", ImageTexture.CreateFromImage(mapImage));
+            }
+            else if (keyEvent.Keycode == Key.W)
+            {
+                Image mapImage = Image.CreateEmpty(MapDefines.MapWidth, MapDefines.MapHeight, false, Image.Format.Rgba8);
+
+                for (int y = 0; y < MapDefines.MapHeight; y++)
+                {
+                    for (int x = 0; x < MapDefines.MapWidth; x++)
+                    {
+                        int index = (y * MapDefines.MapWidth) + x;
+
+                        // Get your data
+                        TerrainType terrain = MapDefines.TerrainMapData[index];
+
+                        // Determine color based on terrain or province owner
+                        Color pixelColor = terrain.GetTypography().Colour;
+
+                        mapImage.SetPixel(x, y, pixelColor);
+                    }
+                }
+                mapMaterial.SetShaderParameter("visual_data_map", ImageTexture.CreateFromImage(mapImage));
+            }
+            else if (keyEvent.Keycode == Key.E)
+            {
+                Image mapImage = Image.CreateEmpty(MapDefines.MapWidth, MapDefines.MapHeight, false, Image.Format.Rgba8);
+
+                for (int y = 0; y < MapDefines.MapHeight; y++)
+                {
+                    for (int x = 0; x < MapDefines.MapWidth; x++)
+                    {
+                        int index = (y * MapDefines.MapWidth) + x;
+
+                        // Get your data
+                        TerrainType terrain = MapDefines.TerrainMapData[index];
+
+                        // Determine color based on terrain or province owner
+                        Color pixelColor = terrain.GetVegetation().Colour;
+
+                        mapImage.SetPixel(x, y, pixelColor);
+                    }
+                }
+                mapMaterial.SetShaderParameter("visual_data_map", ImageTexture.CreateFromImage(mapImage));
+            }
         }
     }
 
