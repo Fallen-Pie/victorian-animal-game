@@ -3,7 +3,7 @@ using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Map.Terrain;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.Engine.Map;
+namespace VictorianAnimalGame.View.Nodes.Map;
 
 public partial class MapRenderer : Sprite2D
 {

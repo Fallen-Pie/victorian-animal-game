@@ -2,7 +2,7 @@ using Godot;
 using VictorianAnimalGame.Engine.Defines;
 using VictorianAnimalGame.Engine.Province;
 
-namespace VictorianAnimalGame.Engine.Map;
+namespace VictorianAnimalGame.View.Nodes.Map;
 
 public partial class MapInteraction : Sprite2D
 {
