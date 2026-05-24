@@ -1,16 +1,23 @@
 [gd_scene format=3 uid="uid://c3xcrufcww4k8"]
 
 [ext_resource type="Script" uid="uid://cbhhk5htgybue" path="res://Engine/Map/MainMap.cs" id="1_e7g1p"]
+[ext_resource type="Script" uid="uid://cq132f4ddutqh" path="res://View/Nodes/Map/MapRenderer.cs" id="2_jkfea"]
 [ext_resource type="Shader" uid="uid://cjba8edjvej0l" path="res://View/Shaders/Province/ProvinceHighlighting.gdshader" id="2_nofk3"]
-[ext_resource type="Script" uid="uid://cq132f4ddutqh" path="res://Engine/Map/Interaction/MapRenderer.cs" id="3_jkfea"]
-[ext_resource type="Script" uid="uid://dba137artoqv" path="res://Engine/Map/Interaction/DebugProvincePath.cs" id="4_jkfea"]
+[ext_resource type="Script" uid="uid://dba137artoqv" path="res://View/Nodes/Map/DebugProvincePath.cs" id="3_ikcvm"]
+[ext_resource type="Shader" uid="uid://c0jaami5rywaf" path="res://View/Shaders/Province/ProvinceLines.gdshader" id="4_ikcvm"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkfea"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mcxqp"]
 shader = ExtResource("2_nofk3")
 shader_parameter/border_color = Color(0, 0, 0, 1)
 shader_parameter/border_thickness = 1.0
 shader_parameter/hovered_province_color = Color(0, 0, 0, 0)
 shader_parameter/highlight_color = Color(1, 1, 1, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ikcvm"]
+shader = ExtResource("4_ikcvm")
+shader_parameter/line_color = Color(0, 1, 0, 1)
+shader_parameter/dot_frequency = 0.8
+shader_parameter/animation_speed = 3.0
 
 [node name="MainMap" type="Node" unique_id=1989444280]
 
@@ -18,10 +25,15 @@ shader_parameter/highlight_color = Color(1, 1, 1, 0.3)
 script = ExtResource("1_e7g1p")
 
 [node name="Sprite2D" type="Sprite2D" parent="Map" unique_id=406264374]
-material = SubResource("ShaderMaterial_jkfea")
+material = SubResource("ShaderMaterial_mcxqp")
 scale = Vector2(2, 2)
 centered = false
-script = ExtResource("3_jkfea")
+script = ExtResource("2_jkfea")
 
 [node name="Node2D" type="Node2D" parent="Map/Sprite2D" unique_id=488151033]
-script = ExtResource("4_jkfea")
+script = ExtResource("3_ikcvm")
+
+[node name="Line2D" type="Line2D" parent="Map/Sprite2D" unique_id=228459062]
+material = SubResource("ShaderMaterial_ikcvm")
+points = PackedVector2Array(26, 13.5)
+texture_mode = 1
