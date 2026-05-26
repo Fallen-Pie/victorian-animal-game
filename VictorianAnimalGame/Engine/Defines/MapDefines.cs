@@ -75,7 +75,6 @@ public static class MapDefines
                 .SetTypographyColour(typographyData.Colour)
                 .SetTypographyType(newType)
                 .Build();
-
             
             terrainTypography.Add(newType, newDetails);
         }

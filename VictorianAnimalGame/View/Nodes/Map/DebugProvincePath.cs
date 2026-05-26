@@ -13,12 +13,12 @@ public partial class DebugProvincePath : Node2D
 {
     private ProvinceId? _startProvince;
     private List<Vector2> _pathPoints = [];
-    private Line2D pathLine;
+    //private Line2D pathLine;
 
-    public override void _Ready()
-    {
-        pathLine = GetNode<Line2D>("../Line2D");
-    }
+    // public override void _Ready()
+    // {
+    //     pathLine = GetNode<Line2D>("../Line2D");
+    // }
 
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -61,6 +61,27 @@ public partial class DebugProvincePath : Node2D
             _pathPoints.Add(provinceData.Centre);
         }
         
-        pathLine.Points = _pathPoints.ToArray();
+        QueueRedraw();
+        //pathLine.Points = _pathPoints.ToArray();
+    }
+    
+    public override void _Draw()
+    {
+        // Don't draw if we don't have enough points for a line
+        if (_pathPoints.Count < 2) return;
+
+        Color lineColor = new Color(1, 0, 0); // Solid Red
+        float lineWidth = 2.0f;
+        Color dotColor = new Color(1, 1, 0);  // Solid Yellow
+        float dotRadius = 3.0f;
+
+        // Draw the connecting lines
+        DrawPolyline(_pathPoints.ToArray(), lineColor, lineWidth, true);
+
+        // Draw the dots at the Centre of each province
+        foreach (Vector2 point in _pathPoints)
+        {
+            DrawCircle(point, dotRadius, dotColor, true);
+        }
     }
 }
