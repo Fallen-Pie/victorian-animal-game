@@ -23,6 +23,7 @@ public abstract class IProvince(
     public readonly uint Size = pixelSize;
     public readonly FrozenDictionary<ProvinceId, uint> Neighbours = provinceNeighbours.ToFrozenDictionary();
     public readonly Vector2I Centre = provinceCentre;
+    // TODO dosnt work
     //public readonly bool Coastal = CheckCoastal(provinceNeighbours);
 
     public string Name = newName;
