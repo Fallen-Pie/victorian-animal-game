@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using VictorianAnimalGame.Engine.Extensions;
 using VictorianAnimalGame.Engine.Map.Terrain;
@@ -22,13 +23,18 @@ public abstract class IProvince(
     public readonly uint Size = pixelSize;
     public readonly FrozenDictionary<ProvinceId, uint> Neighbours = provinceNeighbours.ToFrozenDictionary();
     public readonly Vector2I Centre = provinceCentre;
-    
+    //public readonly bool Coastal = CheckCoastal(provinceNeighbours);
+
     public string Name = newName;
     public Dictionary<TerrainType, uint> Terrain = provinceTerrain;
 
     protected abstract bool Traversable { get; }
     protected abstract bool Communications { get; }
 
+    private static bool CheckCoastal(Dictionary<ProvinceId, uint> neighbours)
+    {
+        return neighbours.Keys.Any(id => id.Province is Sea);
+    }
 
     public string GetSimpleProvince()
     {
