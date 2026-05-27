@@ -9,12 +9,13 @@ namespace VictorianAnimalGame.Engine.Province;
 public readonly struct ProvinceId(ushort id) : IEquatable<ProvinceId>
 {
     private ushort Id { get; } = id;
-    
-    public string Name => MapDefines.ProvinceData[this].Name;
-    public Color Colour => MapDefines.ProvinceData[this].MapColour;
-    public IProvince Province => MapDefines.ProvinceData[this];
-    public FrozenDictionary<ProvinceId, uint> Neighbours => MapDefines.ProvinceData[this].Neighbours;
-    public Vector2I Centre => MapDefines.ProvinceData[this].Centre;
+
+    private IProvince MappedProvince => MapDefines.ProvinceData[this];
+    public string Name => MappedProvince.Name;
+    public Color Colour => MappedProvince.MapColour;
+    public IProvince Province => MappedProvince;
+    public FrozenDictionary<ProvinceId, uint> Neighbours => MappedProvince.Neighbours;
+    public Vector2I Centre => MappedProvince.Centre;
     
     public override bool Equals(object obj) => obj is ProvinceId other && Equals(other);
     public bool Equals(ProvinceId other) => Id == other.Id;
