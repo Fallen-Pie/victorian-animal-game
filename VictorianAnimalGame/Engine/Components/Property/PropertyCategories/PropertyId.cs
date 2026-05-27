@@ -17,7 +17,6 @@ public readonly record struct PropertyId
     public PropertyId(PropertyCode categoryCode)
     {
         uint categoryBits = (uint)categoryCode;
-        
         uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Grab the category code from the type, shift it, and merge
@@ -25,11 +24,10 @@ public readonly record struct PropertyId
     }
     
     // Constructor 2: You only need to provide the unique ID and GoodType. 
-    public PropertyId(PropertyCode categoryCode, GoodType goodCode)
+    public PropertyId(GoodType goodCode)
     {
         //TODO Change GoodType to return a number like SpeciesType
-        uint categoryBits = (goodCode.RawValue << CategoryShift) | (uint)categoryCode;
-        
+        uint categoryBits = (goodCode.Value << CategoryShift) | (uint)PropertyCode.Production;
         uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Move 10 bits for the type, shift it, and merge

@@ -6,7 +6,7 @@ namespace VictorianAnimalGame.Engine.Components.Property.PropertyTypes;
 
 public class ProductionProperty(GoodType good) : BaseProperty
 {
-    protected override PropertyId Id { get; } = new(PropertyCode.Production, good);
+    protected override PropertyId Id { get; } = new(good);
     private readonly GoodType _goodDetails = good;
 
     public void RunProduction() 
