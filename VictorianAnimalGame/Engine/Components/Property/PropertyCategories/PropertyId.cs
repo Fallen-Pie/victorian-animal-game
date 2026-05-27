@@ -38,17 +38,26 @@ public readonly record struct PropertyId
 
     public uint RawValue => _value;
     public PropertyCode Category => (PropertyCode)(_value & CategoryMask);
-    public uint SequenceValue => _value >> CategoryShift;
+    public uint SequenceValue
+    {
+        get
+        {
+            if (Category == PropertyCode.Production)
+                return GoodSequenceValue;
+            return _value >> CategoryShift;
+        }
+    }
     public uint Good => (_value >> CategoryShift) & GoodMask;
-    public uint GoodSequenceValue => _value >> SubCategoryShift;
+    private uint GoodSequenceValue => _value >> SubCategoryShift;
     
     public bool Equals(PropertyId other) => _value == other._value;
     public override int GetHashCode() => _value.GetHashCode();
 
     public string GetRawValue() => $"RawValue({RawValue})";
-    public string GetIdDetails() => $"Category({Category})|SequenceValue({SequenceValue})";
-    public string GetIdDetails(GoodType goodCode)
+    public string GetIdDetails()
     {
-       return $"Category({Category})|Good({Good})|SequenceValue({GoodSequenceValue})"; 
-    } 
+        if (Category == PropertyCode.Production)
+            return $"Category({Category})|Good({Good})|SequenceValue({GoodSequenceValue})"; 
+        return $"Category({Category})|SequenceValue({SequenceValue})";
+    }
 }
