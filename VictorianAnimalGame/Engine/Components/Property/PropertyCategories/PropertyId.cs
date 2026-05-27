@@ -1,5 +1,6 @@
 ﻿using System;
 using VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
+using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Components.Property.PropertyCategories;
 
@@ -17,7 +18,7 @@ public readonly record struct PropertyId
     {
         uint categoryBits = (uint)categoryCode;
         
-        uint sequence = PropertyIdRegistry.GetNextSequence(categoryBits);
+        uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Grab the category code from the type, shift it, and merge
         _value = (sequence << CategoryShift) | categoryBits;
@@ -29,7 +30,7 @@ public readonly record struct PropertyId
         //TODO Change GoodType to return a number like SpeciesType
         uint categoryBits = (goodCode.RawValue << CategoryShift) | (uint)categoryCode;
         
-        uint sequence = PropertyIdRegistry.GetNextSequence(categoryBits);
+        uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Move 10 bits for the type, shift it, and merge
         _value = (sequence << SubCategoryShift) | categoryBits;

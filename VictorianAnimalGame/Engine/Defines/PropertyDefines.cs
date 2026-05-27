@@ -1,8 +1,8 @@
 ﻿using System.Collections.Concurrent;
 
-namespace VictorianAnimalGame.Engine.Components.Property.PropertyCategories;
+namespace VictorianAnimalGame.Engine.Defines;
 
-public static class PropertyIdRegistry
+public class PropertyDefines
 {
     // Tracks the current count for each distinct Category + SubCategory combination
     private static readonly ConcurrentDictionary<uint, uint> _sequences = new();
