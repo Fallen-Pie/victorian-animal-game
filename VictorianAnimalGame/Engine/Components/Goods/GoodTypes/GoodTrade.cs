@@ -1,11 +1,11 @@
-﻿using System.Collections.Specialized;
-using System.Text;
+﻿using System.Text;
+using VictorianAnimalGame.Engine.Components.Property.PropertyCategories;
 
-namespace VictorianAnimalGame.Engine.Components.Goods.GoodDetails;
+namespace VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
-public record struct GoodAttributes
+public readonly record struct GoodTrade
 {
-    private uint attributeData;
+    private readonly uint _tradeData;
     
     private const int TierShift = 0;
     private const int GoodShift = 3;
@@ -16,24 +16,20 @@ public record struct GoodAttributes
     private const uint FactoryMask = 0x3FFFFF;  // 22 bits (0-4,194,303)
     private const uint GoodsFactoryMask = 0xFFFFFFF8; // 29 bits
     
-    public GoodAttributes(byte tier, byte goods, uint factoryId)
+    public GoodTrade(byte tier, byte goods, uint factoryId)
     {
         // Initialize with bit-packing logic
-        attributeData = (tier & TierMask) |
+        _tradeData = (tier & TierMask) |
                         ((goods & GoodsMask) << GoodShift) |
                         ((factoryId & FactoryMask) << FactoryShift);
     }
     
     //TODO: Make a way to get the tier for a specific good rather than a generic Tier
     // These should also return a specific Good 'Type' and a specific Tier based on the Good
-    public byte GetTier() => (byte)(attributeData & TierMask);
-
-    public byte GetGood() => (byte)((attributeData >> GoodShift) & GoodsMask);
-
-    public uint GetFactoryId() => (attributeData >> FactoryShift) & FactoryMask;
-    
-    // Zero out the Tier bits to get the GoodFactoryID
-    public uint GetGoodFactoryId() => attributeData & GoodsFactoryMask;
+    public byte GetTier() => (byte)(_tradeData & TierMask);
+    public GoodType GetGood() => new((byte)((_tradeData >> GoodShift) & GoodsMask));
+    public uint GetFactoryId() => (_tradeData >> FactoryShift) & FactoryMask;
+    public PropertyId GetPropertyId() => new(_tradeData & GoodsFactoryMask);
 
     public override string ToString()
     {
