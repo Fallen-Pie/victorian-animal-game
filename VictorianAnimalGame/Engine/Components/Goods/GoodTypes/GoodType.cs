@@ -3,23 +3,18 @@ using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Components.Goods.GoodTypes;
 
-public readonly struct GoodType(byte id) : IEquatable<GoodType>
+public readonly record struct GoodType(byte Id)
 {
-    private byte Id { get; } = id;
+    private GoodDetails Good => GoodDefines.Goods[this];
     
-    public string Name => GoodDefines.Goods[this].Name;
-    public float Price => GoodDefines.Goods[this].Price;
-    public float Bulk => GoodDefines.Goods[this].Bulk;
-    public float MinPrice => GoodDefines.Goods[this].MinPrice;
-    public float MaxPrice => GoodDefines.Goods[this].MaxPrice;
-    public float PricePerBulk => GoodDefines.Goods[this].PricePerBulk;
+    public string Name => Good.Name;
+    public float Price => Good.Price;
+    public float Bulk => Good.Bulk;
+    public float MinPrice => Good.MinPrice;
+    public float MaxPrice => Good.MaxPrice;
+    public float PricePerBulk => Good.PricePerBulk;
     
     public uint Value => Id;
     
-    public override bool Equals(object obj) => obj is GoodType other && Equals(other);
-    public bool Equals(GoodType other) => Id == other.Id;
-    public override int GetHashCode() => Id.GetHashCode();
-    public static bool operator ==(GoodType left, GoodType right) => left.Equals(right);
-    public static bool operator !=(GoodType left, GoodType right) => !(left == right);
     public override string ToString() => Name;
 }

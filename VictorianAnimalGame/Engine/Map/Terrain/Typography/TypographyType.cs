@@ -1,20 +1,14 @@
-﻿using System;
-using Godot;
+﻿using Godot;
 using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Map.Terrain.Typography;
 
-public readonly struct TypographyType(ushort typographyId) : IEquatable<TypographyType>
+public readonly record struct TypographyType(ushort TypographyId)
 {
-    private ushort TypographyId { get; } = typographyId;
+    private ITerrain Typography => MapDefines.TerrainTypography[this];
     
-    public string Name => MapDefines.TerrainTypography[this].Name;
-    public Color Colour => MapDefines.TerrainTypography[this].Colour;
+    public string Name => Typography.Name;
+    public Color Colour => Typography.Colour;
     
-    public override bool Equals(object obj) => obj is TypographyType other && Equals(other);
-    public bool Equals(TypographyType other) => TypographyId == other.TypographyId;
-    public override int GetHashCode() => TypographyId.GetHashCode();
-    public static bool operator ==(TypographyType left, TypographyType right) => left.Equals(right);
-    public static bool operator !=(TypographyType left, TypographyType right) => !(left == right);
     public override string ToString() => TypographyId.ToString();
 }

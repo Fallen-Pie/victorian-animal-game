@@ -8,9 +8,6 @@ namespace VictorianAnimalGame.Engine.Components.Critters
     [StructLayout(LayoutKind.Sequential)]
     public readonly record struct CritterEntry(SpeciesType Species, CultureType Culture, CritterClass Class)
     {
-        public SpeciesType Species { get; } = Species;
-        public CritterClass Class { get; } = Class;
-        public CultureType Culture { get; } = Culture;
         public CritterDetails Details { get; } = new(Species);
         
         public bool Equals(CritterEntry newCritter) =>

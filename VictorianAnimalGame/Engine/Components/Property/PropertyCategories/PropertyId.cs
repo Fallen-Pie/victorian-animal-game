@@ -4,55 +4,48 @@ using VictorianAnimalGame.Engine.Defines;
 
 namespace VictorianAnimalGame.Engine.Components.Property.PropertyCategories;
 
-public readonly record struct PropertyId
+public readonly record struct PropertyId(uint Value)
 {
-    private readonly uint _value;
-    
     private const int CategoryShift = 3;
     private const int SubCategoryShift = 10;
     private const uint GoodMask = 0x7F;
     private const uint CategoryMask = 0x7;
-
-    public PropertyId(uint value)
-    {
-        _value = value;
-    }
     
-    public PropertyId(PropertyCode categoryCode)
+    public PropertyId(PropertyCode categoryCode) : this(0U)
     {
         uint categoryBits = (uint)categoryCode;
         uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Grab the category code from the type, shift it, and merge
-        _value = (sequence << CategoryShift) | categoryBits;
+        Value = (sequence << CategoryShift) | categoryBits;
     }
     
-    public PropertyId(GoodType goodCode)
+    public PropertyId(GoodType goodCode) : this(0U)
     {
         //TODO Change GoodType to return a number like SpeciesType
         uint categoryBits = (goodCode.Value << CategoryShift) | (uint)PropertyCode.Production;
         uint sequence = PropertyDefines.GetNextSequence(categoryBits);
         
         // Move 10 bits for the type, shift it, and merge
-        _value = (sequence << SubCategoryShift) | categoryBits;
+        Value = (sequence << SubCategoryShift) | categoryBits;
     }
 
-    public uint RawValue => _value;
-    public PropertyCode Category => (PropertyCode)(_value & CategoryMask);
+    public uint RawValue => Value;
+    public PropertyCode Category => (PropertyCode)(Value & CategoryMask);
     public uint SequenceValue
     {
         get
         {
             if (Category == PropertyCode.Production)
                 return GoodSequenceValue;
-            return _value >> CategoryShift;
+            return Value >> CategoryShift;
         }
     }
-    public uint Good => (_value >> CategoryShift) & GoodMask;
-    private uint GoodSequenceValue => _value >> SubCategoryShift;
+    public uint Good => (Value >> CategoryShift) & GoodMask;
+    private uint GoodSequenceValue => Value >> SubCategoryShift;
     
-    public bool Equals(PropertyId other) => _value == other._value;
-    public override int GetHashCode() => (int)_value;
+    public bool Equals(PropertyId other) => Value == other.Value;
+    public override int GetHashCode() => (int)Value;
 
     public string GetRawValue() => $"RawValue({RawValue})";
     public string GetIdDetails()
