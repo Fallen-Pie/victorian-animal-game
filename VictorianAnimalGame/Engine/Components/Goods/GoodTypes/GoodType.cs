@@ -21,5 +21,5 @@ public readonly struct GoodType(byte id) : IEquatable<GoodType>
     public override int GetHashCode() => Id.GetHashCode();
     public static bool operator ==(GoodType left, GoodType right) => left.Equals(right);
     public static bool operator !=(GoodType left, GoodType right) => !(left == right);
-    public override string ToString() => Id.ToString();
+    public override string ToString() => Name;
 }

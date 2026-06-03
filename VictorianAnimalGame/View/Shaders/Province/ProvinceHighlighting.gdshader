@@ -33,10 +33,10 @@ void fragment() {
 	vec4 color_left  = texture(border_data_map, UV + vec2(-shift.x, 0.0));
 	vec4 color_right = texture(border_data_map, UV + vec2(shift.x, 0.0));
 
-if (current_province_pixel != color_up || current_province_pixel != color_down || current_province_pixel != color_left || current_province_pixel != color_right) {
-	base_color = border_color;
-}
-
-// ---- STEP 4: OUTPUT TO SCREEN ----
-COLOR = base_color;
+	if (current_province_pixel != color_up || current_province_pixel != color_down || current_province_pixel != color_left || current_province_pixel != color_right) {
+		base_color = border_color;
+	}
+	
+	// ---- STEP 4: OUTPUT TO SCREEN ----
+	COLOR = base_color;
 }

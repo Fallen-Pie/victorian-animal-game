@@ -13,7 +13,11 @@ public readonly record struct PropertyId
     private const uint GoodMask = 0x7F;
     private const uint CategoryMask = 0x7;
 
-    // Constructor 1: You only need to provide the unique ID. 
+    public PropertyId(uint value)
+    {
+        _value = value;
+    }
+    
     public PropertyId(PropertyCode categoryCode)
     {
         uint categoryBits = (uint)categoryCode;
@@ -23,7 +27,6 @@ public readonly record struct PropertyId
         _value = (sequence << CategoryShift) | categoryBits;
     }
     
-    // Constructor 2: You only need to provide the unique ID and GoodType. 
     public PropertyId(GoodType goodCode)
     {
         //TODO Change GoodType to return a number like SpeciesType
@@ -49,7 +52,7 @@ public readonly record struct PropertyId
     private uint GoodSequenceValue => _value >> SubCategoryShift;
     
     public bool Equals(PropertyId other) => _value == other._value;
-    public override int GetHashCode() => _value.GetHashCode();
+    public override int GetHashCode() => (int)_value;
 
     public string GetRawValue() => $"RawValue({RawValue})";
     public string GetIdDetails()
